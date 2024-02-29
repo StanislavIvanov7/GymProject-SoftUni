@@ -25,5 +25,20 @@ namespace Gym.Infrastructure.Constants
             public const int MaxLengthName = 100;
             public const int MinLengthName = 3;
         }
+
+        public static class FitnessCard
+        {
+            public const int MaxLengthDescription = 200;
+            public const int MinLengthDescription = 10;
+
+            public const int MaxLengthImageUrl = 2048;
+            public const int MinLengthImageUrl = 10;
+        }
+
+        public static class FitnessCardCategory
+        {
+            public const int MaxLengthName = 100;
+            public const int MinLengthName = 3;
+        }
     }
 }

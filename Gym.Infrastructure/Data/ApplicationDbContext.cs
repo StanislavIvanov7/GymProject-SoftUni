@@ -21,12 +21,25 @@ namespace Gym.Infrastructure.Data
                 .WithMany(x=>x.UserFoodItems)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            
+            builder.Entity<UserFitnessCard>()
+                .HasKey(x=> new { x.FitnessCardId, x.UserId });
+
+
+            builder.Entity<UserFitnessCard>()
+                .HasOne(x => x.FitnessCard)
+                .WithMany(x => x.UserFitnessCards)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
 
         public DbSet<FoodItem> FoodItems { get; set; } = null!;
         public DbSet<FoodItemCategory> FoodItemCategories { get; set; } = null!;
         public DbSet<UserFoodItem> UsersFoodItems { get; set; } = null!;
+
+        public DbSet<FitnessCard> FitnessCards { get; set; } = null!;
+        public DbSet<FitnessCardCategory> FitnessCardCategories { get; set; } = null!;
+        public DbSet<UserFitnessCard> UsersFitnessCards { get; set; } = null!;
+
     }
 }
