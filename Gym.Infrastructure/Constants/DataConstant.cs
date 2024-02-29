@@ -40,5 +40,23 @@ namespace Gym.Infrastructure.Constants
             public const int MaxLengthName = 100;
             public const int MinLengthName = 3;
         }
+
+        public static class Diet
+        {
+            public const int MaxLengthTitle = 75;
+            public const int MinLengthTitle = 3;
+
+            public const int MaxLengthDescription = 200;
+            public const int MinLengthDescription = 10;
+
+            public const int MaxLengthImageUrl = 2048;
+            public const int MinLengthImageUrl = 10;
+        }
+
+        public static class DietCategory
+        {
+            public const int MaxLengthName = 100;
+            public const int MinLengthName = 3;
+        }
     }
 }

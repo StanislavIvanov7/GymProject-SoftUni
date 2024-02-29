@@ -41,5 +41,8 @@ namespace Gym.Infrastructure.Data
         public DbSet<FitnessCardCategory> FitnessCardCategories { get; set; } = null!;
         public DbSet<UserFitnessCard> UsersFitnessCards { get; set; } = null!;
 
+        public DbSet<Diet> Diets { get; set; } = null!;
+        public DbSet<DietCategory> DietCategories { get; set; } = null!;
+
     }
 }
