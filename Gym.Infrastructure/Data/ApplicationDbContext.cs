@@ -44,5 +44,8 @@ namespace Gym.Infrastructure.Data
         public DbSet<Diet> Diets { get; set; } = null!;
         public DbSet<DietCategory> DietCategories { get; set; } = null!;
 
+        public DbSet<WorkoutPlan> WorkoutPlans { get; set; } = null!;
+        public DbSet<WorkoutPlanCategory> WorkoutPlanCategories { get; set; } = null!;
+
     }
 }

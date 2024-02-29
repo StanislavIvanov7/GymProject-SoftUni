@@ -58,5 +58,23 @@ namespace Gym.Infrastructure.Constants
             public const int MaxLengthName = 100;
             public const int MinLengthName = 3;
         }
+
+        public static class WorkoutPlan
+        {
+            public const int MaxLengthName = 100;
+            public const int MinLengthName = 3 ;
+
+            public const int MaxLengthDescription = 200;
+            public const int MinLengthDescription = 10;
+
+            public const int MaxLengthImageUrl = 2048;
+            public const int MinLengthImageUrl = 10;
+        }
+
+        public static class WorkoutPlanCategory
+        {
+            public const int MaxLengthName = 100;
+            public const int MinLengthName = 3;
+        }
     }
 }
