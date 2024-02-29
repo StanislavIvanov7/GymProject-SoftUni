@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Gym.Infrastructure.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gym.Infrastructure.Data
@@ -9,5 +10,23 @@ namespace Gym.Infrastructure.Data
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<UserFoodItem>()
+                .HasKey(x => new { x.UserId, x.FoodItemId });
+
+            builder.Entity<UserFoodItem>()
+                .HasOne(x=>x.FoodItem)
+                .WithMany(x=>x.UserFoodItems)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            
+            base.OnModelCreating(builder);
+        }
+
+        public DbSet<FoodItem> FoodItems { get; set; } = null!;
+        public DbSet<FoodItemCategory> FoodItemCategories { get; set; } = null!;
+        public DbSet<UserFoodItem> UsersFoodItems { get; set; } = null!;
     }
 }
