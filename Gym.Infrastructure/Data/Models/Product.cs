@@ -5,37 +5,37 @@ using System.ComponentModel.DataAnnotations.Schema;
 using static Gym.Infrastructure.Constants.DataConstant.FoodItem;
 namespace Gym.Infrastructure.Data.Models
 {
-    [Comment("Food item table")]
-    public class FoodItem
+    [Comment("Product table")]
+    public class Product
     {
         [Key]
-        [Comment("Food item identifier")]
+        [Comment("Product identifier")]
         public int Id { get; set; }
 
         [Required]
         [MaxLength(MaxLengthName)]
-        [Comment("Food item name")]
+        [Comment("Product name")]
         public string Name { get; set; } = string.Empty;
 
         [Required]
-        [Comment("Food item price")]
+        [Comment("Product price")]
         public decimal Price { get; set; }
 
         [Required]
         [MaxLength(MaxLengthDescription)]
-        [Comment("Food item description")]
+        [Comment("Product description")]
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        [Comment("Food item category identifier")]
-        public int FoodItemCategoryId { get; set; }
+        [Comment("Product category identifier")]
+        public int ProductCategoryId { get; set; }
 
-        [ForeignKey(nameof(FoodItemCategoryId))]
+        [ForeignKey(nameof(ProductCategoryId))]
         [Required]
-        public FoodItemCategory FoodItemCategory { get; set; } = null!;
+        public ProductCategory ProductCategory { get; set; } = null!;
 
         [Required]
-        [Comment("Food item creator identifier")]
+        [Comment("Product creator identifier")]
         public string CreatorId { get; set; } = string.Empty;
 
         [ForeignKey(nameof(CreatorId))]
@@ -43,10 +43,10 @@ namespace Gym.Infrastructure.Data.Models
 
         [Required]
         [MaxLength(MaxLengthImageUrl)]
-        [Comment("Food item image url")]
+        [Comment("Product image url")]
         public string ImageUrl { get; set; } = string.Empty;
 
-        public IEnumerable<UserFoodItem> UserFoodItems { get; set; } = new List<UserFoodItem>();
+        public IEnumerable<UserProduct> UserProducts { get; set; } = new List<UserProduct>();
 
     }
 }

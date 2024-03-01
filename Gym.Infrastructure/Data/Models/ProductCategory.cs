@@ -3,19 +3,19 @@ using System.ComponentModel.DataAnnotations;
 using static Gym.Infrastructure.Constants.DataConstant.FoodItemCategory;
 namespace Gym.Infrastructure.Data.Models
 {
-    [Comment("Food item category table")]
-    public class FoodItemCategory
+    [Comment("Product category table")]
+    public class ProductCategory
     {
         [Key]
-        [Comment("Food item category identifier")]
+        [Comment("Product category identifier")]
         public int Id { get; set; }
 
         [Required]
         [StringLength(MaxLengthName)]
-        [Comment("Food item category name")]
+        [Comment("Product category name")]
         public string Name { get; set; } = string.Empty;
 
 
-        public ICollection<FoodItem> FoodsItems { get; set; } = new List<FoodItem>();
+        public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

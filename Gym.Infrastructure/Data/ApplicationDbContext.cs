@@ -14,12 +14,12 @@ namespace Gym.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<UserFoodItem>()
-                .HasKey(x => new { x.UserId, x.FoodItemId });
+            builder.Entity<UserProduct>()
+                .HasKey(x => new { x.UserId, x.ProductId });
 
-            builder.Entity<UserFoodItem>()
-                .HasOne(x=>x.FoodItem)
-                .WithMany(x=>x.UserFoodItems)
+            builder.Entity<UserProduct>()
+                .HasOne(x=>x.Product)
+                .WithMany(x=>x.UserProducts)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<UserFitnessCard>()
@@ -39,9 +39,9 @@ namespace Gym.Infrastructure.Data
             base.OnModelCreating(builder);
         }
 
-        public DbSet<FoodItem> FoodItems { get; set; } = null!;
-        public DbSet<FoodItemCategory> FoodItemCategories { get; set; } = null!;
-        public DbSet<UserFoodItem> UsersFoodItems { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<ProductCategory> ProductCategories { get; set; } = null!;
+        public DbSet<UserProduct> UsersProducts { get; set; } = null!;
 
         public DbSet<FitnessCard> FitnessCards { get; set; } = null!;
         public DbSet<FitnessCardCategory> FitnessCardCategories { get; set; } = null!;

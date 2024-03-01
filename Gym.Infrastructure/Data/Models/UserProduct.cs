@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gym.Infrastructure.Data.Models
 {
-    [Comment("Users and food items mapping table")]
-    public class UserFoodItem
+    [Comment("Users and products mapping table")]
+    public class UserProduct
     {
         [Required]
         [Comment("User identifier")]
@@ -16,10 +16,10 @@ namespace Gym.Infrastructure.Data.Models
         public IdentityUser User { get; set; } = null!;
 
         [Required]
-        [Comment("Food item identifier")]
-        public int FoodItemId { get; set; }
+        [Comment("Product identifier")]
+        public int ProductId { get; set; }
 
-        [ForeignKey(nameof(FoodItemId))]
-        public FoodItem FoodItem { get; set; } = null!;
+        [ForeignKey(nameof(ProductId))]
+        public Product Product { get; set; } = null!;
     }
 }
