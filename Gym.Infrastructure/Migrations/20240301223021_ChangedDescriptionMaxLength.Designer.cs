@@ -4,6 +4,7 @@ using Gym.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gym.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240301223021_ChangedDescriptionMaxLength")]
+    partial class ChangedDescriptionMaxLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,17 +69,6 @@ namespace Gym.Infrastructure.Migrations
                     b.ToTable("Diets");
 
                     b.HasComment("Diet table");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatorId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
-                            Description = "Breakfast: 1 boiled egg, 1 slice whole grain toast, 1/2 grapefruit, green tea. Snack: 1 small apple, 10 almonds. Lunch: Grilled chicken, mixed greens. Snack: Greek yogurt with berries. Dinner: Baked salmon, quinoa, asparagus.",
-                            DietCategoryId = 1,
-                            ImageUrl = "https://www.fitterfly.com/blog/wp-content/uploads/2022/12/Step-by-Step-Diet-Plan-for-Weight-Loss-copy_11zon.webp",
-                            Title = "The best diet for weight loss"
-                        });
                 });
 
             modelBuilder.Entity("Gym.Infrastructure.Data.Models.DietCategory", b =>

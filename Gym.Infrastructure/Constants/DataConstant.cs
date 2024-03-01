@@ -13,7 +13,7 @@ namespace Gym.Infrastructure.Constants
             public const int MaxLengthName = 100;
             public const int MinLengthName = 3;
 
-            public const int MaxLengthDescription = 200;
+            public const int MaxLengthDescription = 500;
             public const int MinLengthDescription = 10;
 
             public const int MaxLengthImageUrl = 2048;
@@ -28,7 +28,7 @@ namespace Gym.Infrastructure.Constants
 
         public static class FitnessCard
         {
-            public const int MaxLengthDescription = 200;
+            public const int MaxLengthDescription = 500;
             public const int MinLengthDescription = 10;
 
             public const int MaxLengthImageUrl = 2048;
@@ -46,7 +46,7 @@ namespace Gym.Infrastructure.Constants
             public const int MaxLengthTitle = 75;
             public const int MinLengthTitle = 3;
 
-            public const int MaxLengthDescription = 200;
+            public const int MaxLengthDescription = 500;
             public const int MinLengthDescription = 10;
 
             public const int MaxLengthImageUrl = 2048;
@@ -64,7 +64,7 @@ namespace Gym.Infrastructure.Constants
             public const int MaxLengthName = 100;
             public const int MinLengthName = 3 ;
 
-            public const int MaxLengthDescription = 200;
+            public const int MaxLengthDescription = 500;
             public const int MinLengthDescription = 10;
 
             public const int MaxLengthImageUrl = 2048;

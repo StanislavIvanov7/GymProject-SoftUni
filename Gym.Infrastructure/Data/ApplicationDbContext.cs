@@ -32,6 +32,7 @@ namespace Gym.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.ApplyConfiguration(new DietCategoryConfiguration());
+            builder.ApplyConfiguration(new DietConfiguration());
 
             base.OnModelCreating(builder);
         }
