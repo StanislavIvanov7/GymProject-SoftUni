@@ -33,6 +33,7 @@ namespace Gym.Infrastructure.Data
 
             builder.ApplyConfiguration(new DietCategoryConfiguration());
             builder.ApplyConfiguration(new DietConfiguration());
+            builder.ApplyConfiguration(new WorkoutPlanCategoryConfiguration());
 
             base.OnModelCreating(builder);
         }
