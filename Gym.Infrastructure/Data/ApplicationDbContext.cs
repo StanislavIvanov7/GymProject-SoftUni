@@ -1,4 +1,5 @@
-﻿using Gym.Infrastructure.Data.Models;
+﻿using Gym.Infrastructure.Data.Configuration;
+using Gym.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,8 @@ namespace Gym.Infrastructure.Data
                 .HasOne(x => x.FitnessCard)
                 .WithMany(x => x.UserFitnessCards)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.ApplyConfiguration(new DietCategoryConfiguration());
 
             base.OnModelCreating(builder);
         }
