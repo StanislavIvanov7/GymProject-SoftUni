@@ -36,6 +36,7 @@ namespace Gym.Infrastructure.Data
             builder.ApplyConfiguration(new WorkoutPlanCategoryConfiguration());
             builder.ApplyConfiguration(new WorkoutPlanConfiguration());
             builder.ApplyConfiguration(new ProductCategoryConfiguration());
+            builder.ApplyConfiguration(new ProductConfiguration());
 
             base.OnModelCreating(builder);
         }
