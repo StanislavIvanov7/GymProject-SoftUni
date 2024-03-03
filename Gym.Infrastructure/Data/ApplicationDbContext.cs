@@ -38,6 +38,7 @@ namespace Gym.Infrastructure.Data
             builder.ApplyConfiguration(new ProductCategoryConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new FitnessCardCategoryConfiguration());
+            builder.ApplyConfiguration(new FitnessCardConfiguration());
 
             base.OnModelCreating(builder);
         }
