@@ -1,4 +1,7 @@
-﻿using Gym.Infrastructure.Data;
+﻿using Gym.Core.Contracts;
+using Gym.Core.Services;
+using Gym.Infrastructure.Data;
+using Gym.Infrastructure.Data.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +12,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IProductService, ProductService>();
+
             return services;
         }
 
@@ -19,6 +24,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.UseSqlServer(connectionString));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddScoped<IRepository, Repository>();
 
             return services;
         }
