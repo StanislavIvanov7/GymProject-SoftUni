@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static Gym.Infrastructure.Constants.DataConstant.FoodItemCategory;
+using static Gym.Infrastructure.Constants.DataConstant.ProductCategory;
 namespace Gym.Infrastructure.Data.Models
 {
     [Comment("Product category table")]

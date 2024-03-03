@@ -8,7 +8,7 @@ namespace Gym.Infrastructure.Constants
 {
     public static class DataConstant
     {
-        public static class FoodItem
+        public static class Product
         {
             public const int MaxLengthName = 100;
             public const int MinLengthName = 3;
@@ -18,9 +18,10 @@ namespace Gym.Infrastructure.Constants
 
             public const int MaxLengthImageUrl = 2048;
             public const int MinLengthImageUrl = 10;
+
         }
 
-        public static class FoodItemCategory
+        public static class ProductCategory
         {
             public const int MaxLengthName = 100;
             public const int MinLengthName = 3;

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static Gym.Infrastructure.Constants.DataConstant.FoodItem;
+using static Gym.Infrastructure.Constants.DataConstant.Product;
 namespace Gym.Infrastructure.Data.Models
 {
     [Comment("Product table")]
