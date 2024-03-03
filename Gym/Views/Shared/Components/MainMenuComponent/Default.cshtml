@@ -2,4 +2,58 @@
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     </li>
+    @if(this.User?.Identity?.IsAuthenticated ?? false)
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Products
+            </a>
+            <ul class="dropdown-menu">
+
+                <li><a class="dropdown-item" asp-controller="Product" asp-action="All">All products</a></li>
+                <li><a class="dropdown-item" asp-controller="Product" asp-action="Mine">My products</a></li>
+                <li><a class="dropdown-item" asp-controller="Product" asp-action="Add">Add products</a></li>
+
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Workout plans
+            </a>
+            <ul class="dropdown-menu">
+
+                <li><a class="dropdown-item" asp-controller="WorkoutPlan" asp-action="All">All workout plans</a></li>
+                <li><a class="dropdown-item" asp-controller="WorkoutPlan" asp-action="Mine">My workout plans</a></li>
+                <li><a class="dropdown-item" asp-controller="WorkoutPlan" asp-action="Add">Add workout plans</a></li>
+
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Fitness cards
+            </a>
+            <ul class="dropdown-menu">
+
+                <li><a class="dropdown-item" asp-controller="FitnessCard" asp-action="All">All fitness cards</a></li>
+                <li><a class="dropdown-item" asp-controller="FitnessCard" asp-action="Mine">My fitness cards</a></li>
+                <li><a class="dropdown-item" asp-controller="FitnessCard" asp-action="Add">Add fitness cards</a></li>
+
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Diets
+            </a>
+            <ul class="dropdown-menu">
+
+                <li><a class="dropdown-item" asp-controller="Diet" asp-action="All">All diets</a></li>
+                <li><a class="dropdown-item" asp-controller="Diet" asp-action="Mine">My diets</a></li>
+                <li><a class="dropdown-item" asp-controller="Diet" asp-action="Add">Add diets</a></li>
+
+            </ul>
+        </li>
+    }
 </ul>
