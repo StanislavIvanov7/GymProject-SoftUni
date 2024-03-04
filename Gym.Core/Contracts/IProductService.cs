@@ -10,12 +10,17 @@ namespace Gym.Core.Contracts
 {
     public interface IProductService
     {
-       Task<IEnumerable<AllProductViewModel>> AllProductsAsync();
+        Task<IEnumerable<AllProductViewModel>> AllProductsAsync();
 
         Task AddAsync(ProductFormViewModel model,string userId);
 
-        Task<ProductFormViewModel> GetByIdAsync(int id);
+        Task<ProductFormViewModel> GetProductByIdAsync(int id);
 
         Task<IEnumerable<AllProductCategoryViewModel>> GetProductCategoryAsync();
+
+        Task EditAsync(int id,ProductFormViewModel model);
+
+        Task<DetailsProductViewModel> DetailsProductAsync(int id);
+        
     }
 }

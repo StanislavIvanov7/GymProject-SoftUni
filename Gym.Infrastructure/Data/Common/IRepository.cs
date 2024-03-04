@@ -15,5 +15,7 @@ namespace Gym.Infrastructure.Data.Common
         Task AddAsync<T>(T entity) where T : class; 
 
         Task<int> SaveChangesAsync();
+
+        //Task<T?> GetById<T>(int id) where T : class;
     }
 }

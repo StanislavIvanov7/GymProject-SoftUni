@@ -45,6 +45,44 @@ namespace Gym.Controllers
             return RedirectToAction (nameof(All));
 
         }
+
+        [HttpGet] 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await productService.GetProductByIdAsync(id);
+            //if(model == null)
+            //{
+            //    return BadRequest();
+            //}
+            model.ProductCategories = await productService.GetProductCategoryAsync();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, ProductFormViewModel model)
+        {
+          
+
+            if (!ModelState.IsValid)
+            {
+                model.ProductCategories = await productService.GetProductCategoryAsync();
+                return View(model);
+            }
+
+            await productService.EditAsync(id,model);
+
+            return RedirectToAction(nameof(All));
+
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var model = await productService .DetailsProductAsync(id);
+
+            return View(model);
+        }
         private string GetUserId()
         {
             var userId = ClaimsPrincipalExtensions.Id(this.User);

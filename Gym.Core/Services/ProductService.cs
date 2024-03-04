@@ -19,9 +19,6 @@ namespace Gym.Core.Services
 
         public async Task AddAsync(ProductFormViewModel model,string userId)
         {
-            
-           
-          
 
             Product product = new Product()
             {
@@ -53,7 +50,52 @@ namespace Gym.Core.Services
             return products;
         }
 
-        public async Task<ProductFormViewModel> GetByIdAsync(int id)
+        public async Task<DetailsProductViewModel> DetailsProductAsync(int id)
+        {
+            var product = await repository.AllAsReadOnly<Product>()
+              .Where(x => x.Id == id)
+              .Select(x => new DetailsProductViewModel()
+              {
+                  Id = x.Id,
+                  Name = x.Name,
+                  Price = x.Price,
+                  ImageUrl = x.ImageUrl,
+                  Description = x.Description,
+                  ProductCategory = x.ProductCategory.Name,
+                  Creator = x.Creator.UserName
+
+              }).FirstOrDefaultAsync();
+
+            if(product == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+            
+            return product;
+        }
+
+        public async Task EditAsync(int id,ProductFormViewModel model)
+        {
+            var product = await repository .All<Product>().FirstOrDefaultAsync (x=>x.Id == model.Id);
+
+            if (product == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.Price = model.Price;
+            product.ImageUrl = model.ImageUrl;
+            product .ProductCategoryId = model.ProductCategoryId;
+
+            await repository.SaveChangesAsync();
+
+           
+
+        }
+
+        public async Task<ProductFormViewModel> GetProductByIdAsync(int id)
         {
             var product = await repository.All<Product>().FirstOrDefaultAsync(x=>x.Id == id);
 
@@ -61,18 +103,18 @@ namespace Gym.Core.Services
             {
                 throw new ArgumentException("Invalid product");
             }
-            var model =  new ProductFormViewModel()
+            var model = new ProductFormViewModel()
             {
                 Id = id,
                 Name = product.Name,
                 Price = product.Price,
                 Description = product.Description,
-                ImageUrl= product.ImageUrl,
-               
+                ImageUrl = product.ImageUrl,
+
 
             };
 
-            model.ProductCategories = await GetProductCategoryAsync();
+            //model.ProductCategories = await GetProductCategoryAsync();
 
             return model;
         }
