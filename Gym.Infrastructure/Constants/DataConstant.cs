@@ -19,6 +19,10 @@ namespace Gym.Infrastructure.Constants
             public const int MaxLengthImageUrl = 2048;
             public const int MinLengthImageUrl = 10;
 
+            
+            public const string MaxLengthPrice = "100000";
+            public const string MinLengthPrice = "0";
+
         }
 
         public static class ProductCategory

@@ -3,11 +3,8 @@ using Gym.Core.Models;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace Gym.Core.Services
 {
@@ -18,6 +15,27 @@ namespace Gym.Core.Services
         public ProductService(IRepository _repository)
         {
             repository = _repository;
+        }
+
+        public async Task AddAsync(ProductFormViewModel model,string userId)
+        {
+            
+           
+          
+
+            Product product = new Product()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl,
+                ProductCategoryId = model.ProductCategoryId,
+                CreatorId = userId
+
+            };
+
+            await repository.AddAsync(product);
+            await repository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<AllProductViewModel>> AllProductsAsync()
@@ -34,5 +52,40 @@ namespace Gym.Core.Services
 
             return products;
         }
+
+        public async Task<ProductFormViewModel> GetByIdAsync(int id)
+        {
+            var product = await repository.All<Product>().FirstOrDefaultAsync(x=>x.Id == id);
+
+            if (product == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+            var model =  new ProductFormViewModel()
+            {
+                Id = id,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                ImageUrl= product.ImageUrl,
+               
+
+            };
+
+            model.ProductCategories = await GetProductCategoryAsync();
+
+            return model;
+        }
+
+        public async Task<IEnumerable<AllProductCategoryViewModel>> GetProductCategoryAsync()
+        {
+            return await repository.AllAsReadOnly<ProductCategory>()
+                 .Select(x => new AllProductCategoryViewModel
+                 {
+                     Id = x.Id,
+                     Name = x.Name,
+                 }).ToListAsync();
+        }
+
     }
 }
