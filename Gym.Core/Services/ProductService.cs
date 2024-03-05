@@ -97,7 +97,7 @@ namespace Gym.Core.Services
 
         public async Task<ProductFormViewModel> GetProductByIdAsync(int id)
         {
-            var product = await repository.All<Product>().FirstOrDefaultAsync(x=>x.Id == id);
+            var product = await repository.GetByIdAsync<Product>(id);
 
             if (product == null)
             {
@@ -129,5 +129,18 @@ namespace Gym.Core.Services
                  }).ToListAsync();
         }
 
+        public async Task RemoveAsync(int id)
+        {
+            var product = repository.All<Product>().FirstOrDefault(x=>x.Id == id);
+
+            if(product == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+
+            repository.Delete(product);
+            await repository.SaveChangesAsync();
+            
+        }
     }
 }

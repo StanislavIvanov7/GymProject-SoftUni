@@ -21,6 +21,9 @@ namespace Gym.Core.Contracts
         Task EditAsync(int id,ProductFormViewModel model);
 
         Task<DetailsProductViewModel> DetailsProductAsync(int id);
+
+        Task RemoveAsync(int id);
         
+
     }
 }

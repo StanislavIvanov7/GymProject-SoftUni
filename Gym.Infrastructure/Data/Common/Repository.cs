@@ -42,9 +42,14 @@ namespace Gym.Infrastructure.Data.Common
             return await context.SaveChangesAsync();
         }
 
-        //public async Task<T?> GetById<T>(int id) where T : class
-        //{
-        //    return await DbSet<T>().FindAsync(id);
-        //}
+        public void Delete<T>(T entity) where T : class
+        {
+             DbSet<T>().Remove(entity);
+        }
+
+        public async Task<T?> GetByIdAsync<T>(int id) where T : class
+        {
+            return await DbSet<T>().FindAsync(id);
+        }
     }
 }

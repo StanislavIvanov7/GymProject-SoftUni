@@ -83,6 +83,29 @@ namespace Gym.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await productService.GetProductByIdAsync(id);
+
+            var model = new DeleteProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                ImageUrl = product.ImageUrl,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await productService.RemoveAsync(id);
+
+            return RedirectToAction(nameof(All));
+
+        }
         private string GetUserId()
         {
             var userId = ClaimsPrincipalExtensions.Id(this.User);
