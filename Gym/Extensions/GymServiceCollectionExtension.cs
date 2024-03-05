@@ -1,4 +1,5 @@
 ﻿using Gym.Core.Contracts;
+using Gym.Core.Models.FitnessCard;
 using Gym.Core.Services;
 using Gym.Infrastructure.Data;
 using Gym.Infrastructure.Data.Common;
@@ -13,6 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IFitnessCardService,FitnessCardService>();
 
             return services;
         }
