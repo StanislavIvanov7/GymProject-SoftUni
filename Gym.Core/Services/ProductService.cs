@@ -45,6 +45,7 @@ namespace Gym.Core.Services
                     Description = x.Description,
                     Name = x.Name,
                     Price = x.Price,
+                    Creator = x.Creator.UserName 
                 }).ToListAsync();
 
             return products;

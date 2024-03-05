@@ -31,7 +31,7 @@ namespace Gym.Core.Services
                     Description = x.Description ,
                     ImageUrl = x.ImageUrl ,
                     Price = x.Price ,
-                    
+                    Creator = x.Creator.UserName 
                 }).ToListAsync();
 
             return fitnessCard;
