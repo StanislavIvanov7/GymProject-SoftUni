@@ -21,6 +21,27 @@ namespace Gym.Core.Services
             repository = _repository;
         }
 
+        public async Task AddAsync(FitnessCardFormViewModel model, string userId)
+        {
+
+            FitnessCard fitnessCard = new FitnessCard()
+            {
+
+                Description = model.Description,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl,
+                FitnessCardCategoryId = model.FitnessCardCategoryId,
+                CreatorId = userId,
+
+            };
+
+            await repository.AddAsync(fitnessCard);
+            await repository.SaveChangesAsync();
+
+
+
+        }
+
         public async Task<IEnumerable<AllFitnessCardViewModel>> AllFitnessCardAsync()
         {
             var fitnessCard = await repository.AllAsReadOnly<FitnessCard>()
@@ -28,13 +49,50 @@ namespace Gym.Core.Services
                 {
                     Id = x.Id,
                     FitnessCardCategory = x.FitnessCardCategory.Name,
-                    Description = x.Description ,
-                    ImageUrl = x.ImageUrl ,
-                    Price = x.Price ,
-                    Creator = x.Creator.UserName 
+                    Description = x.Description,
+                    ImageUrl = x.ImageUrl,
+                    Price = x.Price,
+                    Creator = x.Creator.UserName
                 }).ToListAsync();
 
             return fitnessCard;
+        }
+
+        public async Task<DetailsFitnessCardViewModel> DetailsFitnessCardAsync(int id)
+        {
+            var fitnessCard = await repository
+                .All<FitnessCard>()
+                .Where(x => x.Id == id)
+                .Select(x => new DetailsFitnessCardViewModel()
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    ImageUrl = x.ImageUrl,
+                    Price = x.Price,
+                    Creator = x.Creator.UserName,
+                    FitnessCardCategory = x.FitnessCardCategory.Name,
+
+                }).FirstOrDefaultAsync();
+
+            if (fitnessCard == null)
+            {
+                throw new ArgumentException("Invalid fitness card");
+            }
+
+            return fitnessCard;
+        }
+
+        public async Task<IEnumerable<FitnessCardCategoryViewModel>> GetFitnessCardCategoryAsync()
+        {
+            var categories = await repository
+                .AllAsReadOnly<FitnessCardCategory>()
+                .Select(x => new FitnessCardCategoryViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                }).ToListAsync();
+
+            return categories;
         }
     }
 }
