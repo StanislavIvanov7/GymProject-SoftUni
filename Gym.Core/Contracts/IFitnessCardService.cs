@@ -9,5 +9,11 @@
         Task AddAsync(FitnessCardFormViewModel model, string userId);
 
         Task<DetailsFitnessCardViewModel> DetailsFitnessCardAsync(int id);
+
+        Task<FitnessCardFormViewModel> GetFitnessCardByIdAsync(int id);
+
+        Task EditAsync(int id, FitnessCardFormViewModel model);
+
+        Task RemoveAsync(int id);
     }
 }

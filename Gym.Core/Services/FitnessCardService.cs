@@ -82,6 +82,51 @@ namespace Gym.Core.Services
             return fitnessCard;
         }
 
+        public async Task EditAsync(int id, FitnessCardFormViewModel model)
+        {
+            var fitnessCard = await repository.All<FitnessCard>().FirstOrDefaultAsync(x => x.Id == model.Id);
+
+            if (fitnessCard == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+
+
+            fitnessCard.Description = model.Description;
+            fitnessCard.Price = model.Price;
+            fitnessCard.ImageUrl = model.ImageUrl;
+            fitnessCard.FitnessCardCategoryId = model.FitnessCardCategoryId;
+
+
+            await repository.SaveChangesAsync();
+        }
+
+
+        public async Task<FitnessCardFormViewModel> GetFitnessCardByIdAsync(int id)
+        {
+            var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
+
+            if (fitnessCard == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+            var model = new FitnessCardFormViewModel()
+            {
+                Id = id,
+                FitnessCardCategoryId = fitnessCard.FitnessCardCategoryId,
+                Price = fitnessCard.Price,
+                Description = fitnessCard.Description,
+                ImageUrl = fitnessCard.ImageUrl,
+                
+
+
+            };
+
+            //model.ProductCategories = await GetProductCategoryAsync();
+
+            return model;
+        }
+
         public async Task<IEnumerable<FitnessCardCategoryViewModel>> GetFitnessCardCategoryAsync()
         {
             var categories = await repository
@@ -93,6 +138,19 @@ namespace Gym.Core.Services
                 }).ToListAsync();
 
             return categories;
+        }
+
+        public async Task RemoveAsync(int id)
+        {
+            var fitnessCard = repository.All<FitnessCard>().FirstOrDefault(x => x.Id == id);
+
+            if (fitnessCard == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+
+            repository.Delete(fitnessCard);
+            await repository.SaveChangesAsync();
         }
     }
 }
