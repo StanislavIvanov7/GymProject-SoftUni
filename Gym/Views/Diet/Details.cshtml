@@ -1,0 +1,33 @@
+﻿@model DetailsDietViewModel
+@{
+    ViewBag.Title = "Diet Details";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="card w-100">
+        <div class="card-body">
+            <h3 class="card-title text-center">@Model.Title</h3>
+            <img class="card-img-top" style="width: 18rem;"
+                 src="@Model.ImageUrl" alt="Book Image">
+            <p class="mb-0"><span class="fw-bold">Description: </span>@Model.Description</p>
+            <p class="mb-0"><span class="fw-bold">Diet Category: </span>@Model.DietCategory</p>
+            <p class="mb-0"><span class="fw-bold">Creator: </span>@Model.Creator</p>
+            <p class="mb-0"><span class="fw-bold">Diet Image URL: </span>@Model.ImageUrl</p>
+        </div>
+
+        <a asp-controller="Diet" asp-action="All" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Back to All Fitness Card</a>
+        @if (User?.Identity?.Name == Model.Creator)
+        {
+            <a asp-controller="Diet" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
+            <a asp-controller="Diet" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger mb-2 w-100 p-3 fw-bold">Delete</a>
+        }
+
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

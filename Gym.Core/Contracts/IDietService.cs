@@ -1,5 +1,6 @@
 ﻿using Gym.Core.Models;
 using Gym.Core.Models.Diet;
+using Gym.Core.Models.FitnessCard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace Gym.Core.Contracts
     public interface IDietService
     {
         Task<IEnumerable<AllDietViewModel>> AllDietsAsync();
+
+        Task<DetailsDietViewModel> DetailsDietAsync(int id);
     }
 }

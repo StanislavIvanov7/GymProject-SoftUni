@@ -31,5 +31,26 @@ namespace Gym.Core.Services
 
             return diets;
         }
+
+        public async Task<DetailsDietViewModel> DetailsDietAsync(int id)
+        {
+            var diet = await repository.All<Diet>()
+                .Where(x => x.Id == id)
+                .Select(x => new DetailsDietViewModel()
+                {
+                    Title = x.Title,
+                    ImageUrl = x.ImageUrl,
+                    Description = x.Description,
+                    Creator = x.Creator.UserName,
+                    DietCategory = x.DietCategory.Name
+                }).FirstOrDefaultAsync();
+                
+            if(diet == null)
+            {
+                throw new ArgumentException("Invalid diet");
+            }
+
+            return diet;
+        }
     }
 }

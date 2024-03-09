@@ -1,4 +1,5 @@
 ﻿using Gym.Core.Contracts;
+using Gym.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gym.Controllers
@@ -13,9 +14,18 @@ namespace Gym.Controllers
 
         }
 
+        [HttpGet]
         public async Task<IActionResult> All()
         {
             var model = await dietService.AllDietsAsync();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var model = await dietService.DetailsDietAsync(id);
 
             return View(model);
         }
