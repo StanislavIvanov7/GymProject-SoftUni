@@ -52,5 +52,17 @@ namespace Gym.Core.Services
 
             return diet;
         }
+
+        public async Task<IEnumerable<DietCategoryViewModel>> GetDietCategoriesAsync()
+        {
+            var categories = await repository.All<DietCategory>()
+                .Select(x => new DietCategoryViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                }).ToListAsync();
+
+            return categories;
+        }
     }
 }

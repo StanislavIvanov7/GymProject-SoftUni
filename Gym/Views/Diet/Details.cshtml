@@ -19,7 +19,7 @@
             <p class="mb-0"><span class="fw-bold">Diet Image URL: </span>@Model.ImageUrl</p>
         </div>
 
-        <a asp-controller="Diet" asp-action="All" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Back to All Fitness Card</a>
+        <a asp-controller="Diet" asp-action="All" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Back to All Diets</a>
         @if (User?.Identity?.Name == Model.Creator)
         {
             <a asp-controller="Diet" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>

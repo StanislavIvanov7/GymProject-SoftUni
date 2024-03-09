@@ -1,4 +1,6 @@
 ﻿using Gym.Core.Contracts;
+using Gym.Core.Models.Diet;
+using Gym.Core.Models.FitnessCard;
 using Gym.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,5 +31,16 @@ namespace Gym.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var model = new DietFormViewModel();
+
+            model.DietCategories = await dietService.GetDietCategoriesAsync();
+
+            return View(model);
+        }
+
     }
 }
