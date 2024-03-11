@@ -16,5 +16,8 @@ namespace Gym.Core.Contracts
         Task<DetailsDietViewModel> DetailsDietAsync(int id);
 
         Task<IEnumerable<DietCategoryViewModel>> GetDietCategoriesAsync();
+
+        Task AddAsync(DietFormViewModel model, string userId);
+
     }
 }

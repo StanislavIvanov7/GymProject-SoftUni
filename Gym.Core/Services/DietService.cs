@@ -19,6 +19,23 @@ namespace Gym.Core.Services
         {
                 repository = _repository;
         }
+
+        public async Task AddAsync(DietFormViewModel model, string userId)
+        {
+            Diet diet = new Diet()
+            {
+                Title = model.Title,
+                Description = model.Description,
+                DietCategoryId = model.DietCategoryId,
+                ImageUrl = model.ImageUrl,
+                CreatorId = userId,
+                
+            };
+
+            await repository.AddAsync(diet);
+            await repository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<AllDietViewModel>> AllDietsAsync()
         {
            var diets = await repository.AllAsReadOnly<Diet>()
