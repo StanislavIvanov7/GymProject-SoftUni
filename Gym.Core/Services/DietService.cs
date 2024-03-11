@@ -119,5 +119,19 @@ namespace Gym.Core.Services
 
             return categories;
         }
+
+        public async Task RemoveAsync(int id)
+        {
+            var diet = await repository.GetByIdAsync<Diet>(id);
+
+            if( diet == null)
+            {
+                throw new ArgumentException("Invalid diet");
+
+            }
+
+            repository.Delete<Diet>(diet);
+            await repository.SaveChangesAsync();
+        }
     }
 }

@@ -96,6 +96,7 @@ namespace Gym.Controllers
             {
                 Id = fitnessCard.Id,
                 ImageUrl = fitnessCard.ImageUrl,
+              
                 
             };
             return View(model);

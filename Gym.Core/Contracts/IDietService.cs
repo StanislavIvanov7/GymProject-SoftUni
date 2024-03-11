@@ -23,5 +23,7 @@ namespace Gym.Core.Contracts
 
         Task EditAsync(int id, DietFormViewModel model);
 
+        Task RemoveAsync(int id);
+
     }
 }

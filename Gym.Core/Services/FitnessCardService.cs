@@ -142,7 +142,7 @@ namespace Gym.Core.Services
 
         public async Task RemoveAsync(int id)
         {
-            var fitnessCard = repository.All<FitnessCard>().FirstOrDefault(x => x.Id == id);
+            var fitnessCard = repository.GetByIdAsync<FitnessCard>(id);
 
             if (fitnessCard == null)
             {

@@ -11,5 +11,6 @@ namespace Gym.Core.Models.FitnessCard
         public int Id { get; set; }
 
         public string ImageUrl { get; set; } = string.Empty;
+
     }
 }
