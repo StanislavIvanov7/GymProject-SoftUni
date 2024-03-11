@@ -84,11 +84,11 @@ namespace Gym.Core.Services
 
         public async Task EditAsync(int id, FitnessCardFormViewModel model)
         {
-            var fitnessCard = await repository.All<FitnessCard>().FirstOrDefaultAsync(x => x.Id == model.Id);
+            var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
 
             if (fitnessCard == null)
             {
-                throw new ArgumentException("Invalid product");
+                throw new ArgumentException("Invalid fitness card");
             }
 
 
@@ -108,7 +108,7 @@ namespace Gym.Core.Services
 
             if (fitnessCard == null)
             {
-                throw new ArgumentException("Invalid product");
+                throw new ArgumentException("Invalid fitness card");
             }
             var model = new FitnessCardFormViewModel()
             {

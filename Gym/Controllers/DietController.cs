@@ -57,6 +57,31 @@ namespace Gym.Controllers
 
             return RedirectToAction(nameof(All));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await dietService.GetDietByIdAsync(id);
+
+            model.DietCategories = await dietService.GetDietCategoriesAsync();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(DietFormViewModel model,int id)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                model.DietCategories = await dietService.GetDietCategoriesAsync();
+                return View(model);
+            }
+
+            await dietService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(All));
+        }
         private string GetUserId()
         {
             var userId = ClaimsPrincipalExtensions.Id(this.User);

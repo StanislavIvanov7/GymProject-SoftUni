@@ -19,5 +19,9 @@ namespace Gym.Core.Contracts
 
         Task AddAsync(DietFormViewModel model, string userId);
 
+        Task<DietFormViewModel> GetDietByIdAsync(int id);
+
+        Task EditAsync(int id, DietFormViewModel model);
+
     }
 }

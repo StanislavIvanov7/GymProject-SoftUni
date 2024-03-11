@@ -55,6 +55,7 @@ namespace Gym.Core.Services
                 .Where(x => x.Id == id)
                 .Select(x => new DetailsDietViewModel()
                 {
+                    Id = x.Id,  
                     Title = x.Title,
                     ImageUrl = x.ImageUrl,
                     Description = x.Description,
@@ -68,6 +69,43 @@ namespace Gym.Core.Services
             }
 
             return diet;
+        }
+
+        public async Task EditAsync(int id, DietFormViewModel model)
+        {
+            var diet = await repository.GetByIdAsync<Diet>(id);
+
+            if (diet == null)
+            {
+                throw new ArgumentException("Invalid diet");
+            }
+
+
+            diet.Description = model.Description;
+            diet.Title = model.Title;
+            diet.ImageUrl = model.ImageUrl;
+            diet.DietCategoryId = model.DietCategoryId;
+
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task<DietFormViewModel> GetDietByIdAsync(int id)
+        {
+            var diet = await repository.GetByIdAsync<Diet>(id);
+
+            if(diet == null)
+            {
+                throw new ArgumentException("Invalid diet");
+            }
+
+            return new DietFormViewModel()
+            {
+                Id = id,
+                Title = diet.Title,
+                Description = diet.Description,
+                DietCategoryId = diet.DietCategoryId,
+                ImageUrl = diet.ImageUrl,
+            };
         }
 
         public async Task<IEnumerable<DietCategoryViewModel>> GetDietCategoriesAsync()

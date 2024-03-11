@@ -1,6 +1,6 @@
-﻿@model FitnessCardFormViewModel
+﻿@model DietFormViewModel
 @{
-    ViewBag.Title = "Edit Ftness Card";
+    ViewBag.Title = "Edit Diet";
 }
 
 
@@ -16,9 +16,9 @@
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Price" class="form-label-add-edit">Edit Price</label>
-                <input asp-for="@Model.Price" class="form-control" aria-required="true" />
-                <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                <label asp-for="@Model.Title" class="form-label-add-edit">Edit Title</label>
+                <input asp-for="@Model.Title" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.ImageUrl" class="form-label-add-edit">Edit ImageUrl</label>
@@ -26,14 +26,14 @@
                 <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.FitnessCardCategoryId" class="form-label-add-edit">Edit Fitness Card Category Id</label>
-                <select asp-for="@Model.FitnessCardCategoryId" class="form-control" aria-required="true">
-                    @foreach (var category in Model.FitnessCardCategories)
+                <label asp-for="@Model.DietCategoryId" class="form-label-add-edit">Edit Diet Category Id</label>
+                <select asp-for="@Model.DietCategoryId" class="form-control" aria-required="true">
+                    @foreach (var category in Model.DietCategories)
                     {
                         <option value="@category.Id">@category.Name</option>
                     }
                 </select>
-                <span asp-validation-for="@Model.FitnessCardCategoryId" class="text-danger"></span>
+                <span asp-validation-for="@Model.DietCategoryId" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Edit" />
