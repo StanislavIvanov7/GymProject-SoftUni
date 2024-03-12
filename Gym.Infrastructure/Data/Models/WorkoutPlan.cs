@@ -33,7 +33,7 @@ namespace Gym.Infrastructure.Data.Models
         public int WorkoutPlanCategoryId { get; set; }
 
         [ForeignKey(nameof(WorkoutPlanCategoryId))]
-        public WorkoutPlanCategory FitnessProgramCategory { get; set; } = null!;
+        public WorkoutPlanCategory WorkoutPlanCategory { get; set; } = null!;
 
         [Required]
         [Comment("Workout plan creator identifier")]

@@ -18,6 +18,24 @@ namespace Gym.Core.Services
         {
                 repository = _repository;
         }
+
+        public async Task AddAsync(string userId, WorkoutPlanFormViewModel model)
+        {
+            var workoutPlan = new WorkoutPlan()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Description = model.Description,
+                CreatorId = userId,
+                ImageUrl = model.ImageUrl,
+                WorkoutPlanCategoryId = model.WorkoutPlanCategoryId,
+
+            };
+
+            await repository.AddAsync(workoutPlan);
+            await repository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<AllWorkoutPlanViewModel>> AllWorkoutPlansAsync()
         {
             var workoutPlans = await repository.AllAsReadOnly<WorkoutPlan>()
@@ -42,7 +60,7 @@ namespace Gym.Core.Services
                     ImageUrl = x.ImageUrl,
                     Description = x.Description,
                     Creator = x.Creator.UserName ,
-                    WorkoutPlanCategory = x.FitnessProgramCategory.Name
+                    WorkoutPlanCategory = x.WorkoutPlanCategory.Name
 
                 }).FirstOrDefaultAsync();
 
@@ -52,6 +70,18 @@ namespace Gym.Core.Services
             }
 
             return workoutPlan;
+        }
+
+        public async Task<IEnumerable<WorkoutPlanCategoryViewModel>> GetWorkoutPlanCategoriesAsync()
+        {
+            var categories = await repository.All<WorkoutPlanCategory>()
+                .Select(x => new WorkoutPlanCategoryViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                }).ToListAsync();
+
+            return categories;
         }
     }
 }

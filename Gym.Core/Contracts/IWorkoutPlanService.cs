@@ -12,5 +12,10 @@ namespace Gym.Core.Contracts
         Task<IEnumerable<AllWorkoutPlanViewModel>> AllWorkoutPlansAsync();
 
         Task<DetailsWorkoutPlanViewModel> DetailsWorkoutPlansAsync(int id);
+
+        Task<IEnumerable<WorkoutPlanCategoryViewModel>> GetWorkoutPlanCategoriesAsync();
+
+        Task AddAsync(string userId ,WorkoutPlanFormViewModel model);
+
     }
 }
