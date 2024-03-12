@@ -10,5 +10,7 @@ namespace Gym.Core.Contracts
     public interface IWorkoutPlanService
     {
         Task<IEnumerable<AllWorkoutPlanViewModel>> AllWorkoutPlansAsync();
+
+        Task<DetailsWorkoutPlanViewModel> DetailsWorkoutPlansAsync(int id);
     }
 }

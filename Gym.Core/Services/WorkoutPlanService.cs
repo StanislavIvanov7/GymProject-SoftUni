@@ -31,5 +31,27 @@ namespace Gym.Core.Services
 
             return workoutPlans;
         }
+
+        public async  Task<DetailsWorkoutPlanViewModel> DetailsWorkoutPlansAsync(int id)
+        {
+            var workoutPlan = await repository.All<WorkoutPlan>().Where(x=>x.Id == id)
+                .Select(x=> new DetailsWorkoutPlanViewModel()
+                {
+                    Id= x.Id,
+                    Name = x.Name,  
+                    ImageUrl = x.ImageUrl,
+                    Description = x.Description,
+                    Creator = x.Creator.UserName ,
+                    WorkoutPlanCategory = x.FitnessProgramCategory.Name
+
+                }).FirstOrDefaultAsync();
+
+            if(workoutPlan == null)
+            {
+                throw new ArgumentException("Invalid workout plan");
+            }
+
+            return workoutPlan;
+        }
     }
 }
