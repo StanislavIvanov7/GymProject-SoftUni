@@ -1,5 +1,6 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Models;
+using Gym.Core.Models.WorkoutPlan;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -96,7 +97,7 @@ namespace Gym.Core.Services
 
         }
 
-        public async Task<ProductFormViewModel> GetProductByIdAsync(int id)
+        public async Task<ProductFormViewModel> GetProductForEditAsync(int id)
         {
             var product = await repository.GetByIdAsync<Product>(id);
 
@@ -128,6 +129,22 @@ namespace Gym.Core.Services
                      Id = x.Id,
                      Name = x.Name,
                  }).ToListAsync();
+        }
+
+        public async Task<DeleteProductViewModel> GetProductForDeleteAsync(int id)
+        {
+            var product = await repository.GetByIdAsync<Product>(id);
+            if (product == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+
+            return new DeleteProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                ImageUrl = product.ImageUrl,
+            };
         }
 
         public async Task RemoveAsync(int id)

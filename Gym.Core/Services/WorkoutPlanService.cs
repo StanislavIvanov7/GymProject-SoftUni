@@ -1,4 +1,5 @@
 ﻿using Gym.Core.Contracts;
+using Gym.Core.Models.Diet;
 using Gym.Core.Models.WorkoutPlan;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Gym.Core.Services
 {
@@ -72,6 +74,8 @@ namespace Gym.Core.Services
             return workoutPlan;
         }
 
+      
+
         public async Task<IEnumerable<WorkoutPlanCategoryViewModel>> GetWorkoutPlanCategoriesAsync()
         {
             var categories = await repository.All<WorkoutPlanCategory>()
@@ -82,6 +86,35 @@ namespace Gym.Core.Services
                 }).ToListAsync();
 
             return categories;
+        }
+
+        public async Task<DeleteWorkoutPlanViewModel> GetWorkoutPlanForDeleteAsync(int id)
+        {
+            var workoutPlan = await repository.GetByIdAsync<WorkoutPlan>(id);
+            if(workoutPlan == null)
+            {
+                throw new ArgumentException("Invalid workout plan");
+            }
+
+            return new DeleteWorkoutPlanViewModel()
+            {
+                Id = workoutPlan.Id,
+                Name = workoutPlan.Name,
+                ImageUrl = workoutPlan.ImageUrl,
+            };
+        }
+
+        public async Task RemoveAsync(int id)
+        {
+            var workoutPlan = await repository.GetByIdAsync<WorkoutPlan>(id);
+
+            if (workoutPlan == null)
+            {
+                throw new ArgumentException("Invalid workout plan");
+            }
+
+            repository.Delete(workoutPlan);
+            await repository.SaveChangesAsync();
         }
     }
 }

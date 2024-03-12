@@ -1,5 +1,7 @@
 ﻿using Gym.Core.Contracts;
+using Gym.Core.Models.Diet;
 using Gym.Core.Models.WorkoutPlan;
+using Gym.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -54,6 +56,23 @@ namespace Gym.Controllers
 
             await workoutPlanService.AddAsync(userId,model);
             return RedirectToAction (nameof(All));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = await workoutPlanService.GetWorkoutPlanForDeleteAsync(id);
+
+           
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await workoutPlanService.RemoveAsync(id);
+
+            return RedirectToAction(nameof(All));
         }
 
         private string GetUserId()

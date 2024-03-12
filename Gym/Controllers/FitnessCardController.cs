@@ -60,7 +60,7 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await fitnessCardService.GetFitnessCardByIdAsync(id);
+            var model = await fitnessCardService.GetFitnessCardForEditAsync(id);
             //if(model == null)
             //{
             //    return BadRequest();
@@ -90,15 +90,9 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var fitnessCard = await fitnessCardService.GetFitnessCardByIdAsync(id);
+            var model = await fitnessCardService.GetFitnessCardForDeleteAsync(id);
 
-            var model = new DeleteFitnessCardViewModel()
-            {
-                Id = fitnessCard.Id,
-                ImageUrl = fitnessCard.ImageUrl,
-              
-                
-            };
+   
             return View(model);
         }
 

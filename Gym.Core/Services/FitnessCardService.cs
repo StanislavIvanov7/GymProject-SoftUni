@@ -102,7 +102,7 @@ namespace Gym.Core.Services
         }
 
 
-        public async Task<FitnessCardFormViewModel> GetFitnessCardByIdAsync(int id)
+        public async Task<FitnessCardFormViewModel> GetFitnessCardForEditAsync(int id)
         {
             var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
 
@@ -138,6 +138,22 @@ namespace Gym.Core.Services
                 }).ToListAsync();
 
             return categories;
+        }
+
+        public async Task<DeleteFitnessCardViewModel> GetFitnessCardForDeleteAsync(int id)
+        {
+            var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
+            if (fitnessCard == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+
+            return new DeleteFitnessCardViewModel()
+            {
+                Id = fitnessCard.Id,
+                ImageUrl = fitnessCard.ImageUrl,
+                
+            };
         }
 
         public async Task RemoveAsync(int id)

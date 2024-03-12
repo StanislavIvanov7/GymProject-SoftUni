@@ -10,7 +10,9 @@
 
         Task<DetailsFitnessCardViewModel> DetailsFitnessCardAsync(int id);
 
-        Task<FitnessCardFormViewModel> GetFitnessCardByIdAsync(int id);
+        Task<FitnessCardFormViewModel> GetFitnessCardForEditAsync(int id);
+
+        Task<DeleteFitnessCardViewModel> GetFitnessCardForDeleteAsync(int id);
 
         Task EditAsync(int id, FitnessCardFormViewModel model);
 

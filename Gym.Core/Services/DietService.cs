@@ -1,5 +1,6 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Models.Diet;
+using Gym.Core.Models.FitnessCard;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -89,7 +90,7 @@ namespace Gym.Core.Services
             await repository.SaveChangesAsync();
         }
 
-        public async Task<DietFormViewModel> GetDietByIdAsync(int id)
+        public async Task<DietFormViewModel> GetDietForEditAsync(int id)
         {
             var diet = await repository.GetByIdAsync<Diet>(id);
 
@@ -118,6 +119,23 @@ namespace Gym.Core.Services
                 }).ToListAsync();
 
             return categories;
+        }
+
+        public async Task<DeleteDietViewModel> GetDietForDeleteAsync(int id)
+        {
+            var diet = await repository.GetByIdAsync<Diet>(id);
+            if (diet == null)
+            {
+                throw new ArgumentException("Invalid product");
+            }
+
+            return new DeleteDietViewModel()
+            {
+                Id = diet.Id,
+                ImageUrl = diet.ImageUrl,
+                Title = diet.Title,
+
+            };
         }
 
         public async Task RemoveAsync(int id)

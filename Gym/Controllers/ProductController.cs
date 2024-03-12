@@ -49,7 +49,7 @@ namespace Gym.Controllers
         [HttpGet] 
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await productService.GetProductByIdAsync(id);
+            var model = await productService.GetProductForEditAsync(id);
             //if(model == null)
             //{
             //    return BadRequest();
@@ -87,14 +87,8 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var product = await productService.GetProductByIdAsync(id);
+            var model = await productService.GetProductForDeleteAsync(id);
 
-            var model = new DeleteProductViewModel()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                ImageUrl = product.ImageUrl,
-            };
             return View(model);
         }
 

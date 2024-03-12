@@ -61,7 +61,7 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await dietService.GetDietByIdAsync(id);
+            var model = await dietService.GetDietForEditAsync(id);
 
             model.DietCategories = await dietService.GetDietCategoriesAsync();
 
@@ -86,15 +86,8 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var diet = await dietService.GetDietByIdAsync(id);
+            var model = await dietService.GetDietForDeleteAsync(id);
 
-            var model = new DeleteDietViewModel()
-            {
-                Id = diet.Id,
-                ImageUrl = diet.ImageUrl,
-                Title = diet.Title,
-
-            };
             return View(model);
         }
 

@@ -1,4 +1,5 @@
 ﻿using Gym.Core.Models;
+using Gym.Core.Models.WorkoutPlan;
 using Gym.Infrastructure.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,15 @@ namespace Gym.Core.Contracts
 
         Task AddAsync(ProductFormViewModel model,string userId);
 
-        Task<ProductFormViewModel> GetProductByIdAsync(int id);
+        Task<ProductFormViewModel> GetProductForEditAsync(int id);
 
         Task<IEnumerable<AllProductCategoryViewModel>> GetProductCategoryAsync();
 
         Task EditAsync(int id,ProductFormViewModel model);
 
         Task<DetailsProductViewModel> DetailsProductAsync(int id);
+
+        Task<DeleteProductViewModel> GetProductForDeleteAsync(int id);
 
         Task RemoveAsync(int id);
         

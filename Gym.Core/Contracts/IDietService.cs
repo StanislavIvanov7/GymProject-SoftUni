@@ -19,7 +19,9 @@ namespace Gym.Core.Contracts
 
         Task AddAsync(DietFormViewModel model, string userId);
 
-        Task<DietFormViewModel> GetDietByIdAsync(int id);
+        Task<DietFormViewModel> GetDietForEditAsync(int id);
+
+        Task<DeleteDietViewModel> GetDietForDeleteAsync(int id);
 
         Task EditAsync(int id, DietFormViewModel model);
 
