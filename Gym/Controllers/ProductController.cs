@@ -16,9 +16,18 @@ namespace Gym.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] AllProductsQueryModel model)
         {
-            var model = await productService.AllProductsAsync();
+            var products = await productService.AllProductsAsync(
+                model.Category,
+                model.SearchTerm,
+                model.Sorting,
+                model.CurrentPage,
+                model.ProductsPerPage);
+
+            model.TotalProductsCount = products.TotalProductsCount;
+            model.Products = products.Products;
+            model.Categories = await productService.AllCategoriesNamesAsync();
 
             return View(model);
         }

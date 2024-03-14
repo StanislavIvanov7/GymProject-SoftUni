@@ -1,4 +1,5 @@
 ﻿using Gym.Core.Contracts;
+using Gym.Core.Enumerations;
 using Gym.Core.Models;
 using Gym.Core.Models.WorkoutPlan;
 using Gym.Infrastructure.Data.Common;
@@ -6,6 +7,7 @@ using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
+using System.Xml.Schema;
 
 namespace Gym.Core.Services
 {
@@ -36,20 +38,70 @@ namespace Gym.Core.Services
             await repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<AllProductViewModel>> AllProductsAsync()
+        public async Task<ProductQueryViewModel> AllProductsAsync(string? category,
+            string? searchTerm,
+            ProductSorting sorting = ProductSorting.Newest,
+            int currentPage = 1,
+            int housesPerPage = 1)
         {
-            var products = await repository.AllAsReadOnly<Product>()
-                .Select(x => new AllProductViewModel()
+            var productsToShow = repository.AllAsReadOnly<Product>();
+
+            if(category != null)
+            {
+                productsToShow = productsToShow.Where(x => x.ProductCategory.Name == category);
+
+            }
+
+            if(searchTerm != null)
+            {
+                string normalizedSearchTerm = searchTerm.ToLower();
+                productsToShow = productsToShow.Where(x => (x.Name.ToLower().Contains(normalizedSearchTerm) ||
+                                                           x.Description.ToLower().Contains(normalizedSearchTerm)));
+
+            }
+
+            productsToShow = sorting switch
+            {
+                ProductSorting.Price => productsToShow
+                    .OrderBy(h => h.Price),
+                _ => productsToShow
+                    .OrderByDescending(h => h.Id)
+            };
+
+            var products = await productsToShow
+                .Skip((currentPage - 1) * housesPerPage)
+                .Take(housesPerPage)
+                .Select(x=> new AllProductViewModel
                 {
                     Id = x.Id,
-                    ImageUrl = x.ImageUrl,
-                    Description = x.Description,
                     Name = x.Name,
+                    Description = x.Description,
+                    ImageUrl = x.ImageUrl,
                     Price = x.Price,
-                    Creator = x.Creator.UserName 
-                }).ToListAsync();
+                    Creator = x.Creator.UserName
+                })
+                .ToListAsync();
 
-            return products;
+            int totalProducts = await productsToShow.CountAsync();
+
+            return new ProductQueryViewModel()
+            {
+                Products = products,
+               TotalProductsCount = totalProducts
+            };
+
+
+            //    .Select(x => new AllProductViewModel()
+            //    {
+            //        Id = x.Id,
+            //        ImageUrl = x.ImageUrl,
+            //        Description = x.Description,
+            //        Name = x.Name,
+            //        Price = x.Price,
+            //        Creator = x.Creator.UserName 
+            //    }).ToListAsync();
+
+            //return products;
         }
 
         public async Task<DetailsProductViewModel> DetailsProductAsync(int id)
@@ -159,6 +211,13 @@ namespace Gym.Core.Services
             repository.Delete(product);
             await repository.SaveChangesAsync();
             
+        }
+
+        public async Task<IEnumerable<string>> AllCategoriesNamesAsync()
+        {
+            return await repository.AllAsReadOnly<ProductCategory>()
+                .Select(c => c.Name)
+                .ToListAsync();
         }
     }
 }

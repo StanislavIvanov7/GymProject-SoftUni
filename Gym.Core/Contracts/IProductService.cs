@@ -1,4 +1,5 @@
-﻿using Gym.Core.Models;
+﻿using Gym.Core.Enumerations;
+using Gym.Core.Models;
 using Gym.Core.Models.WorkoutPlan;
 using Gym.Infrastructure.Data.Models;
 using System;
@@ -11,7 +12,14 @@ namespace Gym.Core.Contracts
 {
     public interface IProductService
     {
-        Task<IEnumerable<AllProductViewModel>> AllProductsAsync();
+        Task<ProductQueryViewModel> AllProductsAsync(
+            string? category,
+            string? searchTerm,
+            ProductSorting sorting = ProductSorting.Newest,
+            int currentPage = 1,
+            int housesPerPage = 1);
+
+        Task<IEnumerable<string>> AllCategoriesNamesAsync();
 
         Task AddAsync(ProductFormViewModel model,string userId);
 
