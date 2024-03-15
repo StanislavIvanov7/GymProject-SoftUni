@@ -32,6 +32,9 @@ namespace Gym.Core.Services
                 ImageUrl = model.ImageUrl,
                 FitnessCardCategoryId = model.FitnessCardCategoryId,
                 CreatorId = userId,
+                DurationInMonths = model.DurationInMonths,
+                Name = model.Name,
+                IssuesDate = DateTime.Now,
 
             };
 
@@ -53,6 +56,7 @@ namespace Gym.Core.Services
                     ImageUrl = x.ImageUrl,
                     Price = x.Price,
                     Creator = x.Creator.UserName
+                    
                 }).ToListAsync();
 
             return fitnessCard;
@@ -60,6 +64,7 @@ namespace Gym.Core.Services
 
         public async Task<DetailsFitnessCardViewModel> DetailsFitnessCardAsync(int id)
         {
+
             var fitnessCard = await repository
                 .All<FitnessCard>()
                 .Where(x => x.Id == id)
@@ -71,6 +76,8 @@ namespace Gym.Core.Services
                     Price = x.Price,
                     Creator = x.Creator.UserName,
                     FitnessCardCategory = x.FitnessCardCategory.Name,
+                    DurationInMoths =x.DurationInMonths,
+                    Name = x.Name,
 
                 }).FirstOrDefaultAsync();
 
@@ -117,6 +124,10 @@ namespace Gym.Core.Services
                 Price = fitnessCard.Price,
                 Description = fitnessCard.Description,
                 ImageUrl = fitnessCard.ImageUrl,
+                DurationInMonths = fitnessCard.DurationInMonths,
+                Name = fitnessCard.Name,
+                
+
                 
 
 
@@ -152,17 +163,19 @@ namespace Gym.Core.Services
             {
                 Id = fitnessCard.Id,
                 ImageUrl = fitnessCard.ImageUrl,
+                Name = fitnessCard.Name,
                 
             };
         }
 
         public async Task RemoveAsync(int id)
         {
-            var fitnessCard = repository.GetByIdAsync<FitnessCard>(id);
+            var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
+           
 
             if (fitnessCard == null)
             {
-                throw new ArgumentException("Invalid product");
+                throw new ArgumentException("Invalid fitness card");
             }
 
             repository.Delete(fitnessCard);

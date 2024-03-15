@@ -47,6 +47,9 @@ namespace Gym.Infrastructure.Constants
 
             public const string MaxLengthPrice = "100000";
             public const string MinLengthPrice = "0";
+
+            public const string MaxLengthDuration = "12";
+            public const string MinLengthDuration = "1";
         }
 
         public static class FitnessCardCategory

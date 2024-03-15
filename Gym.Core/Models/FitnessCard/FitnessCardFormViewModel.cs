@@ -28,6 +28,14 @@ namespace Gym.Core.Models.FitnessCard
         [Required(ErrorMessage = RequiredMessage)]
         public int FitnessCardCategoryId { get; set; }
 
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(MaxLengthName, MinimumLength = MinLengthName, ErrorMessage = LengthMessage)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = RequiredMessage)]
+        [Range(typeof(int),MinLengthDuration,MaxLengthDuration,ErrorMessage = "Duration must be a number between {1} and {2}")]
+        public int DurationInMonths { get; set; }
+
 
         public IEnumerable<FitnessCardCategoryViewModel> FitnessCardCategories { get; set; }
             = new List<FitnessCardCategoryViewModel>();

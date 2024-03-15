@@ -19,5 +19,11 @@ namespace Gym.Core.Models.FitnessCard
         public string Creator { get; set; } = string.Empty;
 
         public string ImageUrl { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
+
+        public int DurationInMoths { get; set; } 
+
+        public string IssuesDate { get; set; } = string.Empty;
     }
 }
