@@ -4,6 +4,7 @@ using Gym.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gym.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240315143143_ChangedFitnessCardAndProductsTables")]
+    partial class ChangedFitnessCardAndProductsTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,7 +66,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasIndex("DietCategoryId");
 
-                    b.ToTable("Diets", (string)null);
+                    b.ToTable("Diets");
 
                     b.HasComment("Diet table");
 
@@ -97,7 +99,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DietCategories", (string)null);
+                    b.ToTable("DietCategories");
 
                     b.HasComment("Diet category table");
 
@@ -173,7 +175,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasIndex("FitnessCardCategoryId");
 
-                    b.ToTable("FitnessCards", (string)null);
+                    b.ToTable("FitnessCards");
 
                     b.HasComment("Fitness card table");
 
@@ -209,7 +211,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FitnessCardCategories", (string)null);
+                    b.ToTable("FitnessCardCategories");
 
                     b.HasComment("Fitnes card category table");
 
@@ -296,7 +298,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
 
                     b.HasComment("Product table");
 
@@ -331,7 +333,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategories", (string)null);
+                    b.ToTable("ProductCategories");
 
                     b.HasComment("Product category table");
 
@@ -367,7 +369,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersFitnessCards", (string)null);
+                    b.ToTable("UsersFitnessCards");
 
                     b.HasComment("Fitness card-user mapping table");
                 });
@@ -386,7 +388,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("UsersProducts", (string)null);
+                    b.ToTable("UsersProducts");
 
                     b.HasComment("Users and products mapping table");
                 });
@@ -433,7 +435,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasIndex("WorkoutPlanCategoryId");
 
-                    b.ToTable("WorkoutPlans", (string)null);
+                    b.ToTable("WorkoutPlans");
 
                     b.HasComment("Workout plan table");
 
@@ -466,7 +468,7 @@ namespace Gym.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkoutPlanCategories", (string)null);
+                    b.ToTable("WorkoutPlanCategories");
 
                     b.HasComment("Workout plan category table");
 

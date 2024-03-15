@@ -27,6 +27,10 @@ namespace Gym.Infrastructure.Data.Models
         public string Description { get; set; } = string.Empty;
 
         [Required]
+        [Comment("Product quantity")]
+        public int Quantity { get; set; }
+
+        [Required]
         [Comment("Product category identifier")]
         public int ProductCategoryId { get; set; }
 

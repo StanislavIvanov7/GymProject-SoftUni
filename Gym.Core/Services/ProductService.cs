@@ -91,17 +91,7 @@ namespace Gym.Core.Services
             };
 
 
-            //    .Select(x => new AllProductViewModel()
-            //    {
-            //        Id = x.Id,
-            //        ImageUrl = x.ImageUrl,
-            //        Description = x.Description,
-            //        Name = x.Name,
-            //        Price = x.Price,
-            //        Creator = x.Creator.UserName 
-            //    }).ToListAsync();
-
-            //return products;
+       
         }
 
         public async Task<DetailsProductViewModel> DetailsProductAsync(int id)

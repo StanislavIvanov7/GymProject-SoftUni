@@ -27,6 +27,20 @@ namespace Gym.Infrastructure.Data.Models
         public decimal Price { get; set; }
 
         [Required]
+        [Comment("Fitness card name")]
+        [MaxLength(MaxLengthName)]
+        public string Name { get; set; } = string.Empty;
+
+
+        [Required]
+        [Comment("Fitness card issues date")]
+        public DateTime IssuesDate { get; set; }
+
+        [Required]
+        [Comment("Fitness card duration")]
+        public int DurationInMonths { get; set; }
+
+        [Required]
         [MaxLength(MaxLengthDescription)]
         [Comment("Fitness card description")]
         public string Description { get; set; } = string.Empty;

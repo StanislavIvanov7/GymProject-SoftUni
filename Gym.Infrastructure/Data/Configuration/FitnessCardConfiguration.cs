@@ -23,9 +23,12 @@ namespace Gym.Infrastructure.Data.Configuration
                 FitnessCardCategoryId = 3,
                 Description = "You have access to the gym every day before 4pm. The duration of this card is 1 month.",
                 Price = 40,
+                Name = "Fitness card for men before 4pm.",
+                DurationInMonths = 1,
+                IssuesDate = DateTime.Now,
                 CreatorId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
-                ImageUrl = "https://png.pngtree.com/template/20211021/ourmid/pngtree-personal-fitness-trainer-black-business-card-image_708208.png"
-                
+                ImageUrl = "https://mymetalbusinesscard.com/wp-content/uploads/2022/10/Fitness-Cards-Blog-Images.jpg"
+
             };
 
             fitnessCards.Add(fitnessCard);
