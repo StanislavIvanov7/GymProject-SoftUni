@@ -25,5 +25,7 @@ namespace Gym.Core.Models.FitnessCard
         public int DurationInMoths { get; set; } 
 
         public string IssuesDate { get; set; } = string.Empty;
+
+       
     }
 }

@@ -76,8 +76,9 @@ namespace Gym.Core.Services
                     Price = x.Price,
                     Creator = x.Creator.UserName,
                     FitnessCardCategory = x.FitnessCardCategory.Name,
-                    DurationInMoths =x.DurationInMonths,
+                    DurationInMoths = x.DurationInMonths,
                     Name = x.Name,
+                    IssuesDate = x.IssuesDate.ToString()
 
                 }).FirstOrDefaultAsync();
 
