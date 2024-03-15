@@ -30,7 +30,9 @@ namespace Gym.Core.Services
                 Price = model.Price,
                 ImageUrl = model.ImageUrl,
                 ProductCategoryId = model.ProductCategoryId,
-                CreatorId = userId
+                CreatorId = userId,
+                Quantity = model.Quantity,
+                
 
             };
 
@@ -78,7 +80,9 @@ namespace Gym.Core.Services
                     Description = x.Description,
                     ImageUrl = x.ImageUrl,
                     Price = x.Price,
-                    Creator = x.Creator.UserName
+                    Creator = x.Creator.UserName,
+                    Quantity = x.Quantity,
+                    
                 })
                 .ToListAsync();
 
@@ -106,7 +110,10 @@ namespace Gym.Core.Services
                   ImageUrl = x.ImageUrl,
                   Description = x.Description,
                   ProductCategory = x.ProductCategory.Name,
-                  Creator = x.Creator.UserName
+                  Creator = x.Creator.UserName,
+                  Quantity = x.Quantity
+                  
+                  
 
               }).FirstOrDefaultAsync();
 
@@ -132,6 +139,7 @@ namespace Gym.Core.Services
             product.Price = model.Price;
             product.ImageUrl = model.ImageUrl;
             product .ProductCategoryId = model.ProductCategoryId;
+            product.Quantity = model.Quantity;
 
             await repository.SaveChangesAsync();
 
@@ -154,6 +162,7 @@ namespace Gym.Core.Services
                 Price = product.Price,
                 Description = product.Description,
                 ImageUrl = product.ImageUrl,
+                Quantity = product.Quantity,
 
 
             };

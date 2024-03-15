@@ -28,6 +28,8 @@ namespace Gym.Core.Models
 
         public string ImageUrl { get; set; } = string.Empty;
 
-       
+        public int Quantity { get; set; }
+
+
     }
 }

@@ -26,6 +26,11 @@
                 <span asp-validation-for="@Model.Price" class="text-danger"></span>
             </div>
             <div class="mb-3">
+                <label asp-for="@Model.Quantity" class="form-label-add-edit">Product Quantity</label>
+                <input asp-for="@Model.Quantity" class="form-control" aria-required="true" placeholder="Write product quantity here..." />
+                <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
                 <label asp-for="@Model.ImageUrl" class="form-label-add-edit">Product Image URL</label>
                 <input asp-for="@Model.ImageUrl" class="form-control" aria-required="true" placeholder="Write image url here..." />
                 <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>

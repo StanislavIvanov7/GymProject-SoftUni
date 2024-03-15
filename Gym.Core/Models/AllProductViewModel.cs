@@ -27,6 +27,8 @@ namespace Gym.Core.Models
 
         public string Creator { get; set; } = null!;
 
+        public int Quantity { get; set; }
+
 
     }
 }

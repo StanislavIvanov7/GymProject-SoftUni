@@ -28,6 +28,13 @@ namespace Gym.Core.Models
         [Required(ErrorMessage = RequiredMessage)]
         public int ProductCategoryId { get; set; }
 
+        [Required(ErrorMessage = RequiredMessage)]
+        [Range(typeof(int),
+            MinLengthQuantity,
+            MaxLengthQuantity,
+            ErrorMessage = "Quantity must be a positive number and less than {2}")]
+        public int Quantity { get; set; }
+
 
         public IEnumerable<AllProductCategoryViewModel> ProductCategories { get; set; }
             = new List<AllProductCategoryViewModel>();
