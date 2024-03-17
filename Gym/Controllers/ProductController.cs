@@ -6,7 +6,7 @@ using System.Security.Claims;
 namespace Gym.Controllers
 {
 
-    public class ProductController : Controller
+    public class ProductController : BaseController 
     {
         private readonly IProductService productService;
 

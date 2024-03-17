@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace Gym.Controllers
 {
-    public class FitnessCardController : Controller
+    public class FitnessCardController : BaseController
     {
         private readonly IFitnessCardService fitnessCardService;
 
