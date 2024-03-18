@@ -1,14 +1,7 @@
-﻿using Gym.Core.Contracts;
-using Gym.Core.Models;
-using Gym.Core.Models.FitnessCard;
+﻿using Gym.Core.Models.FitnessCard;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gym.Core.Services
 {

@@ -1,10 +1,4 @@
-﻿using Gym.Core.Models.Diet;
-using Gym.Core.Models.WorkoutPlan;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gym.Core.Models.WorkoutPlan;
 
 namespace Gym.Core.Contracts
 {

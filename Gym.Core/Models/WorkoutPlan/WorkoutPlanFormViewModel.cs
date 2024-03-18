@@ -1,13 +1,6 @@
-﻿using Gym.Core.Models.Diet;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using static Gym.Infrastructure.Constants.DataConstant.WorkoutPlan;
+﻿using System.ComponentModel.DataAnnotations;
 using static Gym.Core.Constants.MessageConstants;
+using static Gym.Infrastructure.Constants.DataConstant.WorkoutPlan;
 namespace Gym.Core.Models.WorkoutPlan
 {
     public class WorkoutPlanFormViewModel

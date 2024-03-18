@@ -1,13 +1,9 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Enumerations;
 using Gym.Core.Models;
-using Gym.Core.Models.WorkoutPlan;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Security.Claims;
-using System.Xml.Schema;
 
 namespace Gym.Core.Services
 {

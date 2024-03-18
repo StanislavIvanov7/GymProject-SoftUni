@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using static Gym.Infrastructure.Constants.DataConstant.Diet;
+﻿using System.ComponentModel.DataAnnotations;
 using static Gym.Core.Constants.MessageConstants;
+using static Gym.Infrastructure.Constants.DataConstant.Diet;
 
 namespace Gym.Core.Models.Diet
 {
