@@ -1,5 +1,6 @@
 ﻿using Gym.Core.Enumerations;
 using Gym.Core.Models;
+using Gym.Infrastructure.Data.Models;
 
 namespace Gym.Core.Contracts
 {
@@ -27,7 +28,15 @@ namespace Gym.Core.Contracts
         Task<DeleteProductViewModel> GetProductForDeleteAsync(int id);
 
         Task RemoveAsync(int id);
-        
+
+        Task<IEnumerable<AllProductViewModel>> AllProductsInCartAsync(string userId);
+
+        Task AddToCartAsync(int id,string userId);
+
+        Task<UserProduct?> GetProductInCartAsync(string id);
+
+        Task RemoveFromCartAsync(int id,string userId);
+
 
     }
 }

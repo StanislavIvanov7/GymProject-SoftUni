@@ -1,6 +1,8 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Enumerations;
 using Gym.Core.Models;
+using Gym.Infrastructure.Constants;
+using Gym.Infrastructure.Data;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -200,6 +202,7 @@ namespace Gym.Core.Services
 
             if(product == null)
             {
+
                 throw new ArgumentException("Invalid product");
             }
 
@@ -214,5 +217,77 @@ namespace Gym.Core.Services
                 .Select(c => c.Name)
                 .ToListAsync();
         }
+
+        public async Task AddToCartAsync(int id,string userId)
+        {
+            var cart = await repository.All<UserProduct>().FirstOrDefaultAsync(x => x.ProductId == id && x.UserId == userId);
+
+            if (cart == null)
+            {
+                var entity = new UserProduct()
+                {
+                    ProductId = id,
+                    UserId = userId,
+                    Quantity = 1,
+                    
+                };
+                await repository.AddAsync(entity);
+                await repository.SaveChangesAsync();
+
+            }
+            else
+            {
+                
+                cart.Quantity += 1;
+                await repository.SaveChangesAsync();
+            }
+
+            
+
+            
+        }
+
+        public async Task<IEnumerable<AllProductViewModel>> AllProductsInCartAsync(string userId)
+        {
+            var carts = await repository.All<UserProduct>()
+               .Where(x => x.UserId == userId)
+               .Select(x => new AllProductViewModel
+               {
+                   Id = x.Product.Id,
+                   Name = x.Product.Name,
+                   Description = x.Product.Description,
+                   Quantity = x.Quantity,
+                   ImageUrl = x.Product.ImageUrl,
+                   Price = x.Product.Price,
+                 
+                 
+
+               }).ToListAsync();
+
+            return carts;
+        }
+
+        public async Task<UserProduct?> GetProductInCartAsync(string userId)
+        {
+            return await repository.AllAsReadOnly<UserProduct>().FirstOrDefaultAsync(x=>x.UserId == userId);
+        }
+
+        public async Task RemoveFromCartAsync(int id,string userId)
+        {
+            var product = await repository.All<UserProduct>().FirstAsync(x=>x.ProductId == id && x.UserId == userId);
+            if (product.Quantity > 1)
+            {
+                product.Quantity -= 1;
+                await repository.SaveChangesAsync();
+            }
+            else
+            {
+                repository.Delete(product);
+                await repository.SaveChangesAsync();
+            }
+        
+        }
+
+      
     }
 }

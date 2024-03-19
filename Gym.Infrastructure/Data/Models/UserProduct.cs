@@ -21,5 +21,7 @@ namespace Gym.Infrastructure.Data.Models
 
         [ForeignKey(nameof(ProductId))]
         public Product Product { get; set; } = null!;
+
+        public int Quantity { get; set; }
     }
 }

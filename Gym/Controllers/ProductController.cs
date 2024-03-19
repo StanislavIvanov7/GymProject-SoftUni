@@ -1,6 +1,10 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Models;
+using Gym.Infrastructure.Constants;
+using Gym.Infrastructure.Data;
+using Gym.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Gym.Controllers
@@ -10,9 +14,12 @@ namespace Gym.Controllers
     {
         private readonly IProductService productService;
 
-        public ProductController(IProductService service )
+
+
+        public ProductController(IProductService service)
         {
             productService = service;
+
         }
 
         [HttpGet]
@@ -109,6 +116,50 @@ namespace Gym.Controllers
             return RedirectToAction(nameof(All));
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Cart()
+        {
+            string userId = GetUserId();
+
+            var carts = await productService.AllProductsInCartAsync(userId);
+
+            return View(carts);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int id)
+        {
+            var userId = GetUserId();
+
+            var product = await productService.GetProductInCartAsync(userId);
+            if (product == null)
+            {
+                return BadRequest();
+
+            }
+          
+
+            if (product.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            await productService.RemoveFromCartAsync(id,userId);
+
+            return RedirectToAction(nameof(Cart));
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int id)
+        {
+            string userId = GetUserId();
+
+            await productService.AddToCartAsync(id, userId);
+
+            return RedirectToAction(nameof(All));
+        }
+
         private string GetUserId()
         {
             var userId = ClaimsPrincipalExtensions.Id(this.User);
