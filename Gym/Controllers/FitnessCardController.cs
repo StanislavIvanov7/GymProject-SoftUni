@@ -114,6 +114,7 @@ namespace Gym.Controllers
             return View(carts);
 
         }
+
         [HttpPost]
         public async Task<IActionResult> AddToCart(int id)
         {
@@ -122,6 +123,29 @@ namespace Gym.Controllers
             await fitnessCardService.AddToCartAsync(id, userId);
 
             return RedirectToAction(nameof(All));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int id)
+        {
+            var userId = GetUserId();
+
+            var fitnessCard = await fitnessCardService.GetFitnessCardInCartAsync(userId);
+            if (fitnessCard == null)
+            {
+                return BadRequest();
+
+            }
+
+
+            if (fitnessCard.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            await fitnessCardService.RemoveFromCartAsync(id, userId);
+
+            return RedirectToAction(nameof(Cart));
         }
         private string GetUserId()
         {

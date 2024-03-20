@@ -1,4 +1,6 @@
-﻿namespace Gym.Core.Models.FitnessCard
+﻿using Gym.Infrastructure.Data.Models;
+
+namespace Gym.Core.Models.FitnessCard
 {
     public interface IFitnessCardService
     {
@@ -21,6 +23,10 @@
         Task<IEnumerable<AllFitnessCardViewModel>> AllFitnessCardInCartAsync(string userId);
 
         Task AddToCartAsync(int id, string userId);
+
+        Task<UserFitnessCard?> GetFitnessCardInCartAsync(string userId);
+
+        Task RemoveFromCartAsync(int id, string userId);
 
     }
 }

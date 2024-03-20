@@ -224,5 +224,25 @@ namespace Gym.Core.Services
                 await repository.SaveChangesAsync();
             }
         }
+
+        public async Task<UserFitnessCard?> GetFitnessCardInCartAsync(string userId)
+        {
+            return await repository.AllAsReadOnly<UserFitnessCard>().FirstOrDefaultAsync(x => x.UserId == userId);
+        }
+
+        public async Task RemoveFromCartAsync(int id, string userId)
+        {
+            var fitnessCard = await repository.All<UserFitnessCard>().FirstAsync(x => x.FitnessCardId == id && x.UserId == userId);
+            if (fitnessCard.Quantity > 1)
+            {
+                fitnessCard.Quantity -= 1;
+                await repository.SaveChangesAsync();
+            }
+            else
+            {
+                repository.Delete(fitnessCard);
+                await repository.SaveChangesAsync();
+            }
+        }
     }
 }
