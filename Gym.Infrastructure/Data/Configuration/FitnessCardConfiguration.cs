@@ -27,7 +27,8 @@ namespace Gym.Infrastructure.Data.Configuration
                 DurationInMonths = 1,
                 IssuesDate = DateTime.Now,
                 CreatorId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
-                ImageUrl = "https://mymetalbusinesscard.com/wp-content/uploads/2022/10/Fitness-Cards-Blog-Images.jpg"
+                ImageUrl = "https://mymetalbusinesscard.com/wp-content/uploads/2022/10/Fitness-Cards-Blog-Images.jpg",
+                Quantity = 50,
 
             };
 

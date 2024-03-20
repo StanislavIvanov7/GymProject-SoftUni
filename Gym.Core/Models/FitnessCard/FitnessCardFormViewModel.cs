@@ -31,6 +31,13 @@ namespace Gym.Core.Models.FitnessCard
         [Range(typeof(int),MinLengthDuration,MaxLengthDuration,ErrorMessage = "Duration must be a number between {1} and {2}")]
         public int DurationInMonths { get; set; }
 
+        [Required(ErrorMessage = RequiredMessage)]
+        [Range(typeof(int),
+           MinLengthQuantity,
+           MaxLengthQuantity,
+           ErrorMessage = "Quantity must be a positive number and less than {2}")]
+        public int Quantity { get; set; }
+
 
         public IEnumerable<FitnessCardCategoryViewModel> FitnessCardCategories { get; set; }
             = new List<FitnessCardCategoryViewModel>();

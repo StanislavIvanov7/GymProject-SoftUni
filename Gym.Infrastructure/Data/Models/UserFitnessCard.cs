@@ -21,5 +21,9 @@ namespace Gym.Infrastructure.Data.Models
 
         [ForeignKey(nameof(FitnessCardId))]
         public FitnessCard FitnessCard { get; set; } = null!;
+
+        [Required]
+        [Comment("Fitness card quantity")]
+        public int Quantity { get; set; }
     }
 }

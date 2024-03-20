@@ -1,6 +1,6 @@
 ﻿@model FitnessCardFormViewModel
 @{
-    ViewBag.Title = "Edit Ftness Card";
+    ViewBag.Title = "Edit Fitness Card";
 }
 
 
@@ -16,27 +16,32 @@
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Description" class="form-label-add-edit">Edit Description</label>
-                <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5"></textarea>
+                <label asp-for="@Model.Description" class="form-label-add-edit">Edit Fitness Card Description</label>
+                <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5" placeholder="Write fitness card description here..."></textarea>
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Price" class="form-label-add-edit">Edit Price</label>
-                <input asp-for="@Model.Price" class="form-control" aria-required="true" />
+                <label asp-for="@Model.Price" class="form-label-add-edit">Edit Fitness Card Price</label>
+                <input asp-for="@Model.Price" class="form-control" aria-required="true" placeholder="Write fitness card price here..." />
                 <span asp-validation-for="@Model.Price" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.DurationInMonths" class="form-label-add-edit">Fitness Card Duration In Months</label>
-                <input asp-for="@Model.DurationInMonths" class="form-control" aria-required="true" placeholder="Write product quantity here..." />
+                <input asp-for="@Model.DurationInMonths" class="form-control" aria-required="true" placeholder="Write fitness card duration in months here..." />
                 <span asp-validation-for="@Model.DurationInMonths" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.ImageUrl" class="form-label-add-edit">Edit ImageUrl</label>
-                <input asp-for="@Model.ImageUrl" class="form-control" value="@Model.ImageUrl" />
+                <label asp-for="@Model.Quantity" class="form-label-add-edit">Fitness Card Quantity</label>
+                <input asp-for="@Model.Quantity" class="form-control" aria-required="true" placeholder="Write fitness card quantity here..." />
+                <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.ImageUrl" class="form-label-add-edit">Edit Fitness Card ImageUrl</label>
+                <input asp-for="@Model.ImageUrl" class="form-control" placeholder="Write fitness card image url here..." value="@Model.ImageUrl" />
                 <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.FitnessCardCategoryId" class="form-label-add-edit">Edit Fitness Card Category Id</label>
+                <label asp-for="@Model.FitnessCardCategoryId" class="form-label-add-edit">Edit Fitness Card Category</label>
                 <select asp-for="@Model.FitnessCardCategoryId" class="form-control" aria-required="true">
                     @foreach (var category in Model.FitnessCardCategories)
                     {

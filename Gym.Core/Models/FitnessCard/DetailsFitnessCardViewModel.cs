@@ -20,6 +20,8 @@
 
         public string IssuesDate { get; set; } = string.Empty;
 
-       
+        public int Quantity { get; set; }
+
+
     }
 }

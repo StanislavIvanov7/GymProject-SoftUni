@@ -5,7 +5,7 @@
 
         public int Id { get; set; }
         
-        public string FitnessCardCategory { get; set; } = null!;
+        public string FitnessCardCategory { get; set; } = string.Empty;
  
         public decimal Price { get; set; }
 
@@ -13,8 +13,6 @@
      
         public string ImageUrl { get; set; } = string.Empty;
 
-        public string Creator { get; set; } = null!;
-
-       
+        public int Quantity { get; set; }
     }
 }

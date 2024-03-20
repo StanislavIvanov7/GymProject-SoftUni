@@ -44,6 +44,9 @@
 
             public const string MaxLengthDuration = "12";
             public const string MinLengthDuration = "1";
+
+            public const string MaxLengthQuantity = "100000";
+            public const string MinLengthQuantity = "0";
         }
 
         public static class FitnessCardCategory

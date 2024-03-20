@@ -59,5 +59,9 @@ namespace Gym.Infrastructure.Data.Models
         public IdentityUser Creator { get; set; } = null!;
 
         public IEnumerable<UserFitnessCard> UserFitnessCards { get; set; } = new List<UserFitnessCard>();
+
+        [Required]
+        [Comment("Fitness card quantity")]
+        public int Quantity { get; set; }
     }
 }

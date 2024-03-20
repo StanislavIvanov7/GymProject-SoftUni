@@ -1,4 +1,5 @@
 ﻿using Gym.Core.Models.FitnessCard;
+using Gym.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -99,6 +100,17 @@ namespace Gym.Controllers
             await fitnessCardService.RemoveAsync(id);
 
             return RedirectToAction(nameof(All));
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Cart()
+        {
+            string userId = GetUserId();
+
+            var carts = await fitnessCardService.AllFitnessCardInCartAsync(userId);
+
+            return View(carts);
 
         }
 

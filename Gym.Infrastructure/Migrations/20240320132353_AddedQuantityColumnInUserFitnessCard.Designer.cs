@@ -4,6 +4,7 @@ using Gym.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gym.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240320132353_AddedQuantityColumnInUserFitnessCard")]
+    partial class AddedQuantityColumnInUserFitnessCard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,10 +169,6 @@ namespace Gym.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Fitness card price");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasComment("Fitness card quantity");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
@@ -190,10 +188,9 @@ namespace Gym.Infrastructure.Migrations
                             DurationInMonths = 1,
                             FitnessCardCategoryId = 3,
                             ImageUrl = "https://mymetalbusinesscard.com/wp-content/uploads/2022/10/Fitness-Cards-Blog-Images.jpg",
-                            IssuesDate = new DateTime(2024, 3, 20, 15, 40, 29, 275, DateTimeKind.Local).AddTicks(2715),
+                            IssuesDate = new DateTime(2024, 3, 20, 15, 23, 52, 872, DateTimeKind.Local).AddTicks(8900),
                             Name = "Fitness card for men before 4pm.",
-                            Price = 40m,
-                            Quantity = 0
+                            Price = 40m
                         });
                 });
 

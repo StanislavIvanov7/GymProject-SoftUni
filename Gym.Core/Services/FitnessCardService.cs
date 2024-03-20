@@ -1,4 +1,5 @@
-﻿using Gym.Core.Models.FitnessCard;
+﻿using Gym.Core.Models;
+using Gym.Core.Models.FitnessCard;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ namespace Gym.Core.Services
                 DurationInMonths = model.DurationInMonths,
                 Name = model.Name,
                 IssuesDate = DateTime.Now,
+                Quantity = model.Quantity
 
             };
 
@@ -48,7 +50,7 @@ namespace Gym.Core.Services
                     Description = x.Description,
                     ImageUrl = x.ImageUrl,
                     Price = x.Price,
-                    Creator = x.Creator.UserName
+                    Quantity = x.Quantity,
                     
                 }).ToListAsync();
 
@@ -71,7 +73,8 @@ namespace Gym.Core.Services
                     FitnessCardCategory = x.FitnessCardCategory.Name,
                     DurationInMoths = x.DurationInMonths,
                     Name = x.Name,
-                    IssuesDate = x.IssuesDate.ToString()
+                    IssuesDate = x.IssuesDate.ToString(),
+                    Quantity = x.Quantity,
 
                 }).FirstOrDefaultAsync();
 
@@ -97,6 +100,7 @@ namespace Gym.Core.Services
             fitnessCard.Price = model.Price;
             fitnessCard.ImageUrl = model.ImageUrl;
             fitnessCard.FitnessCardCategoryId = model.FitnessCardCategoryId;
+            fitnessCard.Quantity = model.Quantity;
 
 
             await repository.SaveChangesAsync();
@@ -174,6 +178,26 @@ namespace Gym.Core.Services
 
             repository.Delete(fitnessCard);
             await repository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<AllFitnessCardInCartViewModel>> AllFitnessCardInCartAsync(string userId)
+        {
+            var carts = await repository.All<UserFitnessCard>()
+               .Where(x => x.UserId == userId)
+               .Select(x => new AllFitnessCardInCartViewModel
+               {
+                   Id = x.FitnessCard.Id,
+                   Name = x.FitnessCard.Name,
+                   Description = x.FitnessCard.Description,
+                   Quantity = x.Quantity,
+                   ImageUrl = x.FitnessCard.ImageUrl,
+                   Price = x.FitnessCard.Price,
+
+
+
+               }).ToListAsync();
+
+            return carts;
         }
     }
 }
