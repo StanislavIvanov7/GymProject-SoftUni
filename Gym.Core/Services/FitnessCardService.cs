@@ -46,7 +46,7 @@ namespace Gym.Core.Services
                 .Select(x => new AllFitnessCardViewModel()
                 {
                     Id = x.Id,
-                    FitnessCardCategory = x.FitnessCardCategory.Name,
+                    Name = x.Name,
                     Description = x.Description,
                     ImageUrl = x.ImageUrl,
                     Price = x.Price,
@@ -124,7 +124,7 @@ namespace Gym.Core.Services
                 ImageUrl = fitnessCard.ImageUrl,
                 DurationInMonths = fitnessCard.DurationInMonths,
                 Name = fitnessCard.Name,
-                
+                Quantity = fitnessCard.Quantity,
 
                 
 
@@ -180,11 +180,11 @@ namespace Gym.Core.Services
             await repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<AllFitnessCardInCartViewModel>> AllFitnessCardInCartAsync(string userId)
+        public async Task<IEnumerable<AllFitnessCardViewModel>> AllFitnessCardInCartAsync(string userId)
         {
             var carts = await repository.All<UserFitnessCard>()
                .Where(x => x.UserId == userId)
-               .Select(x => new AllFitnessCardInCartViewModel
+               .Select(x => new AllFitnessCardViewModel
                {
                    Id = x.FitnessCard.Id,
                    Name = x.FitnessCard.Name,
@@ -198,6 +198,31 @@ namespace Gym.Core.Services
                }).ToListAsync();
 
             return carts;
+        }
+
+        public async Task AddToCartAsync(int id, string userId)
+        {
+            var cart = await repository.All<UserFitnessCard>().FirstOrDefaultAsync(x => x.FitnessCardId == id && x.UserId == userId);
+
+            if (cart == null)
+            {
+                var entity = new UserFitnessCard()
+                {
+                    FitnessCardId = id,
+                    UserId = userId,
+                    Quantity = 1,
+
+                };
+                await repository.AddAsync(entity);
+                await repository.SaveChangesAsync();
+
+            }
+            else
+            {
+
+                cart.Quantity += 1;
+                await repository.SaveChangesAsync();
+            }
         }
     }
 }

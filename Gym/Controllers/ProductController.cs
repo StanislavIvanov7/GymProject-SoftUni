@@ -150,6 +150,7 @@ namespace Gym.Controllers
 
             return RedirectToAction(nameof(Cart));
         }
+
         [HttpPost]
         public async Task<IActionResult> AddToCart(int id)
         {

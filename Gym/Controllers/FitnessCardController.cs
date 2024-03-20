@@ -1,4 +1,5 @@
-﻿using Gym.Core.Models.FitnessCard;
+﻿using Gym.Core.Contracts;
+using Gym.Core.Models.FitnessCard;
 using Gym.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -113,7 +114,15 @@ namespace Gym.Controllers
             return View(carts);
 
         }
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int id)
+        {
+            string userId = GetUserId();
 
+            await fitnessCardService.AddToCartAsync(id, userId);
+
+            return RedirectToAction(nameof(All));
+        }
         private string GetUserId()
         {
             var userId = ClaimsPrincipalExtensions.Id(this.User);

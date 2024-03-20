@@ -17,6 +17,10 @@
         Task EditAsync(int id, FitnessCardFormViewModel model);
 
         Task RemoveAsync(int id);
-        Task<IEnumerable<AllFitnessCardInCartViewModel>> AllFitnessCardInCartAsync(string userId);
+
+        Task<IEnumerable<AllFitnessCardViewModel>> AllFitnessCardInCartAsync(string userId);
+
+        Task AddToCartAsync(int id, string userId);
+
     }
 }
