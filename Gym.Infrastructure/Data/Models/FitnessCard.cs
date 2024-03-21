@@ -58,7 +58,7 @@ namespace Gym.Infrastructure.Data.Models
         [ForeignKey(nameof(CreatorId))]
         public IdentityUser Creator { get; set; } = null!;
 
-        public IEnumerable<UserFitnessCard> UserFitnessCards { get; set; } = new List<UserFitnessCard>();
+        public IList<UserFitnessCard> UserFitnessCards { get; set; } = new List<UserFitnessCard>();
 
         [Required]
         [Comment("Fitness card quantity")]

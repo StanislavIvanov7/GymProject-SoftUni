@@ -112,33 +112,27 @@ namespace Gym.Core.Services
                   
                   
 
-              }).FirstOrDefaultAsync();
-
-            if(product == null)
-            {
-                throw new ArgumentException("Invalid product");
-            }
+              }).FirstAsync();
             
             return product;
         }
 
         public async Task EditAsync(int id,ProductFormViewModel model)
         {
-            var product = await repository .All<Product>().FirstOrDefaultAsync (x=>x.Id == model.Id);
+            var product = await repository.GetByIdAsync<Product>(id);
 
-            if (product == null)
+            if (product != null)
             {
-                throw new ArgumentException("Invalid product");
+                product.Name = model.Name;
+                product.Description = model.Description;
+                product.Price = model.Price;
+                product.ImageUrl = model.ImageUrl;
+                product.ProductCategoryId = model.ProductCategoryId;
+                product.Quantity = model.Quantity;
+
+                await repository.SaveChangesAsync();
             }
 
-            product.Name = model.Name;
-            product.Description = model.Description;
-            product.Price = model.Price;
-            product.ImageUrl = model.ImageUrl;
-            product .ProductCategoryId = model.ProductCategoryId;
-            product.Quantity = model.Quantity;
-
-            await repository.SaveChangesAsync();
 
            
 
@@ -146,27 +140,20 @@ namespace Gym.Core.Services
 
         public async Task<ProductFormViewModel> GetProductForEditAsync(int id)
         {
-            var product = await repository.GetByIdAsync<Product>(id);
 
-            if (product == null)
-            {
-                throw new ArgumentException("Invalid product");
-            }
-            var model = new ProductFormViewModel()
-            {
-                Id = id,
-                Name = product.Name,
-                Price = product.Price,
-                Description = product.Description,
-                ImageUrl = product.ImageUrl,
-                Quantity = product.Quantity,
+            var product = await repository.AllAsReadOnly<Product>()
+                .Where(x => x.Id == id)
+                .Select(x => new ProductFormViewModel()
+                {
+                    Id = id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    Description = x.Description,
+                    ImageUrl = x.ImageUrl,
+                    Quantity = x.Quantity,
+                }).FirstAsync();
 
-
-            };
-
-            //model.ProductCategories = await GetProductCategoryAsync();
-
-            return model;
+            return product;
         }
 
         public async Task<IEnumerable<AllProductCategoryViewModel>> GetProductCategoryAsync()
@@ -181,32 +168,30 @@ namespace Gym.Core.Services
 
         public async Task<DeleteProductViewModel> GetProductForDeleteAsync(int id)
         {
-            var product = await repository.GetByIdAsync<Product>(id);
-            if (product == null)
-            {
-                throw new ArgumentException("Invalid product");
-            }
+            var product = await repository.AllAsReadOnly<Product>()
+                .Where(x => x.Id == id)
+                .Select(x => new DeleteProductViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ImageUrl = x.ImageUrl,
+                }).FirstAsync();
 
-            return new DeleteProductViewModel()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                ImageUrl = product.ImageUrl,
-            };
+            return product;
         }
 
         public async Task RemoveAsync(int id)
         {
-            var product = repository.All<Product>().FirstOrDefault(x=>x.Id == id);
+            var product = repository.GetByIdAsync<Product>(id);
 
-            if(product == null)
+
+            if(product != null)
             {
-
-                throw new ArgumentException("Invalid product");
+                repository.Delete(product);
+                await repository.SaveChangesAsync();
             }
 
-            repository.Delete(product);
-            await repository.SaveChangesAsync();
+       
             
         }
 
@@ -219,7 +204,8 @@ namespace Gym.Core.Services
 
         public async Task AddToCartAsync(int id,string userId)
         {
-            var cart = await repository.All<UserProduct>().FirstOrDefaultAsync(x => x.ProductId == id && x.UserId == userId);
+            var cart = await repository.All<UserProduct>()
+                .FirstOrDefaultAsync(x => x.ProductId == id && x.UserId == userId);
 
             if (cart == null)
             {
@@ -266,14 +252,17 @@ namespace Gym.Core.Services
             return carts;
         }
 
-        public async Task<UserProduct?> GetProductInCartAsync(string userId)
+        public async Task<UserProduct?> GetProductInCartAsync(string userId, int id)
         {
-            return await repository.AllAsReadOnly<UserProduct>().FirstOrDefaultAsync(x=>x.UserId == userId);
+            return await repository.AllAsReadOnly<UserProduct>()
+                .FirstOrDefaultAsync(x=>x.UserId == userId && x.ProductId == id);
         }
 
         public async Task RemoveFromCartAsync(int id,string userId)
         {
-            var product = await repository.All<UserProduct>().FirstAsync(x=>x.ProductId == id && x.UserId == userId);
+            var product = await repository.All<UserProduct>()
+                .FirstAsync(x=>x.ProductId == id && x.UserId == userId);
+
             if (product.Quantity > 1)
             {
                 product.Quantity -= 1;
@@ -287,6 +276,16 @@ namespace Gym.Core.Services
         
         }
 
-      
+        public async Task<bool> CategoryExistAsync(int id)
+        {
+           return await repository.AllAsReadOnly<ProductCategory>()
+                 .AnyAsync(x => x.Id == id);
+        }
+
+        public async Task<bool> ExistAsync(int id)
+        {
+            return await repository.AllAsReadOnly<Product>()
+                .AnyAsync(x => x.Id == id);
+        }
     }
 }

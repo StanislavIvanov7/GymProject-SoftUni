@@ -1,11 +1,14 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Models;
+using Gym.Core.Services;
 using Gym.Infrastructure.Constants;
 using Gym.Infrastructure.Data;
+using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using static Gym.Infrastructure.Constants.DataConstant;
 
 namespace Gym.Controllers
 {
@@ -51,6 +54,11 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ProductFormViewModel model)
         {
+            if (await productService.CategoryExistAsync(model.ProductCategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.ProductCategoryId), "Category does not exist");
+
+            }
             if (!ModelState.IsValid)
             {
                 model.ProductCategories = await productService.GetProductCategoryAsync();
@@ -65,19 +73,30 @@ namespace Gym.Controllers
         [HttpGet] 
         public async Task<IActionResult> Edit(int id)
         {
+            if(await productService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             var model = await productService.GetProductForEditAsync(id);
-            //if(model == null)
-            //{
-            //    return BadRequest();
-            //}
+     
             model.ProductCategories = await productService.GetProductCategoryAsync();
+
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, ProductFormViewModel model)
         {
-          
+            if (await productService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if(await productService.CategoryExistAsync(model.ProductCategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.ProductCategoryId), "Category does not exist");
+            }
 
             if (!ModelState.IsValid)
             {
@@ -95,6 +114,10 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+            if(await productService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
             var model = await productService .DetailsProductAsync(id);
 
             return View(model);
@@ -103,6 +126,11 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            if(await productService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             var model = await productService.GetProductForDeleteAsync(id);
 
             return View(model);
@@ -111,6 +139,11 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (await productService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             await productService.RemoveAsync(id);
 
             return RedirectToAction(nameof(All));
@@ -133,13 +166,14 @@ namespace Gym.Controllers
         {
             var userId = GetUserId();
 
-            var product = await productService.GetProductInCartAsync(userId);
+            var product = await productService.GetProductInCartAsync(userId,id);
+
             if (product == null)
             {
+
                 return BadRequest();
 
             }
-          
 
             if (product.UserId != userId)
             {
@@ -154,6 +188,11 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(int id)
         {
+            if (await productService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             string userId = GetUserId();
 
             await productService.AddToCartAsync(id, userId);

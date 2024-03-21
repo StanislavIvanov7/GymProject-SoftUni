@@ -32,6 +32,6 @@ namespace Gym.Core.Models.FitnessCard
 
         Task<bool> ExistAsync(int id);
 
-        Task<bool> ExistInCartAsync(int id);
+
     }
 }

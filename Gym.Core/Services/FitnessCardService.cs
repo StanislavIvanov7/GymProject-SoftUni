@@ -231,7 +231,8 @@ namespace Gym.Core.Services
 
         public async Task RemoveFromCartAsync(int id, string userId)
         {
-            var fitnessCard = await repository.All<UserFitnessCard>().FirstAsync(x => x.FitnessCardId == id && x.UserId == userId);
+            var fitnessCard = await repository.All<UserFitnessCard>()
+                .FirstAsync(x => x.FitnessCardId == id && x.UserId == userId);
             if (fitnessCard.Quantity > 1)
             {
                 fitnessCard.Quantity -= 1;
@@ -258,10 +259,6 @@ namespace Gym.Core.Services
                 .AnyAsync(x => x.Id == id);
         }
 
-        public async Task<bool> ExistInCartAsync(int id)
-        {
-           return await repository.AllAsReadOnly<UserFitnessCard>()
-                .AnyAsync(x => x.FitnessCardId == id);
-        }
+   
     }
 }

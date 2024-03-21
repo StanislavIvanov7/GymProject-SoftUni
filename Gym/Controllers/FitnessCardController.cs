@@ -1,7 +1,9 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Models.FitnessCard;
 using Gym.Core.Services;
+using Gym.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Gym.Controllers
@@ -10,9 +12,11 @@ namespace Gym.Controllers
     {
         private readonly IFitnessCardService fitnessCardService;
 
-        public FitnessCardController(IFitnessCardService _fitnessCardService)
+        private readonly ApplicationDbContext data;
+        public FitnessCardController(IFitnessCardService _fitnessCardService, ApplicationDbContext data)
         {
                 fitnessCardService = _fitnessCardService;
+           this.data = data;
         }
 
         public async Task<IActionResult> All()
@@ -165,7 +169,7 @@ namespace Gym.Controllers
         {
             var userId = GetUserId();
 
-            var fitnessCard = await fitnessCardService.GetFitnessCardInCartAsync(userId,id);
+            var fitnessCard = await fitnessCardService.GetFitnessCardInCartAsync(userId, id);
             if (fitnessCard == null)
             {
                 return BadRequest();
@@ -181,6 +185,31 @@ namespace Gym.Controllers
             await fitnessCardService.RemoveFromCartAsync(id, userId);
 
             return RedirectToAction(nameof(Cart));
+
+            //var fitnessCard = await data.FitnessCards
+            //    //.Where(x => x.Id == id)
+            //    .Include(x => x.UserFitnessCards)
+            //    .FirstOrDefaultAsync(x => x.Id == id);
+
+            //if (fitnessCard == null)
+            //{
+            //    return BadRequest();
+            //}
+
+
+            //string userId = GetUserId();
+            //var uf = fitnessCard.UserFitnessCards
+            //    //.Where(x => x.HelperId == userId)
+            //    .FirstOrDefault(x => x.UserId == userId);
+
+            //if (uf == null)
+            //{
+            //    return Unauthorized();
+            //}
+
+            //fitnessCard.UserFitnessCards.Remove(uf);
+            //await data.SaveChangesAsync();
+            //return RedirectToAction(nameof(All));
         }
         private string GetUserId()
         {

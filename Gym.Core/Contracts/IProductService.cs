@@ -33,9 +33,13 @@ namespace Gym.Core.Contracts
 
         Task AddToCartAsync(int id,string userId);
 
-        Task<UserProduct?> GetProductInCartAsync(string userId);
+        Task<UserProduct?> GetProductInCartAsync(string userId,int id);
 
         Task RemoveFromCartAsync(int id,string userId);
+
+        Task<bool> CategoryExistAsync(int id);
+
+        Task<bool> ExistAsync(int id);
 
 
     }
