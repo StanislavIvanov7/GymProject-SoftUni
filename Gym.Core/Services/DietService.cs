@@ -147,5 +147,11 @@ namespace Gym.Core.Services
             return await repository.AllAsReadOnly<Diet>()
                 .AnyAsync(x=>x.Id == id);
         }
+
+        public async Task<bool> CategoryExistAsync(int id)
+        {
+            return await repository.AllAsReadOnly<DietCategory>()
+                .AllAsync(x=>x.Id == id);
+        }
     }
 }

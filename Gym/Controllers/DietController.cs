@@ -49,6 +49,12 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(DietFormViewModel model)
         {
+
+            if(await dietService.CategoryExistAsync(model.DietCategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.DietCategoryId), "Category does not exist");
+            }
+
             if(!ModelState.IsValid)
             {
                 model.DietCategories = await dietService.GetDietCategoriesAsync();
