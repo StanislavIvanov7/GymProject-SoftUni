@@ -20,5 +20,7 @@ namespace Gym.Core.Contracts
 
         Task RemoveAsync(int id);
 
+        Task<bool> ExistAsync(int id);
+
     }
 }

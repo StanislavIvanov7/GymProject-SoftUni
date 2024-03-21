@@ -56,12 +56,8 @@ namespace Gym.Core.Services
                     Description = x.Description,
                     Creator = x.Creator.UserName,
                     DietCategory = x.DietCategory.Name
-                }).FirstOrDefaultAsync();
+                }).FirstAsync();
                 
-            if(diet == null)
-            {
-                throw new ArgumentException("Invalid diet");
-            }
 
             return diet;
         }
@@ -144,6 +140,12 @@ namespace Gym.Core.Services
 
             repository.Delete<Diet>(diet);
             await repository.SaveChangesAsync();
+        }
+
+        public async Task<bool> ExistAsync(int id)
+        {
+            return await repository.AllAsReadOnly<Diet>()
+                .AnyAsync(x=>x.Id == id);
         }
     }
 }

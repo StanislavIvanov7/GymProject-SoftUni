@@ -26,6 +26,11 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+            if(await dietService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             var model = await dietService.DetailsDietAsync(id);
 
             return View(model);
