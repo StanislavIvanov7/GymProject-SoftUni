@@ -46,9 +46,16 @@ namespace Gym.Core.Services
             return workoutPlans;
         }
 
+        public async Task<bool> CategoryExistAsync(int id)
+        {
+            return await repository.AllAsReadOnly<WorkoutPlanCategory>()
+                 .AnyAsync(x => x.Id == id);
+        }
+
         public async  Task<DetailsWorkoutPlanViewModel> DetailsWorkoutPlansAsync(int id)
         {
-            var workoutPlan = await repository.All<WorkoutPlan>().Where(x=>x.Id == id)
+            var workoutPlan = await repository.All<WorkoutPlan>()
+                .Where(x=>x.Id == id)
                 .Select(x=> new DetailsWorkoutPlanViewModel()
                 {
                     Id= x.Id,
@@ -58,17 +65,16 @@ namespace Gym.Core.Services
                     Creator = x.Creator.UserName ,
                     WorkoutPlanCategory = x.WorkoutPlanCategory.Name
 
-                }).FirstOrDefaultAsync();
-
-            if(workoutPlan == null)
-            {
-                throw new ArgumentException("Invalid workout plan");
-            }
+                }).FirstAsync();
 
             return workoutPlan;
         }
 
-      
+        public async Task<bool> ExistAsync(int id)
+        {
+            return await repository.AllAsReadOnly<WorkoutPlan>()
+                .AnyAsync(x => x.Id == id);
+        }
 
         public async Task<IEnumerable<WorkoutPlanCategoryViewModel>> GetWorkoutPlanCategoriesAsync()
         {
@@ -84,31 +90,30 @@ namespace Gym.Core.Services
 
         public async Task<DeleteWorkoutPlanViewModel> GetWorkoutPlanForDeleteAsync(int id)
         {
-            var workoutPlan = await repository.GetByIdAsync<WorkoutPlan>(id);
-            if(workoutPlan == null)
-            {
-                throw new ArgumentException("Invalid workout plan");
-            }
 
-            return new DeleteWorkoutPlanViewModel()
-            {
-                Id = workoutPlan.Id,
-                Name = workoutPlan.Name,
-                ImageUrl = workoutPlan.ImageUrl,
-            };
+            var workoutPlan = await repository.AllAsReadOnly<WorkoutPlan>()
+                .Where(x=>x.Id == id)
+                .Select(x=> new DeleteWorkoutPlanViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ImageUrl = x.ImageUrl
+                }).FirstAsync();
+
+            return workoutPlan;
         }
 
         public async Task RemoveAsync(int id)
         {
             var workoutPlan = await repository.GetByIdAsync<WorkoutPlan>(id);
 
-            if (workoutPlan == null)
+            if (workoutPlan != null)
             {
-                throw new ArgumentException("Invalid workout plan");
+                repository.Delete(workoutPlan);
+                await repository.SaveChangesAsync();
             }
 
-            repository.Delete(workoutPlan);
-            await repository.SaveChangesAsync();
+           
         }
     }
 }

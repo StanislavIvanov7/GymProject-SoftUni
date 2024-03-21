@@ -17,6 +17,7 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> All()
         {
+           
             var model = await workoutPlanService.AllWorkoutPlansAsync();
 
             return View(model);
@@ -25,6 +26,10 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+            if(await workoutPlanService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
             var model = await workoutPlanService.DetailsWorkoutPlansAsync(id);
 
             return View(model);
@@ -43,6 +48,10 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(WorkoutPlanFormViewModel model)
         {
+            if(await workoutPlanService.CategoryExistAsync(model.WorkoutPlanCategoryId)== false)
+            {
+                ModelState.AddModelError(nameof(model.WorkoutPlanCategoryId), "Category does not exist");
+            }
             if (!ModelState.IsValid)
             {
                 model.WorkoutPlanCategories = await workoutPlanService.GetWorkoutPlanCategoriesAsync();
@@ -59,6 +68,11 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            if(await workoutPlanService.ExistAsync(id) == false) 
+            {
+                return BadRequest();
+            }
+
             var model = await workoutPlanService.GetWorkoutPlanForDeleteAsync(id);
 
            
@@ -68,6 +82,12 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+            if (await workoutPlanService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             await workoutPlanService.RemoveAsync(id);
 
             return RedirectToAction(nameof(All));

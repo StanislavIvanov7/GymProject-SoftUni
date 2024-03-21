@@ -12,11 +12,10 @@ namespace Gym.Controllers
     {
         private readonly IFitnessCardService fitnessCardService;
 
-        private readonly ApplicationDbContext data;
-        public FitnessCardController(IFitnessCardService _fitnessCardService, ApplicationDbContext data)
+ 
+        public FitnessCardController(IFitnessCardService _fitnessCardService)
         {
                 fitnessCardService = _fitnessCardService;
-           this.data = data;
         }
 
         public async Task<IActionResult> All()
