@@ -1,4 +1,5 @@
 ﻿using Gym.Core.Contracts;
+using Gym.Core.Models.Diet;
 using Gym.Core.Models.WorkoutPlan;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
@@ -76,6 +77,24 @@ namespace Gym.Core.Services
                 .AnyAsync(x => x.Id == id);
         }
 
+        public async Task<WorkoutPlanFormViewModel> GetWorkoutPlanForEditAsync(int id)
+        {
+            var workoutPlan = await repository.AllAsReadOnly<WorkoutPlan>()
+                 .Where(x => x.Id == id)
+                 .Select(x => new WorkoutPlanFormViewModel()
+                 {
+                     Id = id,
+                     Name = x.Name,
+                     Description = x.Description,
+                     ImageUrl= x.ImageUrl,
+                     WorkoutPlanCategoryId = x.WorkoutPlanCategoryId,
+                     
+                 })
+                 .FirstAsync();
+
+            return workoutPlan;
+        }
+
         public async Task<IEnumerable<WorkoutPlanCategoryViewModel>> GetWorkoutPlanCategoriesAsync()
         {
             var categories = await repository.All<WorkoutPlanCategory>()
@@ -114,6 +133,21 @@ namespace Gym.Core.Services
             }
 
            
+        }
+
+        public async Task EditAsync(int id, WorkoutPlanFormViewModel model)
+        {
+            var workoutPlan = await repository.GetByIdAsync<WorkoutPlan>(id);
+
+            if (workoutPlan != null)
+            {
+                workoutPlan.Description = model.Description;
+                workoutPlan.Name = model.Name;
+                workoutPlan.ImageUrl = model.ImageUrl;
+                workoutPlan.WorkoutPlanCategoryId = model.WorkoutPlanCategoryId;
+
+                await repository.SaveChangesAsync();
+            }
         }
     }
 }

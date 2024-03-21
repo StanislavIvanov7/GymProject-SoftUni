@@ -1,5 +1,7 @@
 ﻿using Gym.Core.Contracts;
+using Gym.Core.Models.Diet;
 using Gym.Core.Models.WorkoutPlan;
+using Gym.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -65,6 +67,45 @@ namespace Gym.Controllers
             return RedirectToAction (nameof(All));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+
+            if (await workoutPlanService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var model = await workoutPlanService.GetWorkoutPlanForEditAsync(id);
+
+            model.WorkoutPlanCategories = await workoutPlanService.GetWorkoutPlanCategoriesAsync();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(WorkoutPlanFormViewModel model, int id)
+        {
+            if (await workoutPlanService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await workoutPlanService.CategoryExistAsync(model.WorkoutPlanCategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.WorkoutPlanCategoryId), "Category does not exist");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.WorkoutPlanCategories = await workoutPlanService.GetWorkoutPlanCategoriesAsync();
+                return View(model);
+            }
+
+            await workoutPlanService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(All));
+        }
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

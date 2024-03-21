@@ -1,4 +1,5 @@
-﻿using Gym.Core.Models.WorkoutPlan;
+﻿using Gym.Core.Models.Diet;
+using Gym.Core.Models.WorkoutPlan;
 
 namespace Gym.Core.Contracts
 {
@@ -11,6 +12,10 @@ namespace Gym.Core.Contracts
         Task<IEnumerable<WorkoutPlanCategoryViewModel>> GetWorkoutPlanCategoriesAsync();
 
         Task AddAsync(string userId ,WorkoutPlanFormViewModel model);
+
+        Task<WorkoutPlanFormViewModel> GetWorkoutPlanForEditAsync(int id);
+
+        Task EditAsync(int id, WorkoutPlanFormViewModel model);
 
         Task<DeleteWorkoutPlanViewModel> GetWorkoutPlanForDeleteAsync(int id);
 
