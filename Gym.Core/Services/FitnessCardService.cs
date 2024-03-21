@@ -51,7 +51,7 @@ namespace Gym.Core.Services
                     ImageUrl = x.ImageUrl,
                     Price = x.Price,
                     Quantity = x.Quantity,
-                    
+
                 }).ToListAsync();
 
             return fitnessCard;
@@ -76,12 +76,7 @@ namespace Gym.Core.Services
                     IssuesDate = x.IssuesDate.ToString(),
                     Quantity = x.Quantity,
 
-                }).FirstOrDefaultAsync();
-
-            if (fitnessCard == null)
-            {
-                throw new ArgumentException("Invalid fitness card");
-            }
+                }).FirstAsync();
 
             return fitnessCard;
         }
@@ -90,50 +85,39 @@ namespace Gym.Core.Services
         {
             var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
 
-            if (fitnessCard == null)
+            if (fitnessCard != null)
             {
-                throw new ArgumentException("Invalid fitness card");
+                fitnessCard.Description = model.Description;
+                fitnessCard.Price = model.Price;
+                fitnessCard.ImageUrl = model.ImageUrl;
+                fitnessCard.FitnessCardCategoryId = model.FitnessCardCategoryId;
+                fitnessCard.Quantity = model.Quantity;
+
+                await repository.SaveChangesAsync();
             }
 
-
-            fitnessCard.Description = model.Description;
-            fitnessCard.Price = model.Price;
-            fitnessCard.ImageUrl = model.ImageUrl;
-            fitnessCard.FitnessCardCategoryId = model.FitnessCardCategoryId;
-            fitnessCard.Quantity = model.Quantity;
-
-
-            await repository.SaveChangesAsync();
         }
 
 
         public async Task<FitnessCardFormViewModel> GetFitnessCardForEditAsync(int id)
         {
-            var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
 
-            if (fitnessCard == null)
-            {
-                throw new ArgumentException("Invalid fitness card");
-            }
-            var model = new FitnessCardFormViewModel()
-            {
-                Id = id,
-                FitnessCardCategoryId = fitnessCard.FitnessCardCategoryId,
-                Price = fitnessCard.Price,
-                Description = fitnessCard.Description,
-                ImageUrl = fitnessCard.ImageUrl,
-                DurationInMonths = fitnessCard.DurationInMonths,
-                Name = fitnessCard.Name,
-                Quantity = fitnessCard.Quantity,
+            var fitnessCard = await repository.AllAsReadOnly<FitnessCard>()
+                .Where(x => x.Id == id)
+                .Select(x => new FitnessCardFormViewModel()
+                {
+                    Id = id,
+                    FitnessCardCategoryId = x.FitnessCardCategoryId,
+                    Price = x.Price,
+                    Description = x.Description,
+                    ImageUrl = x.ImageUrl,
+                    DurationInMonths = x.DurationInMonths,
+                    Name = x.Name,
+                    Quantity = x.Quantity,
+                })
+                .FirstAsync();
 
-                
-
-
-            };
-
-            //model.ProductCategories = await GetProductCategoryAsync();
-
-            return model;
+            return fitnessCard;
         }
 
         public async Task<IEnumerable<FitnessCardCategoryViewModel>> GetFitnessCardCategoryAsync()
@@ -151,33 +135,46 @@ namespace Gym.Core.Services
 
         public async Task<DeleteFitnessCardViewModel> GetFitnessCardForDeleteAsync(int id)
         {
-            var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
-            if (fitnessCard == null)
-            {
-                throw new ArgumentException("Invalid product");
-            }
+            //var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
+            //if (fitnessCard == null)
+            //{
+            //    throw new ArgumentException("Invalid product");
+            //}
 
-            return new DeleteFitnessCardViewModel()
-            {
-                Id = fitnessCard.Id,
-                ImageUrl = fitnessCard.ImageUrl,
-                Name = fitnessCard.Name,
-                
-            };
+            //return new DeleteFitnessCardViewModel()
+            //{
+            //    Id = fitnessCard.Id,
+            //    ImageUrl = fitnessCard.ImageUrl,
+            //    Name = fitnessCard.Name,
+
+            //};
+
+            var fitnessCard = await repository.AllAsReadOnly<FitnessCard>()
+                .Where(x => x.Id == id)
+                .Select(x => new DeleteFitnessCardViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ImageUrl = x.ImageUrl,
+
+                }).FirstAsync();
+
+            return fitnessCard;
+
+
         }
 
         public async Task RemoveAsync(int id)
         {
             var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
-           
 
-            if (fitnessCard == null)
+
+            if (fitnessCard != null)
             {
-                throw new ArgumentException("Invalid fitness card");
+                repository.Delete(fitnessCard);
+                await repository.SaveChangesAsync();
             }
 
-            repository.Delete(fitnessCard);
-            await repository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<AllFitnessCardViewModel>> AllFitnessCardInCartAsync(string userId)
@@ -202,7 +199,8 @@ namespace Gym.Core.Services
 
         public async Task AddToCartAsync(int id, string userId)
         {
-            var cart = await repository.All<UserFitnessCard>().FirstOrDefaultAsync(x => x.FitnessCardId == id && x.UserId == userId);
+            var cart = await repository.All<UserFitnessCard>()
+                .FirstOrDefaultAsync(x => x.FitnessCardId == id && x.UserId == userId);
 
             if (cart == null)
             {
@@ -225,9 +223,10 @@ namespace Gym.Core.Services
             }
         }
 
-        public async Task<UserFitnessCard?> GetFitnessCardInCartAsync(string userId)
+        public async Task<UserFitnessCard?> GetFitnessCardInCartAsync(string userId, int id)
         {
-            return await repository.AllAsReadOnly<UserFitnessCard>().FirstOrDefaultAsync(x => x.UserId == userId);
+            return await repository.AllAsReadOnly<UserFitnessCard>()
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.FitnessCardId == id);
         }
 
         public async Task RemoveFromCartAsync(int id, string userId)
@@ -243,6 +242,26 @@ namespace Gym.Core.Services
                 repository.Delete(fitnessCard);
                 await repository.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> CategoryExistAsync(int id)
+        {
+
+            return await repository.AllAsReadOnly<FitnessCardCategory>()
+                .AnyAsync(x => x.Id == id);
+
+        }
+
+        public async Task<bool> ExistAsync(int id)
+        {
+            return await repository.AllAsReadOnly<FitnessCard>()
+                .AnyAsync(x => x.Id == id);
+        }
+
+        public async Task<bool> ExistInCartAsync(int id)
+        {
+           return await repository.AllAsReadOnly<UserFitnessCard>()
+                .AnyAsync(x => x.FitnessCardId == id);
         }
     }
 }

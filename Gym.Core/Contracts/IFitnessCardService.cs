@@ -24,9 +24,14 @@ namespace Gym.Core.Models.FitnessCard
 
         Task AddToCartAsync(int id, string userId);
 
-        Task<UserFitnessCard?> GetFitnessCardInCartAsync(string userId);
+        Task<UserFitnessCard?> GetFitnessCardInCartAsync(string userId,int id);
 
         Task RemoveFromCartAsync(int id, string userId);
 
+        Task<bool> CategoryExistAsync(int id);
+
+        Task<bool> ExistAsync(int id);
+
+        Task<bool> ExistInCartAsync(int id);
     }
 }

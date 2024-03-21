@@ -34,6 +34,12 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(FitnessCardFormViewModel model)
         {
+            if(await fitnessCardService.CategoryExistAsync(model.FitnessCardCategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.FitnessCardCategoryId), "Category does not exist");
+               
+            }
+
             if (!ModelState.IsValid)
             {
                 model.FitnessCardCategories = await fitnessCardService.GetFitnessCardCategoryAsync();
@@ -51,6 +57,10 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+            if(await fitnessCardService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
             var model = await fitnessCardService.DetailsFitnessCardAsync(id);
 
             return View(model);
@@ -59,11 +69,13 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+
+            if (await fitnessCardService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
             var model = await fitnessCardService.GetFitnessCardForEditAsync(id);
-            //if(model == null)
-            //{
-            //    return BadRequest();
-            //}
+            
             model.FitnessCardCategories = await fitnessCardService.GetFitnessCardCategoryAsync();
             return View(model);
         }
@@ -72,7 +84,15 @@ namespace Gym.Controllers
         public async Task<IActionResult> Edit(int id, FitnessCardFormViewModel model)
         {
 
+            if (await fitnessCardService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
 
+            if (await fitnessCardService.CategoryExistAsync(model.FitnessCardCategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.FitnessCardCategoryId), "Category does not exist");
+            }
             if (!ModelState.IsValid)
             {
                 model.FitnessCardCategories = await fitnessCardService.GetFitnessCardCategoryAsync();
@@ -89,6 +109,12 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+
+            if (await fitnessCardService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             var model = await fitnessCardService.GetFitnessCardForDeleteAsync(id);
 
    
@@ -98,6 +124,10 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (await fitnessCardService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
             await fitnessCardService.RemoveAsync(id);
 
             return RedirectToAction(nameof(All));
@@ -118,6 +148,11 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(int id)
         {
+            if(await fitnessCardService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             string userId = GetUserId();
 
             await fitnessCardService.AddToCartAsync(id, userId);
@@ -130,7 +165,7 @@ namespace Gym.Controllers
         {
             var userId = GetUserId();
 
-            var fitnessCard = await fitnessCardService.GetFitnessCardInCartAsync(userId);
+            var fitnessCard = await fitnessCardService.GetFitnessCardInCartAsync(userId,id);
             if (fitnessCard == null)
             {
                 return BadRequest();
