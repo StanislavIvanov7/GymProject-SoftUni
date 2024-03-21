@@ -12,7 +12,7 @@ namespace Gym.Core.Services
 
         public DietService(IRepository _repository)
         {
-                repository = _repository;
+            repository = _repository;
         }
 
         public async Task AddAsync(DietFormViewModel model, string userId)
@@ -24,7 +24,7 @@ namespace Gym.Core.Services
                 DietCategoryId = model.DietCategoryId,
                 ImageUrl = model.ImageUrl,
                 CreatorId = userId,
-                
+
             };
 
             await repository.AddAsync(diet);
@@ -33,31 +33,31 @@ namespace Gym.Core.Services
 
         public async Task<IEnumerable<AllDietViewModel>> AllDietsAsync()
         {
-           var diets = await repository.AllAsReadOnly<Diet>()
-                .Select(x=>  new AllDietViewModel()
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    ImageUrl = x.ImageUrl,
-                }).ToListAsync();
+            var diets = await repository.AllAsReadOnly<Diet>()
+                 .Select(x => new AllDietViewModel()
+                 {
+                     Id = x.Id,
+                     Title = x.Title,
+                     ImageUrl = x.ImageUrl,
+                 }).ToListAsync();
 
             return diets;
         }
 
         public async Task<DetailsDietViewModel> DetailsDietAsync(int id)
         {
-            var diet = await repository.All<Diet>()
+            var diet = await repository.AllAsReadOnly<Diet>()
                 .Where(x => x.Id == id)
                 .Select(x => new DetailsDietViewModel()
                 {
-                    Id = x.Id,  
+                    Id = x.Id,
                     Title = x.Title,
                     ImageUrl = x.ImageUrl,
                     Description = x.Description,
                     Creator = x.Creator.UserName,
                     DietCategory = x.DietCategory.Name
                 }).FirstAsync();
-                
+
 
             return diet;
         }
@@ -66,42 +66,51 @@ namespace Gym.Core.Services
         {
             var diet = await repository.GetByIdAsync<Diet>(id);
 
-            if (diet == null)
+            if (diet != null)
             {
-                throw new ArgumentException("Invalid diet");
+                diet.Description = model.Description;
+                diet.Title = model.Title;
+                diet.ImageUrl = model.ImageUrl;
+                diet.DietCategoryId = model.DietCategoryId;
+
+                await repository.SaveChangesAsync();
             }
 
-
-            diet.Description = model.Description;
-            diet.Title = model.Title;
-            diet.ImageUrl = model.ImageUrl;
-            diet.DietCategoryId = model.DietCategoryId;
-
-            await repository.SaveChangesAsync();
         }
 
         public async Task<DietFormViewModel> GetDietForEditAsync(int id)
         {
-            var diet = await repository.GetByIdAsync<Diet>(id);
+            //var diet = await repository.GetByIdAsync<Diet>(id);
 
-            if(diet == null)
-            {
-                throw new ArgumentException("Invalid diet");
-            }
 
-            return new DietFormViewModel()
-            {
-                Id = id,
-                Title = diet.Title,
-                Description = diet.Description,
-                DietCategoryId = diet.DietCategoryId,
-                ImageUrl = diet.ImageUrl,
-            };
+            //return new DietFormViewModel()
+            //{
+            //    Id = id,
+            //    Title = diet.Title,
+            //    Description = diet.Description,
+            //    DietCategoryId = diet.DietCategoryId,
+            //    ImageUrl = diet.ImageUrl,
+            //};
+
+            var diet = await repository.AllAsReadOnly<Diet>()
+                 .Where(x => x.Id == id)
+                 .Select(x => new DietFormViewModel()
+                 {
+                     Id = id,
+                     Title = x.Title,
+                     Description = x.Description,
+                     DietCategoryId = x.DietCategoryId,
+                     ImageUrl = x.ImageUrl,
+                 })
+                 .FirstAsync();
+
+            return diet;
+
         }
 
         public async Task<IEnumerable<DietCategoryViewModel>> GetDietCategoriesAsync()
         {
-            var categories = await repository.All<DietCategory>()
+            var categories = await repository.AllAsReadOnly<DietCategory>()
                 .Select(x => new DietCategoryViewModel()
                 {
                     Id = x.Id,
@@ -113,45 +122,53 @@ namespace Gym.Core.Services
 
         public async Task<DeleteDietViewModel> GetDietForDeleteAsync(int id)
         {
-            var diet = await repository.GetByIdAsync<Diet>(id);
-            if (diet == null)
-            {
-                throw new ArgumentException("Invalid product");
-            }
+            //var diet = await repository.GetByIdAsync<Diet>(id);
 
-            return new DeleteDietViewModel()
-            {
-                Id = diet.Id,
-                ImageUrl = diet.ImageUrl,
-                Title = diet.Title,
+            //return new DeleteDietViewModel()
+            //{
+            //    Id = diet.Id,
+            //    ImageUrl = diet.ImageUrl,
+            //    Title = diet.Title,
 
-            };
+            //};
+
+            var diets = await repository.AllAsReadOnly<Diet>()
+                .Where(x => x.Id == id)
+                .Select(x => new DeleteDietViewModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    ImageUrl = x.ImageUrl
+
+                })
+                .FirstAsync();
+
+            return diets;
         }
 
         public async Task RemoveAsync(int id)
         {
             var diet = await repository.GetByIdAsync<Diet>(id);
 
-            if( diet == null)
+            if (diet != null)
             {
-                throw new ArgumentException("Invalid diet");
-
+                repository.Delete<Diet>(diet);
+                await repository.SaveChangesAsync();
             }
 
-            repository.Delete<Diet>(diet);
-            await repository.SaveChangesAsync();
+          
         }
 
         public async Task<bool> ExistAsync(int id)
         {
             return await repository.AllAsReadOnly<Diet>()
-                .AnyAsync(x=>x.Id == id);
+                .AnyAsync(x => x.Id == id);
         }
 
         public async Task<bool> CategoryExistAsync(int id)
         {
             return await repository.AllAsReadOnly<DietCategory>()
-                .AllAsync(x=>x.Id == id);
+                .AnyAsync(x => x.Id == id);
         }
     }
 }

@@ -70,6 +70,12 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            
+            if (await dietService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+           
             var model = await dietService.GetDietForEditAsync(id);
 
             model.DietCategories = await dietService.GetDietCategoriesAsync();
@@ -80,6 +86,15 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(DietFormViewModel model,int id)
         {
+            if (await dietService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await dietService.CategoryExistAsync(model.DietCategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.DietCategoryId), "Category does not exist");
+            }
 
             if (!ModelState.IsValid)
             {
@@ -95,6 +110,11 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            if(await dietService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
             var model = await dietService.GetDietForDeleteAsync(id);
 
             return View(model);
@@ -103,6 +123,12 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+            if(await dietService.ExistAsync(id) == false) 
+            {
+                return BadRequest();
+            }
+
             await dietService.RemoveAsync(id);
 
             return RedirectToAction(nameof(All));
