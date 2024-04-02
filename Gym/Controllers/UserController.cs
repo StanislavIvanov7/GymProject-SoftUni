@@ -2,7 +2,7 @@
 using Gym.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using static Gym.Core.Constants.CustomClaims;
 namespace Gym.Controllers
 {
     public class UserController : Controller
@@ -55,6 +55,7 @@ namespace Gym.Controllers
                 return View(model);
             }
 
+            await userManager.AddClaimAsync(applicationUser, new System.Security.Claims.Claim(UserFullNameClaim, $"{applicationUser.FirstName} {applicationUser.LastName}"));
             await signInManager.SignInAsync(applicationUser, false);
 
             return RedirectToAction("Index", "Home");
