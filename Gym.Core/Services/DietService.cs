@@ -54,7 +54,8 @@ namespace Gym.Core.Services
                     Title = x.Title,
                     ImageUrl = x.ImageUrl,
                     Description = x.Description,
-                    Creator = x.Creator.UserName,
+                    CreatorName = x.Creator.FirstName + " " + x.Creator.LastName,
+                    CreatorEmail = x.Creator.Email,
                     DietCategory = x.DietCategory.Name
                 }).FirstAsync();
 

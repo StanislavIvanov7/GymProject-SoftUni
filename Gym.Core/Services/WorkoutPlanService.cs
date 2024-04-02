@@ -63,7 +63,8 @@ namespace Gym.Core.Services
                     Name = x.Name,  
                     ImageUrl = x.ImageUrl,
                     Description = x.Description,
-                    Creator = x.Creator.UserName ,
+                    CreatorName = x.Creator.FirstName + " " + x.Creator.LastName,
+                    CreatorEmail = x.Creator.Email,
                     WorkoutPlanCategory = x.WorkoutPlanCategory.Name
 
                 }).FirstAsync();

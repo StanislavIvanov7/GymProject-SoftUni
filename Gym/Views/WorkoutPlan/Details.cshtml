@@ -15,12 +15,13 @@
                  src="@Model.ImageUrl" alt="Book Image">
             <p class="mb-0"><span class="fw-bold">Description: </span>@Model.Description</p>
             <p class="mb-0"><span class="fw-bold">Workout Plan Category: </span>@Model.WorkoutPlanCategory</p>
-            <p class="mb-0"><span class="fw-bold">Creator: </span>@Model.Creator</p>
+            <p class="mb-0"><span class="fw-bold">Creator Name: </span>@Model.CreatorName</p>
+            <p class="mb-0"><span class="fw-bold">Creator Email: </span>@Model.CreatorEmail</p>
             <p class="mb-0"><span class="fw-bold">Diet Image URL: </span>@Model.ImageUrl</p>
         </div>
 
         <a asp-controller="WorkoutPlan" asp-action="All" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Back to All Workout plans</a>
-        @if (User?.Identity?.Name == Model.Creator)
+        @if (User?.Identity?.Name == Model.CreatorEmail)
         {
             <a asp-controller="WorkoutPlan" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
             <a asp-controller="WorkoutPlan" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger mb-2 w-100 p-3 fw-bold">Delete</a>

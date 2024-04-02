@@ -107,7 +107,8 @@ namespace Gym.Core.Services
                   ImageUrl = x.ImageUrl,
                   Description = x.Description,
                   ProductCategory = x.ProductCategory.Name,
-                  Creator = x.Creator.UserName,
+                  CreatorName = x.Creator.FirstName + " " + x.Creator.LastName,
+                  CreatorEmail = x.Creator.Email,
                   Quantity = x.Quantity
                   
                   

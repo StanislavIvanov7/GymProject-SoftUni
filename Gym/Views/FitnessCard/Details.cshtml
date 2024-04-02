@@ -19,12 +19,13 @@
             <p class="mb-0"><span class="fw-bold">Duration In Months: </span>@Model.DurationInMoths</p>
             <p class="mb-0"><span class="fw-bold">Quantity: </span>@Model.Quantity</p>
             <p class="mb-0"><span class="fw-bold">Issues Date: </span>@Model.IssuesDate</p>
-            <p class="mb-0"><span class="fw-bold">Creator: </span>@Model.Creator</p>
+            <p class="mb-0"><span class="fw-bold">Creator Name: </span>@Model.CreatorName</p>
+            <Ep class="mb-0"><span class="fw-bold">Creator Email: </span>@Model.CreatorEmail>
             <p class="mb-0"><span class="fw-bold">Product Image URL: </span>@Model.ImageUrl</p>
         </div>
 
         <a asp-controller="FitnessCard" asp-action="All" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Back to All Fitness Card</a>
-        @if (User?.Identity?.Name == Model.Creator)
+        @if (User?.Identity?.Name == Model.CreatorEmail)
         {
             <a asp-controller="FitnessCard" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
             <a asp-controller="FitnessCard" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger mb-2 w-100 p-3 fw-bold">Delete</a>
