@@ -1,10 +1,18 @@
 using Gym.ModelBinders;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Gym.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
+
+builder.Services.ConfigureApplicationCookie(cnf =>
+{
+    cnf.LoginPath = "/User/Login";
+});
 
 builder.Services.AddControllersWithViews(opt =>
 {
