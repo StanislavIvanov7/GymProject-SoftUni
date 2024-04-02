@@ -3,6 +3,7 @@ using Gym.Core.Models.FitnessCard;
 using Gym.Core.Services;
 using Gym.Infrastructure.Data;
 using Gym.Infrastructure.Data.Common;
+using Gym.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,7 +40,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
 
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<ApplicationUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireNonAlphanumeric = false;

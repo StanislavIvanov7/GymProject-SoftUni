@@ -90,5 +90,14 @@
             public const int MaxLengthName = 100;
             public const int MinLengthName = 3;
         }
+
+        public static class ApplicationUser
+        {
+            public const int MaxLengthFirstName = 50;
+            public const int MinLengthFirstName = 1;
+
+            public const int MaxLengthLastName = 50;
+            public const int MinLengthLastName = 3;
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace Gym.Infrastructure.Data.Models
         public string CreatorId { get; set; } = string.Empty;
 
         [ForeignKey(nameof(CreatorId))]
-        public IdentityUser Creator { get; set; } = null!;
+        public ApplicationUser Creator { get; set; } = null!;
 
         [Required]
         [MaxLength(MaxLengthImageUrl)]
