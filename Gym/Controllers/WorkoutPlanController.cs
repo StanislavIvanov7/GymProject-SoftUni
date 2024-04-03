@@ -40,6 +40,12 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = new WorkoutPlanFormViewModel();
 
             model.WorkoutPlanCategories = await workoutPlanService.GetWorkoutPlanCategoriesAsync();
@@ -50,7 +56,13 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(WorkoutPlanFormViewModel model)
         {
-            if(await workoutPlanService.CategoryExistAsync(model.WorkoutPlanCategoryId)== false)
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+            if (await workoutPlanService.CategoryExistAsync(model.WorkoutPlanCategoryId)== false)
             {
                 ModelState.AddModelError(nameof(model.WorkoutPlanCategoryId), "Category does not exist");
             }
@@ -76,6 +88,11 @@ namespace Gym.Controllers
                 return BadRequest();
             }
 
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = await workoutPlanService.GetWorkoutPlanForEditAsync(id);
 
             model.WorkoutPlanCategories = await workoutPlanService.GetWorkoutPlanCategoriesAsync();
@@ -89,6 +106,11 @@ namespace Gym.Controllers
             if (await workoutPlanService.ExistAsync(id) == false)
             {
                 return BadRequest();
+            }
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
             }
 
             if (await workoutPlanService.CategoryExistAsync(model.WorkoutPlanCategoryId) == false)
@@ -114,6 +136,11 @@ namespace Gym.Controllers
                 return BadRequest();
             }
 
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = await workoutPlanService.GetWorkoutPlanForDeleteAsync(id);
 
            
@@ -127,6 +154,11 @@ namespace Gym.Controllers
             if (await workoutPlanService.ExistAsync(id) == false)
             {
                 return BadRequest();
+            }
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
             }
 
             await workoutPlanService.RemoveAsync(id);

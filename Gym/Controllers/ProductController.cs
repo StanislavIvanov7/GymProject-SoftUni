@@ -45,6 +45,12 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = new ProductFormViewModel();
             model.ProductCategories = await productService .GetProductCategoryAsync();
 
@@ -54,6 +60,12 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ProductFormViewModel model)
         {
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             if (await productService.CategoryExistAsync(model.ProductCategoryId) == false)
             {
                 ModelState.AddModelError(nameof(model.ProductCategoryId), "Category does not exist");
@@ -78,6 +90,11 @@ namespace Gym.Controllers
                 return BadRequest();
             }
 
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = await productService.GetProductForEditAsync(id);
      
             model.ProductCategories = await productService.GetProductCategoryAsync();
@@ -93,7 +110,12 @@ namespace Gym.Controllers
                 return BadRequest();
             }
 
-            if(await productService.CategoryExistAsync(model.ProductCategoryId) == false)
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+            if (await productService.CategoryExistAsync(model.ProductCategoryId) == false)
             {
                 ModelState.AddModelError(nameof(model.ProductCategoryId), "Category does not exist");
             }
@@ -131,6 +153,11 @@ namespace Gym.Controllers
                 return BadRequest();
             }
 
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = await productService.GetProductForDeleteAsync(id);
 
             return View(model);
@@ -142,6 +169,11 @@ namespace Gym.Controllers
             if (await productService.ExistAsync(id) == false)
             {
                 return BadRequest();
+            }
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
             }
 
             await productService.RemoveAsync(id);

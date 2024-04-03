@@ -39,6 +39,12 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = new DietFormViewModel();
 
             model.DietCategories = await dietService.GetDietCategoriesAsync();
@@ -49,8 +55,12 @@ namespace Gym.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(DietFormViewModel model)
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
 
-            if(await dietService.CategoryExistAsync(model.DietCategoryId) == false)
+            if (await dietService.CategoryExistAsync(model.DietCategoryId) == false)
             {
                 ModelState.AddModelError(nameof(model.DietCategoryId), "Category does not exist");
             }
@@ -75,6 +85,11 @@ namespace Gym.Controllers
             {
                 return BadRequest();
             }
+
+            if(User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
            
             var model = await dietService.GetDietForEditAsync(id);
 
@@ -89,6 +104,11 @@ namespace Gym.Controllers
             if (await dietService.ExistAsync(id) == false)
             {
                 return BadRequest();
+            }
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
             }
 
             if (await dietService.CategoryExistAsync(model.DietCategoryId) == false)
@@ -115,6 +135,11 @@ namespace Gym.Controllers
                 return BadRequest();
             }
 
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = await dietService.GetDietForDeleteAsync(id);
 
             return View(model);
@@ -127,6 +152,11 @@ namespace Gym.Controllers
             if(await dietService.ExistAsync(id) == false) 
             {
                 return BadRequest();
+            }
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
             }
 
             await dietService.RemoveAsync(id);
