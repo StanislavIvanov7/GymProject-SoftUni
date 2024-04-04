@@ -271,19 +271,6 @@ namespace Gym.Controllers
 
             return RedirectToAction(nameof(All));
 
-            //if(await fitnessCardService.Count(id) < 1)
-            //{
-            //    return BadRequest();
-
-            //}
-
-            //var userId = GetUserId();
-
-            //if(await fitnessCardService.IsInUserCart(id, userId) == false)
-            //{
-            //    Unauthorized();
-            //}
-
 
 
         }

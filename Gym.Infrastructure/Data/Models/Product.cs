@@ -52,5 +52,7 @@ namespace Gym.Infrastructure.Data.Models
 
         public IEnumerable<UserProduct> UserProducts { get; set; } = new List<UserProduct>();
 
+        public IEnumerable<BuyerProduct> BuyerProducts { get; set; } = new List<BuyerProduct>();
+
     }
 }

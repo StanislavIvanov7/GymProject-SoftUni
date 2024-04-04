@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 
 namespace Gym.Infrastructure.Data.Models
 {
-    [Comment("Buyer Fitness Card Mapping Table")]
-    public class BuyerFitnessCard
+    [Comment("Buyer Product Mapping Table")]
+    public class BuyerProduct
     {
-
         [Required]
         [Comment("Buyer identifier")]
         public string BuyerId { get; set; } = string.Empty;
@@ -22,13 +21,13 @@ namespace Gym.Infrastructure.Data.Models
 
         [Required]
         [Comment("Fitness card identifier")]
-        public int FitnessCardId { get; set; }
+        public int ProductId { get; set; }
 
-        [ForeignKey(nameof(FitnessCardId))]
-        public FitnessCard FitnessCard { get; set; } = null!;
+        [ForeignKey(nameof(ProductId))]
+        public Product Product { get; set; } = null!;
 
         [Required]
-        [Comment("Fitness card quantity")]
+        [Comment("Product quantity")]
         public int Quantity { get; set; }
     }
 }

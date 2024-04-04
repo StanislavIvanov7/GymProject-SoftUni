@@ -1,5 +1,6 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Models;
+using Gym.Core.Models.FitnessCard;
 using Gym.Core.Services;
 using Gym.Infrastructure.Constants;
 using Gym.Infrastructure.Data;
@@ -232,6 +233,42 @@ namespace Gym.Controllers
             return RedirectToAction(nameof(All));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Buy(int id)
+        {
+
+            if (await productService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+            var userId = GetUserId();
+
+            if (await productService.IsInUserCart(id, userId) == false)
+            {
+                Unauthorized();
+            }
+
+            if (await productService.CanBuyAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            await productService.BuyAsync(id, userId);
+
+            return RedirectToAction(nameof(All));
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Purchase()
+        {
+            string userId = GetUserId();
+
+            var purchasedProduct = await productService.AllPurchasedProductsAsync(userId);
+
+            return View(purchasedProduct);
+
+        }
         private string GetUserId()
         {
             var userId = ClaimsPrincipalExtensions.Id(this.User);

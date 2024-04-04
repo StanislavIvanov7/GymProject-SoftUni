@@ -1,6 +1,7 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Enumerations;
 using Gym.Core.Models;
+using Gym.Core.Models.FitnessCard;
 using Gym.Infrastructure.Constants;
 using Gym.Infrastructure.Data;
 using Gym.Infrastructure.Data.Common;
@@ -287,6 +288,78 @@ namespace Gym.Core.Services
         {
             return await repository.AllAsReadOnly<Product>()
                 .AnyAsync(x => x.Id == id);
+        }
+
+        public async Task BuyAsync(int id, string userId)
+        {
+            var bp = await repository.All<BuyerProduct>()
+           .FirstOrDefaultAsync(x => x.ProductId == id && x.BuyerId == userId);
+
+            if (bp == null)
+            {
+                var entity = new BuyerProduct()
+                {
+                    ProductId = id,
+                    BuyerId = userId,
+                    Quantity = 1,
+
+                };
+                await repository.AddAsync(entity);
+                await repository.SaveChangesAsync();
+
+            }
+            else
+            {
+
+                bp.Quantity += 1;
+                await repository.SaveChangesAsync();
+            }
+
+            await RemoveFromCartAsync(id, userId);
+
+            var product = await repository.All<Product>()
+                .FirstAsync(x => x.Id == id);
+            product.Quantity -= 1;
+
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsInUserCart(int id, string userId)
+        {
+            return await repository.AllAsReadOnly<UserProduct>()
+                .AnyAsync(x => x.UserId == userId && x.ProductId == id);
+        }
+
+        public async Task<IEnumerable<AllProductViewModel>> AllPurchasedProductsAsync(string userId)
+        {
+            var purchasedProducts = await repository.All<BuyerProduct>()
+                    .Where(x => x.BuyerId == userId)
+                    .Select(x => new AllProductViewModel
+                    {
+                        Id = x.Product.Id,
+                        Name = x.Product.Name,
+                        Description = x.Product.Description,
+                        Quantity = x.Quantity,
+                        ImageUrl = x.Product.ImageUrl,
+                        Price = x.Product.Price,
+
+
+
+                    }).ToListAsync();
+
+            return purchasedProducts;
+        }
+
+        public async Task<bool> CanBuyAsync(int id)
+        {
+            var product = await repository.AllAsReadOnly<Product>()
+             .FirstAsync(x => x.Id == id);
+            if (product.Quantity < 1)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

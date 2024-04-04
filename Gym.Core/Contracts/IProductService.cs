@@ -1,5 +1,6 @@
 ﻿using Gym.Core.Enumerations;
 using Gym.Core.Models;
+using Gym.Core.Models.FitnessCard;
 using Gym.Infrastructure.Data.Models;
 
 namespace Gym.Core.Contracts
@@ -40,6 +41,14 @@ namespace Gym.Core.Contracts
         Task<bool> CategoryExistAsync(int id);
 
         Task<bool> ExistAsync(int id);
+
+        Task BuyAsync(int id, string userId);
+
+        Task<bool> IsInUserCart(int id, string userId);
+
+        Task<IEnumerable<AllProductViewModel>> AllPurchasedProductsAsync(string userId);
+
+        Task<bool> CanBuyAsync(int id);
 
 
     }
