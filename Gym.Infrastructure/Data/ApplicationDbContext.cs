@@ -31,6 +31,14 @@ namespace Gym.Infrastructure.Data
                 .WithMany(x => x.UserFitnessCards)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<BuyerFitnessCard>()
+              .HasKey(x => new { x.FitnessCardId, x.BuyerId });
+
+            builder.Entity<BuyerFitnessCard>()
+            .HasOne(x => x.FitnessCard)
+            .WithMany(x => x.BuyerFitnessCards)
+            .OnDelete(DeleteBehavior.Restrict);
+
             builder.ApplyConfiguration(new DietCategoryConfiguration());
             builder.ApplyConfiguration(new DietConfiguration());
             builder.ApplyConfiguration(new WorkoutPlanCategoryConfiguration());
@@ -50,6 +58,7 @@ namespace Gym.Infrastructure.Data
         public DbSet<FitnessCard> FitnessCards { get; set; } = null!;
         public DbSet<FitnessCardCategory> FitnessCardCategories { get; set; } = null!;
         public DbSet<UserFitnessCard> UsersFitnessCards { get; set; } = null!;
+        public DbSet<BuyerFitnessCard> BuyersFitnessCards { get; set; } = null!;
 
         public DbSet<Diet> Diets { get; set; } = null!;
         public DbSet<DietCategory> DietCategories { get; set; } = null!;

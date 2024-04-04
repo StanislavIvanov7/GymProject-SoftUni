@@ -2,6 +2,7 @@
 using Gym.Core.Models.FitnessCard;
 using Gym.Core.Services;
 using Gym.Infrastructure.Data;
+using Gym.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -243,6 +244,59 @@ namespace Gym.Controllers
             //fitnessCard.UserFitnessCards.Remove(uf);
             //await data.SaveChangesAsync();
             //return RedirectToAction(nameof(All));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Buy(int id)
+        {
+            
+            if(await fitnessCardService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var userId = GetUserId();
+
+            if (await fitnessCardService.IsInUserCart(id, userId) == false)
+            {
+                Unauthorized();
+            }
+
+            if(await fitnessCardService.CanBuyAsync(id)== false)
+            {
+                return BadRequest();
+            }
+
+            await fitnessCardService.BuyAsync(id, userId);
+
+            return RedirectToAction(nameof(All));
+
+            //if(await fitnessCardService.Count(id) < 1)
+            //{
+            //    return BadRequest();
+
+            //}
+
+            //var userId = GetUserId();
+
+            //if(await fitnessCardService.IsInUserCart(id, userId) == false)
+            //{
+            //    Unauthorized();
+            //}
+
+
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Purchase()
+        {
+            string userId = GetUserId();
+
+            var purchasedFitnessCard = await fitnessCardService.AllPurchasedFitnessCardAsync(userId);
+
+            return View(purchasedFitnessCard);
+
         }
         private string GetUserId()
         {

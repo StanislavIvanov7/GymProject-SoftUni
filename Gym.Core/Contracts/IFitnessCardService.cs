@@ -32,6 +32,13 @@ namespace Gym.Core.Models.FitnessCard
 
         Task<bool> ExistAsync(int id);
 
+        Task BuyAsync(int id, string userId);
+
+        Task<bool> IsInUserCart(int id,string userId);
+
+        Task<IEnumerable<AllFitnessCardViewModel>> AllPurchasedFitnessCardAsync(string userId);
+
+        Task<bool> CanBuyAsync(int id);
 
     }
 }

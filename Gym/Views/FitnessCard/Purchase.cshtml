@@ -1,6 +1,6 @@
 ﻿@model ICollection<AllFitnessCardViewModel>
 @{
-    ViewBag.Title = "My Cart for fitness cards";
+    ViewBag.Title = "My purchased Fitness Cards";
 }
 
 
@@ -20,15 +20,6 @@
 
             </div>
 
-
-            <form class="input-group-sm " asp-controller="FitnessCard" asp-action="RemoveFromCart" asp-route-id="@a.Id">
-                <input type="submit" value="Remove from Cart" class="fs-6 btn btn-warning mb-3 w-100 p-3 fw-bold" />
-            </form>
-
-            <form class="input-group-sm " asp-controller="FitnessCard" asp-action="Buy" asp-route-id="@a.Id">
-                <input type="submit" value="Buy" class="fs-6 btn btn-warning mb-3 w-100 p-3 fw-bold" />
-            </form>
-
         </div>
     }
 </div>
@@ -36,4 +27,3 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-

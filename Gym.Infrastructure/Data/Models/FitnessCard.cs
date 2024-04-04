@@ -58,7 +58,10 @@ namespace Gym.Infrastructure.Data.Models
         [ForeignKey(nameof(CreatorId))]
         public ApplicationUser Creator { get; set; } = null!;
 
+
         public IList<UserFitnessCard> UserFitnessCards { get; set; } = new List<UserFitnessCard>();
+
+        public IList<BuyerFitnessCard> BuyerFitnessCards { get; set; } = new List<BuyerFitnessCard>();
 
         [Required]
         [Comment("Fitness card quantity")]

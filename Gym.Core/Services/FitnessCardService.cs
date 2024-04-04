@@ -260,6 +260,87 @@ namespace Gym.Core.Services
                 .AnyAsync(x => x.Id == id);
         }
 
-   
+        public async Task BuyAsync(int id, string userId)
+        {
+            var bf = await repository.All<BuyerFitnessCard>()
+           .FirstOrDefaultAsync(x => x.FitnessCardId == id && x.BuyerId == userId);
+
+            if (bf == null)
+            {
+                var entity = new BuyerFitnessCard()
+                {
+                    FitnessCardId = id,
+                    BuyerId = userId,
+                    Quantity = 1,
+
+                };
+                await repository.AddAsync(entity);
+                await repository.SaveChangesAsync();
+
+            }
+            else
+            {
+
+                bf.Quantity += 1;
+                await repository.SaveChangesAsync();
+            }
+
+            await RemoveFromCartAsync(id, userId);
+
+            var fitnessCard = await repository.All<FitnessCard>()
+                .FirstAsync(x => x.Id == id);
+            fitnessCard.Quantity -= 1;
+
+            await repository.SaveChangesAsync();
+
+
+        }
+
+        //public async Task<int> Count(int id)
+        //{
+        //    return await repository.AllAsReadOnly<FitnessCard>()
+        //        .CountAsync(x=> x.Id == id);
+        //}
+
+        public async Task<bool> IsInUserCart(int id, string userId)
+        {
+            return await repository.AllAsReadOnly<UserFitnessCard>()
+                .AnyAsync(x => x.UserId == userId && x.FitnessCardId == id);
+        }
+
+        public async Task<IEnumerable<AllFitnessCardViewModel>> AllPurchasedFitnessCardAsync(string userId)
+        {
+            var purchasedFitnessCards = await repository.All<BuyerFitnessCard>()
+                     .Where(x => x.BuyerId == userId)
+                     .Select(x => new AllFitnessCardViewModel
+                     {
+                         Id = x.FitnessCard.Id,
+                         Name = x.FitnessCard.Name,
+                         Description = x.FitnessCard.Description,
+                         Quantity = x.Quantity,
+                         ImageUrl = x.FitnessCard.ImageUrl,
+                         Price = x.FitnessCard.Price,
+
+
+
+                     }).ToListAsync();
+
+            return purchasedFitnessCards
+;
+        }
+
+        public async Task<bool> CanBuyAsync(int id)
+        {
+            var fitnessCard = await repository.AllAsReadOnly<FitnessCard>()
+             .FirstAsync(x => x.Id == id);
+            if (fitnessCard.Quantity < 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+       
     }
 }
