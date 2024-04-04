@@ -32,7 +32,6 @@
             <ul class="dropdown-menu">
 
                 <li><a class="dropdown-item" asp-controller="WorkoutPlan" asp-action="All">All workout plans</a></li>
-                <li><a class="dropdown-item" asp-controller="WorkoutPlan" asp-action="Mine">My workout plans</a></li>
                 @if (User.IsAdmin())
                 {
                     <li><a class="dropdown-item" asp-controller="WorkoutPlan" asp-action="Add">Add workout plans</a></li>
@@ -65,7 +64,6 @@
             <ul class="dropdown-menu">
 
                 <li><a class="dropdown-item" asp-controller="Diet" asp-action="All">All diets</a></li>
-                <li><a class="dropdown-item" asp-controller="Diet" asp-action="Mine">My diets</a></li>
                 @if (User.IsAdmin())
                 {
                     <li><a class="dropdown-item" asp-controller="Diet" asp-action="Add">Add diets</a></li>

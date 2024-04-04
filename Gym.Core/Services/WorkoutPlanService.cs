@@ -150,5 +150,18 @@ namespace Gym.Core.Services
                 await repository.SaveChangesAsync();
             }
         }
+
+        public async Task<bool> UserHasFitnessCardAsync(string userId)
+        {
+            var uf = await repository.AllAsReadOnly<BuyerFitnessCard>()
+                 .FirstOrDefaultAsync(x => x.BuyerId == userId);
+
+            if (uf == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

@@ -32,6 +32,14 @@ namespace Gym.Controllers
             {
                 return BadRequest();
             }
+
+            var userId = GetUserId();
+
+            if (await workoutPlanService.UserHasFitnessCardAsync(userId) == false && User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = await workoutPlanService.DetailsWorkoutPlansAsync(id);
 
             return View(model);

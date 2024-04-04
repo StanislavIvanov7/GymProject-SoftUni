@@ -26,14 +26,20 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            if(await dietService.ExistAsync(id) == false)
+            if (await dietService.ExistAsync(id) == false)
             {
                 return BadRequest();
             }
 
+            var userId = GetUserId();
+            if (await dietService.UserHasFitnessCardAsync(userId) == false && User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             var model = await dietService.DetailsDietAsync(id);
 
             return View(model);
+
         }
 
         [HttpGet]
@@ -65,14 +71,14 @@ namespace Gym.Controllers
                 ModelState.AddModelError(nameof(model.DietCategoryId), "Category does not exist");
             }
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 model.DietCategories = await dietService.GetDietCategoriesAsync();
                 return View(model);
             }
             string userId = GetUserId();
 
-            await dietService.AddAsync(model,userId);
+            await dietService.AddAsync(model, userId);
 
             return RedirectToAction(nameof(All));
         }
@@ -80,17 +86,17 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            
+
             if (await dietService.ExistAsync(id) == false)
             {
                 return BadRequest();
             }
 
-            if(User.IsAdmin() == false)
+            if (User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
-           
+
             var model = await dietService.GetDietForEditAsync(id);
 
             model.DietCategories = await dietService.GetDietCategoriesAsync();
@@ -99,7 +105,7 @@ namespace Gym.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(DietFormViewModel model,int id)
+        public async Task<IActionResult> Edit(DietFormViewModel model, int id)
         {
             if (await dietService.ExistAsync(id) == false)
             {
@@ -130,7 +136,7 @@ namespace Gym.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            if(await dietService.ExistAsync(id) == false)
+            if (await dietService.ExistAsync(id) == false)
             {
                 return BadRequest();
             }
@@ -149,7 +155,7 @@ namespace Gym.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
 
-            if(await dietService.ExistAsync(id) == false) 
+            if (await dietService.ExistAsync(id) == false)
             {
                 return BadRequest();
             }

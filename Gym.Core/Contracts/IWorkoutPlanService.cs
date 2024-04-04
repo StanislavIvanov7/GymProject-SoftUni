@@ -24,5 +24,7 @@ namespace Gym.Core.Contracts
         Task<bool> ExistAsync(int id);
 
         Task<bool> CategoryExistAsync(int id);
+
+        Task<bool> UserHasFitnessCardAsync(string userId);
     }
 }

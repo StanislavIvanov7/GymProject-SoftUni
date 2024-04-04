@@ -171,5 +171,18 @@ namespace Gym.Core.Services
             return await repository.AllAsReadOnly<DietCategory>()
                 .AnyAsync(x => x.Id == id);
         }
+
+        public async Task<bool> UserHasFitnessCardAsync(string userId)
+        {
+           var uf = await repository.AllAsReadOnly<BuyerFitnessCard>()
+                 .FirstOrDefaultAsync(x => x.BuyerId == userId);
+
+            if(uf == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
