@@ -37,10 +37,6 @@
             <ul class="dropdown-menu">
 
                 <li><a class="dropdown-item" asp-area="" asp-controller="WorkoutPlan" asp-action="All">All workout plans</a></li>
-                @if (User.IsAdmin())
-                {
-                    <li><a class="dropdown-item" asp-controller="WorkoutPlan" asp-action="Add">Add workout plans</a></li>
-                }
 
             </ul>
         </li>
