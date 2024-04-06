@@ -1,16 +1,14 @@
 ﻿<ul class="navbar-nav flex-grow-1">
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
-    </li>
-    @if (User.IsAdmin())
-    {
-        <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="DashBoard">DashBoard</a></li>
-    }
+        <li class="nav-item">
 
-    @if(this.User?.Identity?.IsAuthenticated ?? false)
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    </li>
+    
+   
+        <li><a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="DashBoard">DashBoard</a></li>
+    
+
+    @if (this.User?.Identity?.IsAuthenticated ?? false)
     {
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -19,13 +17,9 @@
             <ul class="dropdown-menu">
 
                 <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="All">All products</a></li>
-                <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Cart">Cart for products</a></li>
-                <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Purchase">My purchased products</a></li>
-                @if (User.IsAdmin())
-                {
-                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Add">Add products</a></li>
-                }
-               
+                <li><a class="dropdown-item" asp-controller="Product" asp-action="Add">Add products</a></li>
+
+
 
             </ul>
         </li>
@@ -37,10 +31,8 @@
             <ul class="dropdown-menu">
 
                 <li><a class="dropdown-item" asp-area="" asp-controller="WorkoutPlan" asp-action="All">All workout plans</a></li>
-                @if (User.IsAdmin())
-                {
-                    <li><a class="dropdown-item" asp-controller="WorkoutPlan" asp-action="Add">Add workout plans</a></li>
-                }
+                <li><a class="dropdown-item" asp-controller="WorkoutPlan" asp-action="Add">Add workout plans</a></li>
+
 
             </ul>
         </li>
@@ -52,12 +44,8 @@
             <ul class="dropdown-menu">
 
                 <li><a class="dropdown-item" asp-area="" asp-controller="FitnessCard" asp-action="All">All fitness cards</a></li>
-                <li><a class="dropdown-item" asp-area="" asp-controller="FitnessCard" asp-action="Cart">Cart for fitness cards</a></li>
-                <li><a class="dropdown-item" asp-area="" asp-controller="FitnessCard" asp-action="Purchase">My purchased fitness card</a></li>
-                @if (User.IsAdmin())
-                {
-                    <li><a class="dropdown-item" asp-controller="FitnessCard" asp-action="Add">Add fitness cards</a></li>
-                }
+                <li><a class="dropdown-item" asp-controller="FitnessCard" asp-action="Add">Add fitness cards</a></li>
+
 
             </ul>
         </li>
@@ -68,11 +56,13 @@
             </a>
             <ul class="dropdown-menu">
 
-                <li><a class="dropdown-item" asp-area="" asp-controller="Diet" asp-action="All">All diets</a></li>
+                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Diet" asp-action="All">All diets</a></li>
+                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Diet" asp-action="Add">Add diets</a></li>
+
 
             </ul>
         </li>
 
-     
+
     }
 </ul>

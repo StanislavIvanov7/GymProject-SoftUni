@@ -1,0 +1,33 @@
+﻿@model IEnumerable<AllDietViewModel>
+@{
+    ViewBag.Title = "All diet in the gym";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    @foreach (var p in Model)
+    {
+        <div class="card col-4" style="width: 20rem; ">
+            <img class="card-img-top" style="width: 18rem;"
+                 src="@p.ImageUrl" alt="Fitness Card Image">
+            <div class="card-body">
+
+                <h5 class="card-title mt-1">@p.Title</h5>
+
+            </div>
+
+            <a asp-area="Admin" asp-controller="Diet" asp-action="Edit" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
+            <a asp-area="Admin" asp-controller="Diet" asp-action="Delete" asp-route-id="@p.Id" class="btn btn-danger mb-2 w-100 p-3 fw-bold">Delete</a>
+
+
+
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

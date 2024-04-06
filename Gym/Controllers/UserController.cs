@@ -3,6 +3,7 @@ using Gym.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static Gym.Core.Constants.CustomClaims;
+using static Gym.Core.Constants.RoleConstants;
 namespace Gym.Controllers
 {
     public class UserController : Controller
@@ -87,6 +88,13 @@ namespace Gym.Controllers
                 ModelState.AddModelError(string.Empty, "There was an error while logging you in! Please try again later or contact an administrator.");
 
                 return View(model);
+            }
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+
+            if(await userManager.IsInRoleAsync(user,AdminRole))
+            {
+                return RedirectToAction("DashBoard", "Home", new { area = "Admin" });
             }
             return Redirect(model.ReturnUrl ?? "/Home/Index");
         }

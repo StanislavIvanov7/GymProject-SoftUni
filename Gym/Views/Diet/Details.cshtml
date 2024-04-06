@@ -21,11 +21,7 @@
         </div>
 
         <a asp-controller="Diet" asp-action="All" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Back to All Diets</a>
-        @if (User.IsAdmin())
-        {
-            <a asp-controller="Diet" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>
-            <a asp-controller="Diet" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger mb-2 w-100 p-3 fw-bold">Delete</a>
-        }
+       
 
     </div>
 </div>
