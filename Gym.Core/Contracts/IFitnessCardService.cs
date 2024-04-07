@@ -24,7 +24,7 @@ namespace Gym.Core.Models.FitnessCard
 
         Task AddToCartAsync(int id, string userId);
 
-        Task<UserFitnessCard?> GetFitnessCardInCartAsync(string userId,int id);
+        Task<UserFitnessCard?> GetFitnessCardInCartAsync(string userId, int id);
 
         Task RemoveFromCartAsync(int id, string userId);
 
@@ -34,11 +34,16 @@ namespace Gym.Core.Models.FitnessCard
 
         Task BuyAsync(int id, string userId);
 
-        Task<bool> IsInUserCart(int id,string userId);
+        Task<bool> IsInUserCart(int id, string userId);
 
         Task<IEnumerable<AllFitnessCardViewModel>> AllPurchasedFitnessCardAsync(string userId);
 
         Task<bool> CanBuyAsync(int id);
 
+        Task RemoveFitnessCardFromUserFitnessCardsAsync(int id);
+
+        Task RemoveFitnessCardFromBuyerFitnessCardsAsync(int id);
+
     }
 }
+

@@ -341,6 +341,46 @@ namespace Gym.Core.Services
             return true;
         }
 
-       
+        public async Task RemoveFitnessCardFromUserFitnessCardsAsync(int id)
+        {
+
+
+            var fitnessCard = await repository.All<FitnessCard>()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var uf = await repository.All<UserFitnessCard>()
+                .Where(x => x.FitnessCard == fitnessCard)
+                .ToListAsync();
+            if (uf != null)
+            {
+                foreach (var item in uf)
+                {
+                    repository.Delete(item);
+                   
+                }
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async  Task RemoveFitnessCardFromBuyerFitnessCardsAsync(int id)
+        {
+            var fitnessCard = await repository.All<FitnessCard>()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var bf = await repository.All<BuyerFitnessCard>()
+                .Where(x => x.FitnessCard == fitnessCard)
+                .ToListAsync();
+            if (bf != null)
+            {
+                foreach (var item in bf)
+                {
+                    repository.Delete(item);
+
+                }
+
+                await repository.SaveChangesAsync();
+            }
+        }
     }
 }
