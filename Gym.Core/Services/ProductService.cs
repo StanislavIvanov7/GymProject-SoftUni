@@ -184,7 +184,7 @@ namespace Gym.Core.Services
 
         public async Task RemoveAsync(int id)
         {
-            var product = repository.GetByIdAsync<Product>(id);
+            var product = await repository.GetByIdAsync<Product>(id);
 
 
             if(product != null)
@@ -360,6 +360,63 @@ namespace Gym.Core.Services
             }
 
             return true;
+        }
+
+        public async Task<IEnumerable<AllProductViewModel>> AllProductsForAdminPageAsync()
+        {
+            var products = await repository.AllAsReadOnly<Product>()
+               .Select(x => new AllProductViewModel()
+               {
+                   Id = x.Id,
+                   Name = x.Name,
+                   Description = x.Description,
+                   ImageUrl = x.ImageUrl,
+                   Price = x.Price,
+                   Quantity = x.Quantity,
+
+               }).ToListAsync();
+
+            return products;
+        }
+
+        public async Task RemoveProductsFromUserProductsAsync(int id)
+        {
+            var product = await repository.All<Product>()
+               .FirstOrDefaultAsync(x => x.Id == id);
+
+            var up = await repository.All<UserProduct>()
+                .Where(x => x.Product == product)
+                .ToListAsync();
+            if (up != null)
+            {
+                foreach (var item in up)
+                {
+                    repository.Delete(item);
+
+                }
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveProductsFromBuyerProductsAsync(int id)
+        {
+            var product = await repository.All<Product>()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var bp = await repository.All<BuyerProduct>()
+                .Where(x => x.Product == product)
+                .ToListAsync();
+            if (bp != null)
+            {
+                foreach (var item in bp)
+                {
+                    repository.Delete(item);
+
+                }
+
+                await repository.SaveChangesAsync();
+            }
         }
     }
 }

@@ -50,6 +50,12 @@ namespace Gym.Core.Contracts
 
         Task<bool> CanBuyAsync(int id);
 
+        Task<IEnumerable<AllProductViewModel>> AllProductsForAdminPageAsync();
+
+        Task RemoveProductsFromUserProductsAsync(int id);
+
+        Task RemoveProductsFromBuyerProductsAsync(int id);
+
 
     }
 }

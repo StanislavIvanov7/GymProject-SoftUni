@@ -21,10 +21,6 @@
                 <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="All">All products</a></li>
                 <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Cart">Cart for products</a></li>
                 <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Purchase">My purchased products</a></li>
-                @if (User.IsAdmin())
-                {
-                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Add">Add products</a></li>
-                }
                
 
             </ul>
