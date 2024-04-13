@@ -83,12 +83,12 @@ namespace Gym.Tests.ServicesTests
                 DietCategoryId = 1,
                 ImageUrl = "",
                 Title = "",
-                Description = "This house is edited",
+                Description = "This diet is edited",
             });
 
             var dbDiet = await repo.GetByIdAsync<Diet>(2);
 
-            Assert.That(dbDiet.Description, Is.EqualTo("This house is edited"));
+            Assert.That(dbDiet.Description, Is.EqualTo("This diet is edited"));
         }
 
         [Test]
