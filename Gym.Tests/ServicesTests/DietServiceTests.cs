@@ -198,6 +198,9 @@ namespace Gym.Tests.ServicesTests
 
             Assert.IsTrue(diet);
         }
+
+
+      
         //[Test]
         //public async Task DetailsDietTestInMemory()
         //{

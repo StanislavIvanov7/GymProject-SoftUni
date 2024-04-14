@@ -14,7 +14,7 @@ namespace Gym.Core.Contracts
             int currentPage = 1,
             int housesPerPage = 1);
 
-        Task<IEnumerable<string>> AllCategoriesNamesAsync();
+        Task<IEnumerable<AllProductCategoryViewModel>> AllCategoriesNamesAsync();
 
         Task AddAsync(ProductFormViewModel model,string userId);
 
