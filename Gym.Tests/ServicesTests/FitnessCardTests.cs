@@ -189,6 +189,37 @@ namespace Gym.Tests.ServicesTests
             Assert.IsTrue(diet);
         }
 
+        [Test]
+        public async Task AddFitnessCardTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            fitnessCardService = new FitnessCardService(repo);
+
+            var model = new FitnessCardFormViewModel()
+            {
+                Id = 2,
+                Name = "fitnessCard",
+                Description = "",
+                FitnessCardCategoryId = 1,
+                ImageUrl = "",
+                Price = 40,
+                Quantity = 10,
+                DurationInMonths = 1,
+
+            };
+
+
+            await fitnessCardService.AddAsync(model, "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            var dbFitnessCard = await repo.GetByIdAsync<FitnessCard>(2);
+
+            Assert.That(dbFitnessCard.Id, Is.EqualTo(2));
+
+            Assert.That(dbFitnessCard.Name, Is.EqualTo("fitnessCard"));
+
+        }
+
 
         [TearDown]
         public void TearDown()

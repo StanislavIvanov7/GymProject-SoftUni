@@ -1,4 +1,5 @@
 ﻿using Gym.Core.Contracts;
+using Gym.Core.Models;
 using Gym.Core.Models.Diet;
 using Gym.Core.Services;
 using Gym.Infrastructure.Data;
@@ -200,7 +201,7 @@ namespace Gym.Tests.ServicesTests
         }
 
 
-      
+
         //[Test]
         //public async Task DetailsDietTestInMemory()
         //{
@@ -222,6 +223,34 @@ namespace Gym.Tests.ServicesTests
         //    Assert.AreEqual(diet.Title, "The best diet for weight loss");
         //    Assert.AreEqual(diet.Id,1);
         //}
+
+        [Test]
+        public async Task AddDietTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            dietService = new DietService(repo);
+
+            var model = new DietFormViewModel()
+            {
+                Id = 2,
+                Title = "diet",
+                Description = "",
+                DietCategoryId = 1,
+                ImageUrl = "",
+            };
+
+
+            await dietService.AddAsync(model, "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            var dbProduct = await repo.GetByIdAsync<Diet>(2);
+
+            Assert.That(dbProduct.Id, Is.EqualTo(2));
+
+            Assert.That(dbProduct.Title, Is.EqualTo("diet"));
+
+        }
+
 
         [TearDown]
         public void TearDown()

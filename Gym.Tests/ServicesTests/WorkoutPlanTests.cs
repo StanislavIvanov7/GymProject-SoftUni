@@ -11,6 +11,7 @@ using Gym.Core.Services;
 using Gym.Infrastructure.Data.Models;
 using Gym.Core.Models.Diet;
 using Gym.Core.Models.WorkoutPlan;
+using Gym.Core.Models.FitnessCard;
 
 namespace Gym.Tests.ServicesTests
 {
@@ -195,6 +196,34 @@ namespace Gym.Tests.ServicesTests
             var diet = await workoutPlanService.CategoryExistAsync(2);
 
             Assert.IsTrue(diet);
+        }
+        [Test]
+        public async Task AddWorkoutPlanTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            workoutPlanService = new WorkoutPlanService(repo);
+
+            var model = new WorkoutPlanFormViewModel()
+            {
+                Id = 2,
+                Name = "workoutPlan",
+                Description = "",
+                WorkoutPlanCategoryId = 1,
+                ImageUrl = "",
+                
+            };
+            
+
+
+            await workoutPlanService.AddAsync("2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",model);
+
+            var dbWorkoutPlan = await repo.GetByIdAsync<WorkoutPlan>(2);
+
+            Assert.That(dbWorkoutPlan.Id, Is.EqualTo(2));
+
+            Assert.That(dbWorkoutPlan.Name, Is.EqualTo("workoutPlan"));
+
         }
 
         [TearDown]

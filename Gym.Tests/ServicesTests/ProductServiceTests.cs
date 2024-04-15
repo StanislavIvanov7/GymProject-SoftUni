@@ -13,6 +13,8 @@ using System.Diagnostics;
 using System.Xml.Linq;
 using Gym.Core.Models;
 using Gym.Core.Models.Diet;
+using Gym.Core.Models.FitnessCard;
+using Gym.Core.Models.WorkoutPlan;
 
 namespace Gym.Tests.ServicesTests
 {
@@ -213,6 +215,36 @@ namespace Gym.Tests.ServicesTests
 
             Assert.That(4, Is.EqualTo(productCategories.Count()));
             Assert.That(productCategories.Any(x=>x.Id == 5), Is.False);
+        }
+
+        [Test]
+        public async Task AddProductTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            productService = new ProductService(repo);
+
+            var model = new ProductFormViewModel()
+            {
+                Id = 2,
+                Name = "product",
+                Description = "",
+                ProductCategoryId = 1,
+                ImageUrl = "",
+                Quantity = 10,
+
+            };
+        
+
+
+            await productService.AddAsync(model, "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            var dbProduct = await repo.GetByIdAsync<Product>(2);
+
+            Assert.That(dbProduct.Id, Is.EqualTo(2));
+
+            Assert.That(dbProduct.Name, Is.EqualTo("product"));
+
         }
 
         [TearDown]
