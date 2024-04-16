@@ -233,7 +233,7 @@ namespace Gym.Tests.ServicesTests
             var repo = new Repository(applicationDbContext);
             workoutPlanService = new WorkoutPlanService(repo);
 
-            var model = new WorkoutPlanFormViewModel()
+            var model = new WorkoutPlan()
             {
                 Id = 2,
                 Name = "workoutPlan",
@@ -242,6 +242,9 @@ namespace Gym.Tests.ServicesTests
                 ImageUrl = "",
 
             };
+
+            await repo.AddAsync(model);
+            await repo.SaveChangesAsync();
 
 
 

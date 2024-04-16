@@ -254,7 +254,7 @@ namespace Gym.Tests.ServicesTests
             var repo = new Repository(applicationDbContext);
             productService = new ProductService(repo);
 
-            var model = new ProductFormViewModel()
+            var model = new Product()
             {
                 Id = 2,
                 Name = "product",
@@ -264,6 +264,10 @@ namespace Gym.Tests.ServicesTests
                 Quantity = 10,
 
             };
+
+            await repo.AddAsync(model);
+            await repo.SaveChangesAsync();
+
 
 
 
@@ -314,6 +318,117 @@ namespace Gym.Tests.ServicesTests
 
 
 
+        }
+
+        [Test]
+        public async Task RemoveProductFromUserProductTableTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            productService = new ProductService(repo);
+
+            var model = new UserProduct()
+            {
+                UserId = "2a2dba3e - f9bf - 4c83 - 83eb - fbd8af5f891c",
+                ProductId = 1,
+                Quantity = 10
+
+            };
+
+            await repo.AddAsync(model);
+
+            await repo.SaveChangesAsync();
+
+            await productService.RemoveProductsFromUserProductsAsync(1);
+
+            var dbFitnessCard = await repo.All<UserProduct>()
+                .FirstOrDefaultAsync(x => x.ProductId == 1);
+
+
+
+            Assert.That(dbFitnessCard, Is.EqualTo(null));
+
+        }
+
+        [Test]
+        public async Task RemoveProductFromBuyerProductTableTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            productService = new ProductService(repo);
+
+            var model = new BuyerProduct()
+            {
+                BuyerId = "2a2dba3e - f9bf - 4c83 - 83eb - fbd8af5f891c",
+                ProductId = 1,
+                Quantity = 10
+
+            };
+
+            await repo.AddAsync(model);
+
+            await repo.SaveChangesAsync();
+
+            await productService.RemoveProductsFromBuyerProductsAsync(1);
+
+            var dbFitnessCard = await repo.All<BuyerProduct>()
+                .FirstOrDefaultAsync(x => x.ProductId == 1);
+
+
+
+            Assert.That(dbFitnessCard, Is.EqualTo(null));
+
+        }
+
+        [Test]
+        public async Task AllPurchasedProductsTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            productService = new ProductService(repo);
+
+            var model = new BuyerProduct()
+            {
+                BuyerId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
+                ProductId = 1,
+                Quantity = 10
+
+            };
+
+            await repo.AddAsync(model);
+
+
+            await repo.SaveChangesAsync();
+
+            var FitnessCardCollection = await productService.AllPurchasedProductsAsync("2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            Assert.That(1, Is.EqualTo(FitnessCardCollection.Count()));
+            Assert.That(FitnessCardCollection.Any(h => h.Id == 2), Is.False);
+        }
+
+        [Test]
+        public async Task IsInUserCartTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            productService = new ProductService(repo);
+
+            var model = new UserProduct()
+            {
+                UserId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
+                ProductId = 1,
+                Quantity = 10
+
+            };
+
+            await repo.AddAsync(model);
+
+
+            await repo.SaveChangesAsync();
+
+            var result = await productService.IsInUserCart(1, "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            Assert.IsTrue(result);
         }
 
         [TearDown]

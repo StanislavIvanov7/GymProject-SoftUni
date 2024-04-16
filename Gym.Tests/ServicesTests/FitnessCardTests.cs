@@ -51,10 +51,10 @@ namespace Gym.Tests.ServicesTests
             });
             await repo.SaveChangesAsync();
 
-            var dietCollection = await fitnessCardService.AllFitnessCardAsync();
+            var FitnessCardCollection = await fitnessCardService.AllFitnessCardAsync();
 
-            Assert.That(3, Is.EqualTo(dietCollection.Count()));
-            Assert.That(dietCollection.Any(h => h.Id == 4), Is.False);
+            Assert.That(3, Is.EqualTo(FitnessCardCollection.Count()));
+            Assert.That(FitnessCardCollection.Any(h => h.Id == 4), Is.False);
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace Gym.Tests.ServicesTests
             var repo = new Repository(applicationDbContext);
             fitnessCardService = new FitnessCardService(repo);
 
-            var model = new FitnessCardFormViewModel()
+            var model = new FitnessCard()
             {
                 Id = 2,
                 Name = "fitnessCard",
@@ -241,6 +241,9 @@ namespace Gym.Tests.ServicesTests
                 DurationInMonths = 1,
 
             };
+            await repo.AddAsync(model);
+            await repo.SaveChangesAsync();
+
 
 
             await fitnessCardService.RemoveAsync(2);
@@ -253,6 +256,65 @@ namespace Gym.Tests.ServicesTests
 
         }
 
+        [Test]
+        public async Task RemoveFitnessCardFromUserFitnessCardsTableTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            fitnessCardService = new FitnessCardService(repo);
+
+            var model = new UserFitnessCard()
+            {
+                UserId = "2a2dba3e - f9bf - 4c83 - 83eb - fbd8af5f891c",
+                FitnessCardId = 1,
+                Quantity = 10
+
+            };
+
+            await repo.AddAsync(model);
+          
+            await repo.SaveChangesAsync();
+
+            await fitnessCardService.RemoveFitnessCardFromUserFitnessCardsAsync(1);
+
+            var dbFitnessCard = await repo.All<UserFitnessCard>()
+                .FirstOrDefaultAsync(x => x.FitnessCardId == 1);
+
+
+
+            Assert.That(dbFitnessCard, Is.EqualTo(null));
+
+        }
+
+        [Test]
+        public async Task RemoveFitnessCardFromBuyerFitnessCardsTableTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            fitnessCardService = new FitnessCardService(repo);
+
+            var model = new BuyerFitnessCard()
+            {
+                BuyerId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
+                FitnessCardId = 1,
+                Quantity = 10
+
+            };
+
+            await repo.AddAsync(model);
+
+            await repo.SaveChangesAsync();
+
+            await fitnessCardService.RemoveFitnessCardFromBuyerFitnessCardsAsync(1);
+
+            var dbFitnessCard = await repo.All<BuyerFitnessCard>()
+                .FirstOrDefaultAsync(x => x.FitnessCardId == 1);
+
+
+
+            Assert.That(dbFitnessCard, Is.EqualTo(null));
+
+        }
         //[Test]
         //public async Task AllFitnessCardInCardTestInMemory()
         //{
@@ -361,6 +423,57 @@ namespace Gym.Tests.ServicesTests
             await repo.SaveChangesAsync();
 
             var result = await fitnessCardService.CanBuyAsync(2);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task AllPurchasedFitnessCardTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            fitnessCardService = new FitnessCardService(repo);
+
+            var model = new BuyerFitnessCard()
+            {
+                BuyerId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
+                FitnessCardId = 1,
+                Quantity = 10
+
+            };
+
+            await repo.AddAsync(model);
+
+
+            await repo.SaveChangesAsync();
+
+            var FitnessCardCollection = await fitnessCardService.AllPurchasedFitnessCardAsync("2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            Assert.That(1, Is.EqualTo(FitnessCardCollection.Count()));
+            Assert.That(FitnessCardCollection.Any(h => h.Id == 2), Is.False);
+        }
+
+        [Test]
+        public async Task IsInUserCartTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            fitnessCardService = new FitnessCardService(repo);
+
+                var model = new UserFitnessCard()
+                {
+                    UserId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
+                    FitnessCardId = 1,
+                    Quantity = 10
+
+                };
+
+                await repo.AddAsync(model);
+
+
+                await repo.SaveChangesAsync();
+
+                var result = await fitnessCardService.IsInUserCart(1, "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
 
             Assert.IsTrue(result);
         }

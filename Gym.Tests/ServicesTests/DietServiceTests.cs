@@ -258,7 +258,7 @@ namespace Gym.Tests.ServicesTests
             var repo = new Repository(applicationDbContext);
             dietService = new DietService(repo);
 
-            var model = new DietFormViewModel()
+            var model = new Diet()
             {
                 Id = 2,
                 Title = "diet",
@@ -266,6 +266,9 @@ namespace Gym.Tests.ServicesTests
                 DietCategoryId = 1,
                 ImageUrl = "",
             };
+
+            await repo.AddAsync(model);
+            await repo.SaveChangesAsync();
 
 
             await dietService.RemoveAsync(2);
