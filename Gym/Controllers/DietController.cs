@@ -1,5 +1,4 @@
 ﻿using Gym.Core.Contracts;
-using Gym.Core.Models.Diet;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 

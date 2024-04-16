@@ -1,18 +1,11 @@
 ﻿using Gym.Core.Contracts;
-using Gym.Core.Models;
 using Gym.Core.Models.Diet;
 using Gym.Core.Services;
 using Gym.Infrastructure.Data;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using NUnit.Framework.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gym.Tests.ServicesTests
 {

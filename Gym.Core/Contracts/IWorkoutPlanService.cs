@@ -1,5 +1,4 @@
-﻿using Gym.Core.Models.Diet;
-using Gym.Core.Models.WorkoutPlan;
+﻿using Gym.Core.Models.WorkoutPlan;
 
 namespace Gym.Core.Contracts
 {

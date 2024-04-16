@@ -1,5 +1,4 @@
 ﻿using Gym.Core.Contracts;
-using Gym.Core.Models.Diet;
 using Gym.Core.Models.WorkoutPlan;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;

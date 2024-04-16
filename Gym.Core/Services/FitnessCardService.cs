@@ -1,5 +1,4 @@
-﻿using Gym.Core.Models;
-using Gym.Core.Models.FitnessCard;
+﻿using Gym.Core.Models.FitnessCard;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;

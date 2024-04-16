@@ -1,8 +1,5 @@
 using Gym.ModelBinders;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Gym.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

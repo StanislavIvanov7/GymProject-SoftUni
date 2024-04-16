@@ -1,17 +1,10 @@
 ﻿using Gym.Core.Contracts;
-using Gym.Infrastructure.Data.Common;
-using Gym.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Gym.Core.Services;
-using Gym.Infrastructure.Data.Models;
-using Gym.Core.Models.Diet;
 using Gym.Core.Models.WorkoutPlan;
-using Gym.Core.Models.FitnessCard;
+using Gym.Core.Services;
+using Gym.Infrastructure.Data;
+using Gym.Infrastructure.Data.Common;
+using Gym.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gym.Tests.ServicesTests
 {

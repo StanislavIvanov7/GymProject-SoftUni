@@ -1,15 +1,7 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Models;
-using Gym.Core.Models.FitnessCard;
-using Gym.Core.Services;
-using Gym.Infrastructure.Constants;
-using Gym.Infrastructure.Data;
-using Gym.Infrastructure.Data.Common;
-using Gym.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using static Gym.Infrastructure.Constants.DataConstant;
 
 namespace Gym.Controllers
 {

@@ -1,10 +1,5 @@
-﻿using Gym.Core.Contracts;
-using Gym.Core.Models.FitnessCard;
-using Gym.Core.Services;
-using Gym.Infrastructure.Data;
-using Gym.Infrastructure.Data.Models;
+﻿using Gym.Core.Models.FitnessCard;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Gym.Controllers

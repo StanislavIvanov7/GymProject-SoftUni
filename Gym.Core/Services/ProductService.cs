@@ -1,9 +1,6 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Enumerations;
 using Gym.Core.Models;
-using Gym.Core.Models.FitnessCard;
-using Gym.Infrastructure.Constants;
-using Gym.Infrastructure.Data;
 using Gym.Infrastructure.Data.Common;
 using Gym.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,5 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Models.WorkoutPlan;
-using Gym.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
