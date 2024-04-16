@@ -226,6 +226,33 @@ namespace Gym.Tests.ServicesTests
 
         }
 
+        [Test]
+        public async Task RemoveWorkoutPlanTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            workoutPlanService = new WorkoutPlanService(repo);
+
+            var model = new WorkoutPlanFormViewModel()
+            {
+                Id = 2,
+                Name = "workoutPlan",
+                Description = "",
+                WorkoutPlanCategoryId = 1,
+                ImageUrl = "",
+
+            };
+
+
+
+            await workoutPlanService.RemoveAsync(2);
+
+            var dbWorkoutPlan = await repo.GetByIdAsync<WorkoutPlan>(2);
+
+            Assert.That(dbWorkoutPlan, Is.EqualTo(null));
+
+        }
+
         [TearDown]
         public void TearDown()
         {

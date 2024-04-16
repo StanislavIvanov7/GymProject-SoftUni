@@ -251,6 +251,31 @@ namespace Gym.Tests.ServicesTests
 
         }
 
+        [Test]
+        public async Task RemoveDietTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            dietService = new DietService(repo);
+
+            var model = new DietFormViewModel()
+            {
+                Id = 2,
+                Title = "diet",
+                Description = "",
+                DietCategoryId = 1,
+                ImageUrl = "",
+            };
+
+
+            await dietService.RemoveAsync(2);
+
+            var dbProduct = await repo.GetByIdAsync<Diet>(2);
+
+            Assert.That(dbProduct, Is.EqualTo(null));
+
+        }
+
 
         [TearDown]
         public void TearDown()

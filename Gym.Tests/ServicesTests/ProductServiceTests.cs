@@ -247,6 +247,75 @@ namespace Gym.Tests.ServicesTests
 
         }
 
+        [Test]
+        public async Task RemoveProductTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            productService = new ProductService(repo);
+
+            var model = new ProductFormViewModel()
+            {
+                Id = 2,
+                Name = "product",
+                Description = "",
+                ProductCategoryId = 1,
+                ImageUrl = "",
+                Quantity = 10,
+
+            };
+
+
+
+            await productService.RemoveAsync(2);
+
+            var dbProduct = await repo.GetByIdAsync<Product>(2);
+
+            Assert.That(dbProduct, Is.EqualTo(null));
+
+        }
+        [Test]
+        public async Task AddProductToCartTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            productService = new ProductService(repo);
+
+            await productService.AddToCartAsync(1, "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            var dbFitnessCard = await repo.All<UserProduct>()
+                .FirstOrDefaultAsync(x => x.ProductId == 1 && x.UserId == "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            Assert.That(dbFitnessCard.ProductId, Is.EqualTo(1));
+
+            Assert.That(dbFitnessCard.Quantity, Is.EqualTo(1));
+
+        }
+
+        [Test]
+        public async Task RemoveFitnessCardFromCartTestInMemory()
+        {
+
+            var repo = new Repository(applicationDbContext);
+            productService = new ProductService(repo);
+            await repo.AddAsync(new UserProduct()
+            {
+                UserId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
+                Quantity = 2,
+                ProductId = 1
+            });
+            await repo.SaveChangesAsync();
+            await productService.RemoveFromCartAsync(1, "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            var dbFitnessCard = await repo.All<UserProduct>()
+                .FirstOrDefaultAsync(x => x.ProductId == 1 && x.UserId == "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c");
+
+            Assert.That(dbFitnessCard.Quantity, Is.EqualTo(1));
+
+
+
+        }
+
         [TearDown]
         public void TearDown()
         {
