@@ -30,61 +30,6 @@ namespace Gym.Tests.ServicesTests
             applicationDbContext.Database.EnsureCreated();
         }
 
-        //[Test]
-        //public async Task DetailsProductTestInMemory()
-        //{
-
-        //    var repo = new Repository(applicationDbContext);
-        //    productService = new ProductService(repo);
-
-        //    var product = new Product()
-        //    {
-        //        Id = 2,
-        //        Name = "product",
-        //        ProductCategoryId = 2,
-        //        Description = "The description of product",
-        //        CreatorId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",
-        //        Quantity = 50,
-        //        Price = 24.95m,
-        //        ImageUrl = "https://www.ciela.com/media/catalog/product/cache/32bb0748c82325b02c55df3c2a9a9856/a/n/ana-karenina-lev-tolstoi-hermes-9789542619529.jpg",
-
-        //    };
-
-        //    await repo.AddAsync(product);
-      
-
-        //    var currentProductDetails = new DetailsProductViewModel()
-        //    {
-        //        Id = product.Id,
-        //        Name = product.Name,
-        //        Price = product.Price,
-        //        ProductCategory = product.ProductCategory.Name,
-        //        Description = product.Description,
-        //        CreatorEmail = product.Creator.Email,
-        //        CreatorName = product.Creator.FirstName + " " + product.Creator.LastName,
-        //        Quantity = product.Quantity,
-        //        ImageUrl = product.ImageUrl,
-
-        //    };
-
-        //    // Act
-        //    var result = await productService.DetailsProductAsync(product.Id);
-
-        //    // Assert
-        //    Assert.AreEqual(product.Id, result.Id);
-        //    Assert.AreEqual(product.Name, result.Name);
-        //    Assert.AreEqual(product.Price, result.Price);
-        //    Assert.AreEqual(product.ProductCategory.Name, result.ProductCategory);
-        //    Assert.AreEqual(product.Description, result.Description);
-        //    Assert.AreEqual(product.Creator.Email, result.CreatorEmail);
-        //    Assert.AreEqual(product.Creator.FirstName + " " + product.Creator.LastName, result.CreatorName);
-        //    Assert.AreEqual(product.Quantity, result.Quantity);
-        //    Assert.AreEqual(product.ImageUrl, result.ImageUrl);
-
-
-
-        //}
-
         [Test]
         public async Task TestProductEdit()
         {
@@ -186,28 +131,7 @@ namespace Gym.Tests.ServicesTests
             Assert.That(2, Is.EqualTo(diet.Id));
             Assert.AreEqual(diet.Name, "product");
         }
-        //!!!
-        //[Test]
-        //public async Task AllProductCategoryTestInMemory()
-        //{
-
-        //    var repo = new Repository(applicationDbContext);
-        //    productService = new ProductService(repo);
-
-        //    await repo.AddAsync(new ProductCategory()
-        //    {
-        //       Id = 4,
-        //       Name = "Test",
-
-        //    });
-
-        //    await repo.SaveChangesAsync();
-
-        //    var productCategories = await productService.AllCategoriesNamesAsync();
-
-        //    Assert.That(4, Is.EqualTo(productCategories.Count()));
-        //    Assert.That(productCategories.Any(x=>x.Id == 5), Is.False);
-        //}
+        
 
         [Test]
         public async Task AddProductTestInMemory()

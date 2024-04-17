@@ -306,33 +306,7 @@ namespace Gym.Tests.ServicesTests
             Assert.That(dbFitnessCard, Is.EqualTo(null));
 
         }
-        //[Test]
-        //public async Task AllFitnessCardInCardTestInMemory()
-        //{
-
-        //    var repo = new Repository(applicationDbContext);
-        //    fitnessCardService = new FitnessCardService(repo);
-
-        //    //Id = x.FitnessCard.Id,
-        //    //       Name = x.FitnessCard.Name,
-        //    //       Description = x.FitnessCard.Description,
-        //    //       Quantity = x.Quantity,
-        //    //       ImageUrl = x.FitnessCard.ImageUrl,
-        //    //       Price = x.FitnessCard.Price,
-        //    await repo.AddAsync(new UserFitnessCard()
-        //    {
-        //        UserId = "2e6d9cf9-f2fa-4012-936c-82d0847f5f9c",
-        //        Quantity = 2,
-        //        FitnessCardId = 10
-
-        //    });
-        //    await repo.SaveChangesAsync();
-
-        //    var fitnessCardCollection = await fitnessCardService.AllFitnessCardInCartAsync("2e6d9cf9-f2fa-4012-936c-82d0847f5f9c");
-
-        //    Assert.That(1, Is.EqualTo(fitnessCardCollection.Count()));
-        //    Assert.That(fitnessCardCollection.Any(h => h.Name == "Fitness card for men before 4pm."), Is.True);
-        //}
+        
 
 
         [Test]

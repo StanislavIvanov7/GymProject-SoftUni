@@ -194,29 +194,6 @@ namespace Gym.Tests.ServicesTests
         }
 
 
-
-        //[Test]
-        //public async Task DetailsDietTestInMemory()
-        //{
-
-        //    var repo = new Repository(applicationDbContext);
-        //    dietService = new DietService(repo);
-
-        //    await repo.AddRangeAsync(new List<Diet>()
-        //    {
-        //        new Diet() { Id = 2, ImageUrl = "", Title = "", Description = "", CreatorId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",DietCategoryId = 1},
-        //        new Diet() { Id = 3, ImageUrl = "", Title = "",Description = "",CreatorId = "2a2dba3e-f9bf-4c83-83eb-fbd8af5f891c",DietCategoryId = 1},
-
-        //    });
-
-        //    await repo.SaveChangesAsync();
-
-        //    var diet = await dietService.DetailsDietAsync(1);
-
-        //    Assert.AreEqual(diet.Title, "The best diet for weight loss");
-        //    Assert.AreEqual(diet.Id,1);
-        //}
-
         [Test]
         public async Task AddDietTestInMemory()
         {
