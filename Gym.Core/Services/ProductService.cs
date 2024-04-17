@@ -42,7 +42,7 @@ namespace Gym.Core.Services
             int currentPage = 1,
             int housesPerPage = 1)
         {
-            var productsToShow = repository.AllAsReadOnly<Product>();
+            var productsToShow = repository.All<Product>();
 
             if(category != null)
             {
