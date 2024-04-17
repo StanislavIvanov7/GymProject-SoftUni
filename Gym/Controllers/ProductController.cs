@@ -115,7 +115,7 @@ namespace Gym.Controllers
 
             if (await productService.CanBuyAsync(id) == false)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(All));
             }
 
             await productService.BuyAsync(id, userId);

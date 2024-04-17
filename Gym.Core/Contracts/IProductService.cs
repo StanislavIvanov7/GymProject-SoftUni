@@ -7,13 +7,13 @@ namespace Gym.Core.Contracts
     public interface IProductService
     {
         Task<ProductQueryViewModel> AllProductsAsync(
-            string? category,
-            string? searchTerm,
+            string? category = null,
+            string? searchTerm = null,
             ProductSorting sorting = ProductSorting.Newest,
             int currentPage = 1,
             int housesPerPage = 1);
 
-        Task<IEnumerable<AllProductCategoryViewModel>> AllCategoriesNamesAsync();
+        Task<IEnumerable<string>> AllCategoriesNamesAsync();
 
         Task AddAsync(ProductFormViewModel model,string userId);
 

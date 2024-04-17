@@ -194,14 +194,10 @@ namespace Gym.Core.Services
             
         }
 
-        public async Task<IEnumerable<AllProductCategoryViewModel>> AllCategoriesNamesAsync()
+        public async Task<IEnumerable<string>> AllCategoriesNamesAsync()
         {
             return await repository.AllAsReadOnly<ProductCategory>()
-                .Select(c => new AllProductCategoryViewModel()
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                })
+                .Select(c => c.Name)
                 .ToListAsync();
         }
 

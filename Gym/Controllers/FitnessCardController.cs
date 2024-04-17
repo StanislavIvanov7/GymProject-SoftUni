@@ -127,7 +127,7 @@ namespace Gym.Controllers
 
             if(await fitnessCardService.CanBuyAsync(id)== false)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(All));
             }
 
             await fitnessCardService.BuyAsync(id, userId);

@@ -18,7 +18,7 @@ namespace Gym.Core.Models
 
         public int TotalProductsCount { get; set; }
 
-        public IEnumerable<AllProductCategoryViewModel> Categories { get; set; } = null!;
+        public IEnumerable<string> Categories { get; set; } = null!;
 
         public IEnumerable<AllProductViewModel> Products { get; set; } = new List<AllProductViewModel>();
     }
