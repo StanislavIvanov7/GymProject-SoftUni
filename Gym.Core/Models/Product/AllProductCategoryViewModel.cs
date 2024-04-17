@@ -3,7 +3,7 @@
 using static Gym.Core.Constants.MessageConstants;
 using static Gym.Infrastructure.Constants.DataConstant.ProductCategory;
 
-namespace Gym.Core.Models
+namespace Gym.Core.Models.Product
 {
     public class AllProductCategoryViewModel
     {

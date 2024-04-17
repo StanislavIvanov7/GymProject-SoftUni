@@ -1,8 +1,8 @@
-﻿namespace Gym.Core.Models
+﻿namespace Gym.Core.Models.Product
 {
     public class DetailsProductViewModel
     {
-        
+
         public int Id { get; set; }
 
         public decimal Price { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Gym.Core.Models
+﻿namespace Gym.Core.Models.Product
 {
     public class DeleteProductViewModel
     {

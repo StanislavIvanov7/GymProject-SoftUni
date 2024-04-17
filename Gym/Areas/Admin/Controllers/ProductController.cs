@@ -1,5 +1,5 @@
 ﻿using Gym.Core.Contracts;
-using Gym.Core.Models;
+using Gym.Core.Models.Product;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 

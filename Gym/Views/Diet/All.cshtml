@@ -9,16 +9,9 @@
 @* @if (!diets.Any())
 {
     <div class="mt-4 p-5 bg-light">
-        <h1 class="display-4">Welcome to the best place for renting houses!</h1>
+        <h1 class="display-4">Welcome to the best fitness!</h1>
         <p class="lead">
             There are no houses in the system currently available so why don't you just add one?
-        </p>
-        <hr class="my-4">
-        <p class="lead">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <a asp-controller="House" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add House</a>
-            }
         </p>
     </div>
 } *@

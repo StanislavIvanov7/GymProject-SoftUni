@@ -11,7 +11,6 @@ namespace Gym.Controllers
 
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
-        private IUserStore<ApplicationUser> userStore;
 
         public UserController(SignInManager<ApplicationUser> _signInManager,
             UserManager<ApplicationUser> _userManager,
@@ -19,7 +18,7 @@ namespace Gym.Controllers
         {
             signInManager = _signInManager;
             userManager = _userManager;
-            userStore = _userStore;
+
         }
         [HttpGet]
         public IActionResult Register()

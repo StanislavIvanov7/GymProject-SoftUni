@@ -1,7 +1,7 @@
 ﻿using Gym.Core.Enumerations;
 using System.ComponentModel.DataAnnotations;
 
-namespace Gym.Core.Models
+namespace Gym.Core.Models.Product
 {
     public class AllProductsQueryModel
     {

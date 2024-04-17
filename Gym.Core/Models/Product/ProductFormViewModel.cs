@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 using static Gym.Core.Constants.MessageConstants;
 using static Gym.Infrastructure.Constants.DataConstant.Product;
 
-namespace Gym.Core.Models
+namespace Gym.Core.Models.Product
 {
     public class ProductFormViewModel
     {

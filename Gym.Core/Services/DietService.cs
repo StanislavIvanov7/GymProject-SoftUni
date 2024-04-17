@@ -81,18 +81,6 @@ namespace Gym.Core.Services
 
         public async Task<DietFormViewModel> GetDietForEditAsync(int id)
         {
-            //var diet = await repository.GetByIdAsync<Diet>(id);
-
-
-            //return new DietFormViewModel()
-            //{
-            //    Id = id,
-            //    Title = diet.Title,
-            //    Description = diet.Description,
-            //    DietCategoryId = diet.DietCategoryId,
-            //    ImageUrl = diet.ImageUrl,
-            //};
-
             var diet = await repository.AllAsReadOnly<Diet>()
                  .Where(x => x.Id == id)
                  .Select(x => new DietFormViewModel()
@@ -123,15 +111,6 @@ namespace Gym.Core.Services
 
         public async Task<DeleteDietViewModel> GetDietForDeleteAsync(int id)
         {
-            //var diet = await repository.GetByIdAsync<Diet>(id);
-
-            //return new DeleteDietViewModel()
-            //{
-            //    Id = diet.Id,
-            //    ImageUrl = diet.ImageUrl,
-            //    Title = diet.Title,
-
-            //};
 
             var diets = await repository.AllAsReadOnly<Diet>()
                 .Where(x => x.Id == id)

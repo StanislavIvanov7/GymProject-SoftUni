@@ -1,4 +1,4 @@
-﻿namespace Gym.Core.Models
+﻿namespace Gym.Core.Models.Product
 {
     public class AllProductViewModel
     {
@@ -8,7 +8,7 @@
         public string Name { get; set; } = string.Empty;
 
         public decimal Price { get; set; }
-       
+
         public string Description { get; set; } = string.Empty;
 
         public string ImageUrl { get; set; } = string.Empty;

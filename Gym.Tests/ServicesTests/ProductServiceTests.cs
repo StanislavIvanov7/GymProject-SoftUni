@@ -1,5 +1,6 @@
 ﻿using Gym.Core.Contracts;
 using Gym.Core.Models;
+using Gym.Core.Models.Product;
 using Gym.Core.Services;
 using Gym.Infrastructure.Data;
 using Gym.Infrastructure.Data.Common;

@@ -135,19 +135,6 @@ namespace Gym.Core.Services
 
         public async Task<DeleteFitnessCardViewModel> GetFitnessCardForDeleteAsync(int id)
         {
-            //var fitnessCard = await repository.GetByIdAsync<FitnessCard>(id);
-            //if (fitnessCard == null)
-            //{
-            //    throw new ArgumentException("Invalid product");
-            //}
-
-            //return new DeleteFitnessCardViewModel()
-            //{
-            //    Id = fitnessCard.Id,
-            //    ImageUrl = fitnessCard.ImageUrl,
-            //    Name = fitnessCard.Name,
-
-            //};
 
             var fitnessCard = await repository.AllAsReadOnly<FitnessCard>()
                 .Where(x => x.Id == id)
@@ -294,12 +281,6 @@ namespace Gym.Core.Services
 
 
         }
-
-        //public async Task<int> Count(int id)
-        //{
-        //    return await repository.AllAsReadOnly<FitnessCard>()
-        //        .CountAsync(x=> x.Id == id);
-        //}
 
         public async Task<bool> IsInUserCart(int id, string userId)
         {

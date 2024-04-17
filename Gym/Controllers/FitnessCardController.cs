@@ -83,30 +83,6 @@ namespace Gym.Controllers
 
             return RedirectToAction(nameof(Cart));
 
-            //var fitnessCard = await data.FitnessCards
-            //    //.Where(x => x.Id == id)
-            //    .Include(x => x.UserFitnessCards)
-            //    .FirstOrDefaultAsync(x => x.Id == id);
-
-            //if (fitnessCard == null)
-            //{
-            //    return BadRequest();
-            //}
-
-
-            //string userId = GetUserId();
-            //var uf = fitnessCard.UserFitnessCards
-            //    //.Where(x => x.HelperId == userId)
-            //    .FirstOrDefault(x => x.UserId == userId);
-
-            //if (uf == null)
-            //{
-            //    return Unauthorized();
-            //}
-
-            //fitnessCard.UserFitnessCards.Remove(uf);
-            //await data.SaveChangesAsync();
-            //return RedirectToAction(nameof(All));
         }
 
         [HttpPost]

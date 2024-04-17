@@ -1,5 +1,5 @@
 ﻿using Gym.Core.Enumerations;
-using Gym.Core.Models;
+using Gym.Core.Models.Product;
 using Gym.Infrastructure.Data.Models;
 
 namespace Gym.Core.Contracts
